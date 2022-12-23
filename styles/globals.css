@@ -1,0 +1,109 @@
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  background: linear-gradient(to left, #02aab0, #00cdac);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.App h1 {
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+}
+
+/* common button style  */
+.btn {
+  background-color: #004244;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  box-shadow: inset 0 0 15px #02bdc46c;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+.btn:hover,
+.btn:active {
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+form {
+  display: flex;
+  background-color: #d7fdff46;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  max-width: 75%;
+}
+form input {
+  border: none;
+  outline: none;
+  padding: 1rem;
+  margin: 0.3rem 0;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+}
+.output-link {
+  word-break: break-all;
+  color: gray;
+  max-width: 250px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+textarea {
+  border: none;
+  outline: none;
+  border-radius: 0.8rem;
+  min-height: 5rem;
+  padding: 1rem;
+  resize: none;
+  width: 250px;
+  color: slategray;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+.d-none {
+  display: none;
+}
+
+label {
+  color: #004244;
+  align-self: flex-start;
+  text-indent: 0.5rem;
+  /* text-decoration: underline; */
+}
+select {
+  padding: 1rem 0.5rem;
+  outline: 0;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  align-self: stretch;
+}
