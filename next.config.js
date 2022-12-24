@@ -4,11 +4,10 @@ const nextConfig = {
   swcMinify: true,
 
 
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false };
-
-    return config;
-  },
+  // webpack: (config) => {
+  // config.resolve.fallback = { fs: false };
+  // return config;
+  // },
 
 }
 
