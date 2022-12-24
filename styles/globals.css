@@ -68,6 +68,16 @@ form input {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   word-wrap: break-word;
 }
+
+form button {
+  border: none;
+  outline: none;
+  padding: 1rem;
+  margin: 0.3rem 0;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+}
 .output-link {
   word-break: break-all;
   color: gray;
@@ -106,4 +116,114 @@ select {
   border: 1px solid gray;
   border-radius: 1rem;
   align-self: stretch;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(to left, #109094, #2dcbb1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+nav .logo {
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  font-size: 0.5rem;
+}
+
+nav .links {
+  color: #fff;
+}
+nav .links .link {
+  margin: 0 20px;
+}
+
+nav .links .link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+nav .links .menu {
+}
+
+nav .links .menu-button {
+  color: inherit;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+nav .links .menu .menu-div {
+  transform: scaleY(0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 80%;
+  right: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  transform-origin: top;
+  background: linear-gradient(to left, #05a8ee, #17d0e4);
+}
+
+nav .links .menu .menu-div .option {
+  font-size: 1rem;
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 250px;
+  height: 50px;
+}
+
+nav .links .menu .menu-div .option:hover {
+  background-color: rgb(0, 229, 255);
+}
+
+.data {
+  margin: 3rem 0;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 100%;
+}
+
+th {
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }

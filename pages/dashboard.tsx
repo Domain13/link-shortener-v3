@@ -16,9 +16,18 @@ import { useRouter } from "next/router";
 import jwt from "jsonwebtoken";
 import Link from "next/link";
 import dbConnect from "../lib/dbConnect";
+import Navbar from "../components/Navbar";
+import { useState } from "react";
 
 export default function Dashboard({ shortUrls, users, domains, token }) {
   const router = useRouter();
+  // const [createDomainOpen, setCreateDomainOpen] = useState(false);
+  // const [createTokenOpen, setCreateTokenOpen] = useState(false);
+  // const [createUserOpen, setCreateUserOpen] = useState(false);
+  // const [changePasswordOpen, setChangePasswordOpen] = useState(false);
+  const [popup, setPopup] = useState<
+    "CreateDomain" | "CreateToken" | "CreateUser" | "ChangePassword" | null
+  >(null);
 
   async function handleCreateDomain(e) {
     e.preventDefault();
@@ -41,6 +50,9 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
       // remove the input values
       e.target[0].value = "";
       e.target[1].value = "";
+
+      // close the popup
+      setPopup(null);
     }
   }
 
@@ -58,6 +70,8 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
       }),
     });
     const data = await res.json();
+
+    setPopup(null);
   }
 
   async function handleCreateUser(e) {
@@ -81,6 +95,9 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
       // remove the input values
       e.target[0].value = "";
       e.target[1].value = "";
+
+      // close the popup
+      setPopup(null);
     }
   }
 
@@ -107,138 +124,165 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
       // remove the input values
       e.target[0].value = "";
       e.target[1].value = "";
+
+      // close the popup
+      setPopup(null);
     } else {
       alert("Wrong password");
     }
   }
 
-  async function logout() {
-    const response = await fetch("/api/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-
-    if (data.type === "SUCCESS") {
-      router.push("/login");
-    }
-  }
-
   return (
-    <div className="App">
-      <h1>ADMIN PANNEL</h1>
+    <>
+      <Navbar user={users} dashboard={true} setPopup={setPopup} />
+      <div className="App">
+        <h1>ADMIN PANNEL</h1>
 
-      <form action="#" onSubmit={handleCreateDomain}>
-        <h1>Create Custom Domain</h1>
-        <input type="text" placeholder="custom domain" />
-        <input type="text" placeholder="Error page" />
-        <input type="submit" value="Create" />
-      </form>
-      <form action="#" onSubmit={handleCreateToken}>
-        <h1>Create/Change Token</h1>
-        <input
-          type="text"
-          placeholder="Change/Create Token"
-          defaultValue={token.token}
-        />
-        <input type="submit" value="Create/Change" />
-      </form>
-      <form action="#" onSubmit={handleCreateUser}>
-        <h1>Create User</h1>
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Password" />
-        <input type="submit" value="Create" />
-      </form>
-      <form action="#" onSubmit={handleChangePassword}>
-        <h1>Change Password</h1>
-        <input type="text" placeholder="Old Password" />
-        <input type="text" placeholder="New Password" />
-        <input type="submit" value="Change" />
-      </form>
+        {popup === "CreateDomain" && (
+          <form action="#" onSubmit={handleCreateDomain}>
+            <h1>Create Custom Domain</h1>
+            <input type="text" placeholder="custom domain" />
+            <input type="text" placeholder="Error page" />
+            <input type="submit" value="Create" />
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+        {popup === "CreateToken" && (
+          <form action="#" onSubmit={handleCreateToken}>
+            <h1>Create/Change Token</h1>
+            <input
+              type="text"
+              placeholder="Change/Create Token"
+              defaultValue={token.token}
+            />
+            <input type="submit" value="Create/Change" />
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+        {popup === "CreateUser" && (
+          <form action="#" onSubmit={handleCreateUser}>
+            <h1>Create User</h1>
+            <input type="text" placeholder="Username" />
+            <input type="text" placeholder="Password" />
+            <input type="submit" value="Create" />
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+        {popup === "ChangePassword" && (
+          <form action="#" onSubmit={handleChangePassword}>
+            <h1>Change Password</h1>
+            <input type="text" placeholder="Old Password" />
+            <input type="text" placeholder="New Password" />
+            <input type="submit" value="Change" />
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
 
-      <button className="btn" onClick={logout}>
+        {/* <button className="btn" onClick={logout}>
         Logout
-      </button>
+      </button> */}
 
-      <Link href="/">
+        {/* <Link href="/">
         <a className="btn">Home</a>
-      </Link>
+      </Link> */}
 
-      <div className="datas">
-        <div className="data urls">
-          <h4>Links</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Short Code</th>
-                <th>Original Url</th>
-                <th>Clicks</th>
-                <th>Created By</th>
-                <th>Custom Domain</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {shortUrls.map((url) => (
-                <tr key={url._id}>
-                  <td>{url.shortCode}</td>
-                  <td>{url.originalUrl}</td>
-                  <td>{url.clicks}</td>
-                  <td>{url.createdBy}</td>
-                  <td>{url.customDomain}</td>
-                  <td>{url.createdAt}</td>
+        <div className="datas">
+          <div className="data urls">
+            <h4>Links</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Short Code</th>
+                  <th>Original Url</th>
+                  <th>Clicks</th>
+                  <th>Created By</th>
+                  <th>Custom Domain</th>
+                  <th>Created At</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {shortUrls.map((url) => (
+                  <tr key={url._id}>
+                    <td>{url.shortCode}</td>
+                    <td>{url.originalUrl}</td>
+                    <td>{url.clicks}</td>
+                    <td>{url.createdBy}</td>
+                    <td>{url.customDomain}</td>
+                    <td>{url.createdAt}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        <div className="data users">
-          <h4>Users</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.username}</td>
-                  <td>{user.createdAt}</td>
+          <div className="data users">
+            <h4>Users</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Created At</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.username}</td>
+                    <td>{user.createdAt}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        <div className="data domains">
-          <h4>Domains</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Domain</th>
-                <th>Error page</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {domains.map((domain) => (
-                <tr key={domain._id}>
-                  <td>{domain.domain}</td>
-                  <td>{domain.errorPage}</td>
-                  <td>{domain.createdAt}</td>
+          <div className="data domains">
+            <h4>Domains</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Error page</th>
+                  <th>Created At</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {domains.map((domain) => (
+                  <tr key={domain._id}>
+                    <td>{domain.domain}</td>
+                    <td>{domain.errorPage}</td>
+                    <td>{domain.createdAt}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

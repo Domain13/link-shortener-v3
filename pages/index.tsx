@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken";
 import Home from "../components/Home";
 import dbConnect from "../lib/dbConnect";
 import { useRouter } from "next/router";
+import Navbar from "../components/Navbar";
 
 // TODO: the backend api codes uses repeated code, make it into a function
 // TODO: Input validation
@@ -34,8 +35,10 @@ export default function home({ user, domains }) {
   }
 
   return (
-    <div className="App">
-      <div>
+    <>
+      <Navbar user={user} dashboard={false} />
+      <div className="App">
+        {/* <div>
         {user.role === "admin" && (
           <Link href="/dashboard">
             <a className="btn">Dashboard</a>
@@ -46,9 +49,10 @@ export default function home({ user, domains }) {
             Logout
           </button>
         )}
+      </div> */}
+        {user && <Home domains={domains} />}
       </div>
-      {user && <Home domains={domains} />}
-    </div>
+    </>
   );
 }
 
