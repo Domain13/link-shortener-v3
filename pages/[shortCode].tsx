@@ -2,6 +2,7 @@
 
 import dbConnect from "../lib/dbConnect";
 import ShortUrl from "../models/ShortUrl";
+import State from "../models/State";
 import React from "react";
 
 export default function () {
@@ -12,6 +13,10 @@ export async function getServerSideProps(context) {
   // const { req, res } = context;
   const { shortCode } = context.query;
 
+  console.log("====================================");
+  console.log("shortCode", shortCode);
+  console.log("====================================");
+
   await dbConnect();
 
   // Find the short url in the database
@@ -19,10 +24,6 @@ export async function getServerSideProps(context) {
   const shortUrl = await ShortUrl.findOne({
     shortCode,
   });
-
-  console.log("====================================");
-  console.log(shortUrl);
-  console.log("====================================");
 
   // If there is no short url with the given short url return 404.
   // TODO: Redirect to a errorPage included in the short url or
@@ -32,14 +33,19 @@ export async function getServerSideProps(context) {
     };
   }
 
-  if (shortUrl.clicks >= 5) {
-    return {
-      // redirect to shortUrl.errorPage
-      redirect: {
-        destination: shortUrl.errorPage,
-        permanent: true,
-      },
-    };
+  // @ts-ignore
+  const state = await State.findOne({});
+
+  if (shortUrl.clicks >= 4) {
+    if (state.shouldRedirectOnLimit === true) {
+      return {
+        // redirect to shortUrl.errorPage
+        redirect: {
+          destination: shortUrl.errorPage,
+          permanent: true,
+        },
+      };
+    }
   }
 
   // +1 to the clicks

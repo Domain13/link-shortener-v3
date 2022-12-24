@@ -6,10 +6,10 @@ const tokenSchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
 });
 
 export default mongoose.models.Token || mongoose.model("Token", tokenSchema);

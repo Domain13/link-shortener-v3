@@ -15,6 +15,7 @@ import Navbar from "../components/Navbar";
 
 // TODO: the backend api codes uses repeated code, make it into a function
 // TODO: Input validation
+// TODO: Store the token inside the State model
 
 export default function home({ user, domains }) {
   const router = useRouter();

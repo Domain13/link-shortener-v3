@@ -10,7 +10,12 @@ export default function Navbar({
   user: { username: string; role: string } | null;
   dashboard: boolean;
   setPopup?: React.Dispatch<
-    "CreateDomain" | "CreateToken" | "CreateUser" | "ChangePassword" | null
+    | "CreateDomain"
+    | "CreateToken"
+    | "CreateUser"
+    | "ChangePassword"
+    | "RedirectConfig"
+    | null
   >;
 }) {
   const router = useRouter();
@@ -36,15 +41,16 @@ export default function Navbar({
       <div className="logo">
         <h1>Url Shortener</h1>
       </div>
+
       <div className="links">
         {user || dashboard ? (
           <>
             <Link href="/">
               <a className="link">Home</a>
             </Link>
-            <button className="link" onClick={logout}>
+            {/* <button className="link" onClick={logout}>
               Logout
-            </button>
+            </button> */}
           </>
         ) : (
           <>
@@ -60,13 +66,14 @@ export default function Navbar({
 
         {dashboard && (
           <>
-            <button
-              className="menu-button"
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Menu
-            </button>
             <div className="menu">
+              <button
+                className="menu-button link"
+                onClick={() => setOpenMenu(!openMenu)}
+              >
+                Menu <p className="down-arrow">^</p>
+              </button>
+
               <div
                 className="menu-div"
                 style={{
@@ -109,16 +116,42 @@ export default function Navbar({
                 >
                   Change Password
                 </button>
+
                 <button
                   className="option"
+                  onClick={() => {
+                    setPopup?.("RedirectConfig");
+                    setOpenMenu(false);
+                  }}
+                >
+                  Redirect Config
+                </button>
+
+                <button
+                  className="option log-out"
                   onClick={() => {
                     setOpenMenu(false);
                   }}
                 >
-                  Close X
+                  ^
                 </button>
               </div>
             </div>
+          </>
+        )}
+
+        {user || dashboard ? (
+          <>
+            {/* <Link href="/">
+              <a className="link">Home</a>
+            </Link> */}
+            <button className="link" onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="msg">You need to login first</p>
           </>
         )}
       </div>

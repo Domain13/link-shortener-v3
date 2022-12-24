@@ -14,10 +14,10 @@ const domainSchema = new Schema({
   //     type: Boolean,
   //     default: false,
   //   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
 });
 
 export default mongoose.models.Domain || mongoose.model("Domain", domainSchema);

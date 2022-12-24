@@ -19,27 +19,11 @@ export default async function handler(
 
   const { username, password, newPassword } = req.body;
 
-  console.log("====================================");
-  console.log("====================================");
-  console.log("username: ", username);
-  console.log("====================================");
-  console.log("====================================");
-  console.log("password: ", password);
-  console.log("====================================");
-  console.log("====================================");
-  console.log("new password: ", newPassword);
-  console.log("====================================");
-  console.log("====================================");
-
   // Find the user with the given username
   // @ts-ignore
   const user = await User.findOne({
     username,
   });
-
-  console.log("====================================");
-  console.log("User: ", user);
-  console.log("====================================");
 
   // If there is no user with the given username
   if (!user) {
@@ -52,10 +36,6 @@ export default async function handler(
   // If there is a user with the given username
   // Check if the password is correct
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-  console.log("====================================");
-  console.log("Is password correct: ", isPasswordCorrect);
-  console.log("====================================");
 
   // If the password is not correct
   if (!isPasswordCorrect) {

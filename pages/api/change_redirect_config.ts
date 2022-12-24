@@ -1,14 +1,10 @@
-// COMPLETE
-
 // Create new domain
 
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
-import Domain from "../../models/Domain";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import cookie from "cookie";
 import User from "../../models/User";
+import State from "../../models/State";
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,27 +33,28 @@ export default async function handler(
     });
   }
 
-  const errorPageWithDomain = errorPage
-    ? `${domain}/${errorPage}`
-    : `${domain}/404`;
-
-  // Create a new domain
+  // Find the state
   // @ts-ignore
-  const newDomain = await Domain.create({
-    domain,
-    errorPage: errorPageWithDomain,
-  });
-
-  if (!newDomain) {
-    // server error
+  const state = await State.findOne({});
+  if (!state) {
     return res.status(500).json({
       message: "Server error",
       type: "SERVER_ERROR",
     });
   }
 
+  // If the state is found
+  // If the state.shouldRedirectLimit is true make it false
+  if (state.shouldRedirectOnLimit === true) {
+    state.shouldRedirectOnLimit = false;
+    await state.save();
+  } else {
+    state.shouldRedirectOnLimit = true;
+    await state.save();
+  }
+
   return res.status(200).json({
-    message: "Domain created",
+    message: "State changed successfully",
     type: "SUCCESS",
   });
 }

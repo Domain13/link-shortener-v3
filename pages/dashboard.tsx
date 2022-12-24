@@ -19,14 +19,25 @@ import dbConnect from "../lib/dbConnect";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 
-export default function Dashboard({ shortUrls, users, domains, token }) {
+export default function Dashboard({
+  shortUrls,
+  users,
+  domains,
+  token,
+  shouldRedirectOnLimit,
+}) {
   const router = useRouter();
   // const [createDomainOpen, setCreateDomainOpen] = useState(false);
   // const [createTokenOpen, setCreateTokenOpen] = useState(false);
   // const [createUserOpen, setCreateUserOpen] = useState(false);
   // const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [popup, setPopup] = useState<
-    "CreateDomain" | "CreateToken" | "CreateUser" | "ChangePassword" | null
+    | "CreateDomain"
+    | "CreateToken"
+    | "CreateUser"
+    | "ChangePassword"
+    | "RedirectConfig"
+    | null
   >(null);
 
   async function handleCreateDomain(e) {
@@ -48,11 +59,14 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
 
     if (data.type === "SUCCESS") {
       // remove the input values
-      e.target[0].value = "";
-      e.target[1].value = "";
+      // e.target[0].value = "";
+      // e.target[1].value = "";
 
       // close the popup
-      setPopup(null);
+      // setPopup(null);
+
+      // reload the page
+      router.reload();
     }
   }
 
@@ -93,11 +107,14 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
 
     if (data.type === "SUCCESS") {
       // remove the input values
-      e.target[0].value = "";
-      e.target[1].value = "";
+      // e.target[0].value = "";
+      // e.target[1].value = "";
 
       // close the popup
-      setPopup(null);
+      // setPopup(null);
+
+      // reload the page
+      router.reload();
     }
   }
 
@@ -122,13 +139,37 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
 
     if (data.type === "SUCCESS") {
       // remove the input values
-      e.target[0].value = "";
-      e.target[1].value = "";
+      // e.target[0].value = "";
+      // e.target[1].value = "";
 
       // close the popup
-      setPopup(null);
+      // setPopup(null);
+
+      // reload the page
+      router.reload();
     } else {
       alert("Wrong password");
+    }
+  }
+
+  async function handleChangeRedirectConfig(e) {
+    // the input has only one value
+    // it is a checkbox
+    e.preventDefault();
+    const redirectConfig = e.target[0].checked;
+
+    const res = await fetch("/api/change_redirect_config", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    if (data.type === "SUCCESS") {
+      // reload the page
+      router.reload();
     }
   }
 
@@ -143,7 +184,9 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
             <h1>Create Custom Domain</h1>
             <input type="text" placeholder="custom domain" />
             <input type="text" placeholder="Error page" />
-            <input type="submit" value="Create" />
+            <button className="btn" type="submit">
+              Create
+            </button>
             <button
               onClick={() => {
                 setPopup(null);
@@ -156,12 +199,13 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
         {popup === "CreateToken" && (
           <form action="#" onSubmit={handleCreateToken}>
             <h1>Create/Change Token</h1>
-            <input
-              type="text"
+            <textarea
               placeholder="Change/Create Token"
               defaultValue={token.token}
             />
-            <input type="submit" value="Create/Change" />
+            <button className="btn" type="submit">
+              Create/Change
+            </button>
             <button
               onClick={() => {
                 setPopup(null);
@@ -176,7 +220,9 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
             <h1>Create User</h1>
             <input type="text" placeholder="Username" />
             <input type="text" placeholder="Password" />
-            <input type="submit" value="Create" />
+            <button className="btn" type="submit">
+              Create
+            </button>
             <button
               onClick={() => {
                 setPopup(null);
@@ -191,7 +237,9 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
             <h1>Change Password</h1>
             <input type="text" placeholder="Old Password" />
             <input type="text" placeholder="New Password" />
-            <input type="submit" value="Change" />
+            <button className="btn" type="submit">
+              Change
+            </button>
             <button
               onClick={() => {
                 setPopup(null);
@@ -201,14 +249,15 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
             </button>
           </form>
         )}
-
-        {/* <button className="btn" onClick={logout}>
-        Logout
-      </button> */}
-
-        {/* <Link href="/">
-        <a className="btn">Home</a>
-      </Link> */}
+        {popup === "RedirectConfig" && (
+          <form action="#" onSubmit={handleChangeRedirectConfig}>
+            <h1>Redirect after 4 clicks? On/Off</h1>
+            <p>
+              Current Status: <b>{shouldRedirectOnLimit ? "On" : "Off"}</b>
+            </p>
+            <input type="submit" value={shouldRedirectOnLimit ? "Off" : "On"} />
+          </form>
+        )}
 
         <div className="datas">
           <div className="data urls">
@@ -221,7 +270,6 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
                   <th>Clicks</th>
                   <th>Created By</th>
                   <th>Custom Domain</th>
-                  <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
@@ -232,7 +280,6 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
                     <td>{url.clicks}</td>
                     <td>{url.createdBy}</td>
                     <td>{url.customDomain}</td>
-                    <td>{url.createdAt}</td>
                   </tr>
                 ))}
               </tbody>
@@ -245,14 +292,12 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
               <thead>
                 <tr>
                   <th>Username</th>
-                  <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr key={user._id}>
                     <td>{user.username}</td>
-                    <td>{user.createdAt}</td>
                   </tr>
                 ))}
               </tbody>
@@ -266,7 +311,6 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
                 <tr>
                   <th>Domain</th>
                   <th>Error page</th>
-                  <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
@@ -274,7 +318,6 @@ export default function Dashboard({ shortUrls, users, domains, token }) {
                   <tr key={domain._id}>
                     <td>{domain.domain}</td>
                     <td>{domain.errorPage}</td>
-                    <td>{domain.createdAt}</td>
                   </tr>
                 ))}
               </tbody>
@@ -294,6 +337,7 @@ export async function getServerSideProps(context) {
   const User = require("../models/User").default;
   const Domain = require("../models/Domain").default;
   const Token = require("../models/Token").default;
+  const State = require("../models/State").default;
 
   await dbConnect();
 
@@ -326,6 +370,8 @@ export async function getServerSideProps(context) {
   const users = await User.find({});
   const domains = await Domain.find({});
   const token = await Token.findOne({});
+  const state = await State.findOne({});
+  const shouldRedirectOnLimit = state.shouldRedirectOnLimit;
 
   return {
     props: {
@@ -333,6 +379,7 @@ export async function getServerSideProps(context) {
       users: JSON.parse(JSON.stringify(users)),
       domains: JSON.parse(JSON.stringify(domains)),
       token: JSON.parse(JSON.stringify(token)),
+      shouldRedirectOnLimit: JSON.parse(JSON.stringify(shouldRedirectOnLimit)),
     },
   };
 }
