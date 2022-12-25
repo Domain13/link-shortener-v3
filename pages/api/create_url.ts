@@ -92,6 +92,6 @@ export default async function handler(
   return res.status(200).json({
     message: "Url created",
     type: "SUCCESS",
-    shortUrl,
+    data: shortUrl,
   });
 }

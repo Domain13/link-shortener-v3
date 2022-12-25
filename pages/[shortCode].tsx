@@ -31,7 +31,11 @@ export async function getServerSideProps(context) {
   // @ts-ignore
   const state = await State.findOne({});
 
-  if (shortUrl.clicks >= 4) {
+  // +1 to the clicks
+  shortUrl.clicks += 1;
+  await shortUrl.save();
+
+  if (shortUrl.clicks === 5) {
     if (state.shouldRedirectOnLimit === true) {
       return {
         // redirect to shortUrl.errorPage
@@ -42,10 +46,6 @@ export async function getServerSideProps(context) {
       };
     }
   }
-
-  // +1 to the clicks
-  shortUrl.clicks += 1;
-  await shortUrl.save();
 
   // Redirect to the original url
   return {

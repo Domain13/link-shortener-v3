@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { isURL } from "validator";
 
 export default function Home() {
-  const [url, setUrl] = useState("");
-  const [domain, setDomain] = useState("");
+  const [urlInput, setUrlInput] = useState("");
+  const [domainInput, setDomainInput] = useState("");
   const [outputLink, setOutputLink] = useState("");
   const [copyMsg, setCopyMsg] = useState(
     <>
@@ -28,14 +28,14 @@ export default function Home() {
 
   useEffect(() => {
     if (domains.length > 0) {
-      setDomain(domains[0].domain);
+      setDomainInput(domains[0].domain);
     }
   }, [domains]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isURL(url, { require_protocol: true }) || domain === "") {
+    if (!isURL(urlInput, { require_protocol: true }) || domainInput === "") {
       alert("You need to provide valid url and domain");
       return;
     }
@@ -45,16 +45,19 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url, domain }),
+      body: JSON.stringify({
+        url: urlInput,
+        domain: domainInput,
+      }),
     });
 
-    const data = await response.json();
+    const datas = await response.json();
 
-    if (data.type === "SUCCESS") {
+    if (datas.type === "SUCCESS") {
       setOutputLink(
         `https://google.co.in/url?q=https://www.youtube.com/redirect?q=${
-          domain + "/" + data.shortUrl.shortCode
-        }%26redir_token=${data.shortUrl.token}`
+          domainInput + "/" + datas.data.shortCode
+        }%26redir_token=${datas.data.token}`
         // QUFFLUhqbmEtYl8tTUpnNkROaVZieXktNVNjMnZCQ0xrd3xBQ3Jtc0tuUGVJSjdvVkpyREJLYkllU0FQQlBORjVRdXhjb1ZWTTBoenVQcklkd2taWDd3TExLa0R3WU9YYVhaVnkycjVoTFo3Vm8zdFZFTXJqTDNWVWMxMXRmVnpoYTBRam5xS2NFT1BBd0tleWpkV2JGYUxiRQ
       );
 
@@ -63,6 +66,9 @@ export default function Home() {
           <i className="fa-solid fa-copy"></i> Copy
         </>
       );
+    } else if (datas.type === "ALREADY") {
+      // the alias and domain already exist
+      alert("The alias and domain already exist");
     } else {
       setOutputLink("Something went wrong");
     }
@@ -85,7 +91,10 @@ export default function Home() {
       <h1>URL Shortener</h1>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Title" />
-        <select value={domain} onChange={(e) => setDomain(e.target.value)}>
+        <select
+          value={domainInput}
+          onChange={(e) => setDomainInput(e.target.value)}
+        >
           {domains.map((domain, index) => (
             <option key={index} value={domain.domain}>
               {domain.domain}
@@ -94,12 +103,12 @@ export default function Home() {
         </select>
         <textarea
           placeholder="Type/Paste your Link Here: https://example.com"
-          onBlur={(e) => setUrl(e.target.value)}
+          onBlur={(e) => setUrlInput(e.target.value)}
         />
         <input className="btn" type="submit" value="Shorten" />
       </form>
 
-      {url && (
+      {urlInput && (
         <div className={output}>
           <button onClick={handleCopy} className="btn">
             {copyMsg}

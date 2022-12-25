@@ -81,7 +81,10 @@ export default function Dashboard() {
     const domain = e.target[0].value;
     let errorPage = e.target[1].value;
 
-    if (!isURL(domain, { require_protocol: true })) {
+    if (
+      !isURL(domain, { require_protocol: true }) &&
+      domain !== "http://localhost:3000"
+    ) {
       alert("You need to give a valid url");
       return;
     }
