@@ -10,12 +10,7 @@ export default function () {
 }
 
 export async function getServerSideProps(context) {
-  // const { req, res } = context;
   const { shortCode } = context.query;
-
-  console.log("====================================");
-  console.log("shortCode", shortCode);
-  console.log("====================================");
 
   await dbConnect();
 

@@ -12,8 +12,14 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  const { domain, errorPage } = req.body;
   const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(400).json({
+      message: "Token is not provided",
+      type: "UNAUTHORIZED",
+    });
+  }
 
   const { username } = jwt.verify(token, process.env.JWT_SECRET) as {
     username: string;

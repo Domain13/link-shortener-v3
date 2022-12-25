@@ -46,7 +46,7 @@ export default async function handler(
   const token = jwt.sign(
     {
       username: user.username,
-      id: user._id,
+      _id: user._id,
     },
     process.env.JWT_SECRET,
     {
@@ -67,5 +67,10 @@ export default async function handler(
   res.status(200).json({
     message: "You are now logged in!",
     type: "SUCCESS",
+    data: {
+      _id: user._id,
+      username: user.username,
+      role: user.role,
+    },
   });
 }

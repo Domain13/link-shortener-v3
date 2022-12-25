@@ -19,16 +19,15 @@ export default async function handler(
 
   // Get the adminUser and adminPassword from the cookies jwt token
   const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(400).json({
+      message: "Token is not provided",
+      type: "UNAUTHORIZED",
+    });
+  }
+
   const admin = jwt.verify(token, process.env.JWT_SECRET).username;
-
-  console.log("====================================");
-  console.log("adminUser: ", admin);
-  console.log("====================================");
-
-  // Find the adminUser with the given username
-  // const admin = await User.findOne({
-  //   username: adminUser,
-  // });
 
   // If there is no adminUser with the given username
   if (!admin || admin !== "admin") {
@@ -37,20 +36,6 @@ export default async function handler(
       type: "UNAUTHORIZED",
     });
   }
-
-  // const adminPassword = admin.password;
-
-  // If there is a adminUser with the given username
-  // Check if the password is correct
-  // const isPasswordCorrect = await bcrypt.compare(adminPassword, admin.password);
-
-  // If the password is not correct
-  // if (!isPasswordCorrect) {
-  // return res.status(400).json({
-  // message: "Username or password is incorrect",
-  // type: "UNAUTHORIZED",
-  // });
-  // }
 
   // If the password is correct
   // Check if the user already exists
@@ -83,5 +68,10 @@ export default async function handler(
   return res.status(200).json({
     message: "User created successfully",
     type: "SUCCESS",
+    data: {
+      _id: newUser._id,
+      username: newUser.username,
+      role: newUser.role,
+    },
   });
 }

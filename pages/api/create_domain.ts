@@ -5,9 +5,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import Domain from "../../models/Domain";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import cookie from "cookie";
 import User from "../../models/User";
 
 export default async function handler(
@@ -18,6 +16,13 @@ export default async function handler(
 
   const { domain, errorPage } = req.body;
   const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(400).json({
+      message: "Token is not provided",
+      type: "UNAUTHORIZED",
+    });
+  }
 
   const { username } = jwt.verify(token, process.env.JWT_SECRET) as {
     username: string;
@@ -34,6 +39,19 @@ export default async function handler(
     return res.status(400).json({
       message: "Username or password is incorrect",
       type: "UNAUTHORIZED",
+    });
+  }
+
+  // Check if the domain is already present or not
+  // @ts-ignore
+  const domainToCheck = await Domain.findOne({
+    domain,
+  });
+
+  if (domainToCheck) {
+    return res.status(409).json({
+      message: "Domain Already exists",
+      type: "ALREADY",
     });
   }
 

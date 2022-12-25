@@ -20,14 +20,16 @@ export default async function handler(
   const { url, domain } = req.body;
   const jwtToken = req.cookies.token;
 
-  console.log("Cookies: ", req.cookies);
-  console.log("Token: ");
+  if (!jwtToken) {
+    return res.status(400).json({
+      message: "Token is not provided",
+      type: "UNAUTHORIZED",
+    });
+  }
 
   const decode = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
     username: string;
   };
-
-  console.log("Decoded: ", decode);
 
   // Find the user with the given username
   // @ts-expect-error

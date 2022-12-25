@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
+import { IsLoadingContext } from "../contexts/isLoading";
+import { isUrl } from "validator";
 
-export default function Home({
-  domains,
-}: {
-  domains: { domain: string; errorPage: string }[];
+export default function Home({}: //   domains,
+{
+  //   domains: { domain: string; errorPage: string }[];
 }) {
+  const isLoadingContext = useContext(IsLoadingContext);
+
   const [url, setUrl] = useState("");
   const [domain, setDomain] = useState("");
   const [outputLink, setOutputLink] = useState("");
@@ -15,6 +18,20 @@ export default function Home({
     </>
   );
   const [output, setOutput] = useState("d-none");
+  const [domains, setDomains] = useState([]);
+
+  useEffect(() => {
+    const fetchDomains = async () => {
+      const response = await fetch("/api/get_domains");
+      const datas = await response.json();
+
+      if (datas.type === "SUCCESS") {
+        setDomains(datas.data);
+      }
+    };
+
+    fetchDomains();
+  }, []);
 
   useEffect(() => {
     if (domains.length > 0) {
@@ -25,6 +42,11 @@ export default function Home({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!isUrl(url) || domain === "") {
+      alert("You need to provide valid url and domain");
+      return;
+    }
+
     const response = await fetch(`/api/create_url`, {
       method: "POST",
       headers: {
@@ -34,7 +56,6 @@ export default function Home({
     });
 
     const data = await response.json();
-    console.log(data);
 
     if (data.type === "SUCCESS") {
       setOutputLink(
@@ -72,8 +93,8 @@ export default function Home({
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Title" />
         <select value={domain} onChange={(e) => setDomain(e.target.value)}>
-          {domains.map((domain) => (
-            <option key={domain.domain} value={domain.domain}>
+          {domains.map((domain, index) => (
+            <option key={index} value={domain.domain}>
               {domain.domain}
             </option>
           ))}

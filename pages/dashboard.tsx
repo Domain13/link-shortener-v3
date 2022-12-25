@@ -13,37 +13,99 @@
 
 import React from "react";
 import { useRouter } from "next/router";
-import jwt from "jsonwebtoken";
-import Link from "next/link";
-import dbConnect from "../lib/dbConnect";
-import Navbar from "../components/Navbar";
 import { useState } from "react";
+import { UserContext } from "../contexts/user";
+import { useContext } from "react";
+import { IsLoadingContext } from "../contexts/isLoading";
+import { PopupContext } from "../contexts/popup";
+import { useEffect } from "react";
+import { isURL } from "validator";
 
-export default function Dashboard({
-  shortUrls,
-  users,
-  domains,
-  token,
-  shouldRedirectOnLimit,
-}) {
+export default function Dashboard() {
   const router = useRouter();
-  // const [createDomainOpen, setCreateDomainOpen] = useState(false);
-  // const [createTokenOpen, setCreateTokenOpen] = useState(false);
-  // const [createUserOpen, setCreateUserOpen] = useState(false);
-  // const [changePasswordOpen, setChangePasswordOpen] = useState(false);
-  const [popup, setPopup] = useState<
-    | "CreateDomain"
-    | "CreateToken"
-    | "CreateUser"
-    | "ChangePassword"
-    | "RedirectConfig"
-    | null
-  >(null);
+  const userContext = useContext(UserContext);
+  const user = userContext.user;
+  const popupContext = useContext(PopupContext);
+  const popup = popupContext.popup;
+  const setPopup = popupContext.setPopup;
+  const isLoadingContext = useContext(IsLoadingContext);
+  const setIsLoading = isLoadingContext.setIsLoading;
+
+  const [shortUrls, setShortUrls] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [domains, setDomains] = useState([]);
+  const [token, setToken] = useState({ token: "" });
+  const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
+
+  useEffect(() => {
+    const getShortUrls = async () => {
+      const res = await fetch("/api/get_short_urls");
+      const datas = await res.json();
+
+      if (datas.type === "SUCCESS") {
+        setShortUrls(datas.data);
+      }
+    };
+
+    const getUsers = async () => {
+      const res = await fetch("/api/get_users");
+      const datas = await res.json();
+
+      if (datas.type === "SUCCESS") {
+        setUsers(datas.data);
+      }
+    };
+
+    const getDomains = async () => {
+      const res = await fetch("/api/get_domains");
+      const datas = await res.json();
+
+      if (datas.type === "SUCCESS") {
+        setDomains(datas.data);
+      }
+    };
+
+    const getToken = async () => {
+      const res = await fetch("/api/get_token");
+      const datas = await res.json();
+
+      if (datas.type === "SUCCESS") {
+        setToken(datas.data);
+      }
+    };
+
+    const getShouldRedirectOnLimit = async () => {
+      const res = await fetch("/api/get_should_redirect_on_limit");
+      const datas = await res.json();
+
+      if (datas.type === "SUCCESS") {
+        setShouldRedirectOnLimit(datas.data);
+      }
+    };
+
+    if (user) {
+      getShortUrls();
+      getUsers();
+      getDomains();
+      getToken();
+      getShouldRedirectOnLimit();
+    }
+  }, []);
 
   async function handleCreateDomain(e) {
     e.preventDefault();
     const domain = e.target[0].value;
-    const errorPage = e.target[1].value;
+    let errorPage = e.target[1].value;
+
+    if (!isURL(domain)) {
+      alert("You need to give a valid url");
+      return;
+    }
+
+    // if the errorPage starts with / remove that
+    if (errorPage.startsWith("/")) {
+      errorPage = errorPage.substring(1);
+    }
 
     const res = await fetch("/api/create_domain", {
       method: "POST",
@@ -55,24 +117,31 @@ export default function Dashboard({
         errorPage,
       }),
     });
-    const data = await res.json();
+    const datas = await res.json();
 
-    if (data.type === "SUCCESS") {
+    if (datas.type === "ALREADY") {
+      alert("Domain already exists");
+    } else if (datas.type === "SUCCESS") {
       // remove the input values
-      // e.target[0].value = "";
-      // e.target[1].value = "";
+      e.target[0].value = "";
+      e.target[1].value = "";
 
       // close the popup
-      // setPopup(null);
+      setPopup(null);
 
-      // reload the page
-      router.reload();
+      // update the domains state
+      setDomains([...domains, { domain, errorPage }]);
     }
   }
 
   async function handleCreateToken(e) {
     e.preventDefault();
     const token = e.target[0].value;
+
+    if (token === "") {
+      alert("The value you provided is empty!");
+      return;
+    }
 
     const res = await fetch("/api/create_token", {
       method: "POST",
@@ -83,7 +152,12 @@ export default function Dashboard({
         token,
       }),
     });
-    const data = await res.json();
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      setToken({ token });
+    }
 
     setPopup(null);
   }
@@ -92,6 +166,11 @@ export default function Dashboard({
     e.preventDefault();
     const username = e.target[0].value;
     const password = e.target[1].value;
+
+    if (username === "" || password === "") {
+      alert("You need to provide valid username and password");
+      return;
+    }
 
     const res = await fetch("/api/register", {
       method: "POST",
@@ -107,14 +186,14 @@ export default function Dashboard({
 
     if (data.type === "SUCCESS") {
       // remove the input values
-      // e.target[0].value = "";
-      // e.target[1].value = "";
+      e.target[0].value = "";
+      e.target[1].value = "";
 
       // close the popup
-      // setPopup(null);
+      setPopup(null);
 
-      // reload the page
-      router.reload();
+      // update the users state
+      setUsers([...users, data.data]);
     }
   }
 
@@ -123,6 +202,11 @@ export default function Dashboard({
     const username = "admin";
     const password = e.target[0].value;
     const newPassword = e.target[1].value;
+
+    if (password === "" || newPassword === "") {
+      alert("You need to provide valid passwords");
+      return;
+    }
 
     const res = await fetch("/api/change_password", {
       method: "POST",
@@ -135,18 +219,15 @@ export default function Dashboard({
         newPassword,
       }),
     });
-    const data = await res.json();
+    const datas = await res.json();
 
-    if (data.type === "SUCCESS") {
+    if (datas.type === "SUCCESS") {
       // remove the input values
-      // e.target[0].value = "";
-      // e.target[1].value = "";
+      e.target[0].value = "";
+      e.target[1].value = "";
 
       // close the popup
-      // setPopup(null);
-
-      // reload the page
-      router.reload();
+      setPopup(null);
     } else {
       alert("Wrong password");
     }
@@ -168,14 +249,14 @@ export default function Dashboard({
     const data = await res.json();
 
     if (data.type === "SUCCESS") {
-      // reload the page
-      router.reload();
+      // update the state
+      setShouldRedirectOnLimit(redirectConfig);
     }
   }
 
   return (
     <>
-      <Navbar user={users} dashboard={true} setPopup={setPopup} />
+      {/* <Navbar user={users} dashboard={true} setPopup={setPopup} /> */}
       <div className="App">
         <h1>ADMIN PANNEL</h1>
 
@@ -292,12 +373,14 @@ export default function Dashboard({
               <thead>
                 <tr>
                   <th>Username</th>
+                  <th>Role</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr key={user._id}>
                     <td>{user.username}</td>
+                    <td>{user.role}</td>
                   </tr>
                 ))}
               </tbody>
@@ -314,8 +397,8 @@ export default function Dashboard({
                 </tr>
               </thead>
               <tbody>
-                {domains.map((domain) => (
-                  <tr key={domain._id}>
+                {domains.map((domain, index) => (
+                  <tr key={index}>
                     <td>{domain.domain}</td>
                     <td>{domain.errorPage}</td>
                   </tr>
@@ -327,59 +410,4 @@ export default function Dashboard({
       </div>
     </>
   );
-}
-
-// Get all urls
-// Get all users
-// Get all domains
-export async function getServerSideProps(context) {
-  const ShortUrl = require("../models/ShortUrl").default;
-  const User = require("../models/User").default;
-  const Domain = require("../models/Domain").default;
-  const Token = require("../models/Token").default;
-  const State = require("../models/State").default;
-
-  await dbConnect();
-
-  const { req, res } = context;
-  const jwtToken = req.cookies.token;
-
-  if (!jwtToken) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  const decode = jwt.verify(jwtToken, process.env.JWT_SECRET);
-
-  // check if the user is in the database
-  const userInDatabase = await User.findOne({ username: decode.username });
-  if (!userInDatabase || userInDatabase.role !== "admin") {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  const shortUrls = await ShortUrl.find({});
-  const users = await User.find({});
-  const domains = await Domain.find({});
-  const token = await Token.findOne({});
-  const state = await State.findOne({});
-  const shouldRedirectOnLimit = state.shouldRedirectOnLimit;
-
-  return {
-    props: {
-      shortUrls: JSON.parse(JSON.stringify(shortUrls)),
-      users: JSON.parse(JSON.stringify(users)),
-      domains: JSON.parse(JSON.stringify(domains)),
-      token: JSON.parse(JSON.stringify(token)),
-      shouldRedirectOnLimit: JSON.parse(JSON.stringify(shouldRedirectOnLimit)),
-    },
-  };
 }

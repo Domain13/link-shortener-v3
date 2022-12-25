@@ -19,6 +19,14 @@ export default async function handler(
   // Get the username from the cookies jwt token
   const jwtToken = req.cookies.token;
   const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({
+      message: "Token is not provided",
+      type: "UNAUTHORIZED",
+    });
+  }
+
   const { username } = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
     username: string;
   };
@@ -42,15 +50,11 @@ export default async function handler(
   // @ts-ignore
   const tokenResult = await Token.findOneAndUpdate({ token });
 
-  console.log("Token result: ", tokenResult);
-
   if (!tokenResult) {
     // @ts-ignore
     const tokenResultAgain = await Token.create({
       token,
     });
-
-    console.log("Token result again: ", tokenResultAgain);
   }
 
   return res.status(200).json({

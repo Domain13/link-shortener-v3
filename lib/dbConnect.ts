@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 
-// const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_URI =
-  "mongodb+srv://admin:admin@cluster0.jquggki.mongodb.net/linkshortener?retryWrites=true&w=majority";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error(

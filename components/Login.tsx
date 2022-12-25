@@ -1,13 +1,30 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { UserContext } from "../contexts/user";
+import { IsLoadingContext } from "../contexts/isLoading";
+import { useContext } from "react";
 
 export default function Login() {
+  const userContext = useContext(UserContext);
+  const isLoadingContext = useContext(IsLoadingContext);
+  // const { user, setUser } = userContext;
+  const setUser = userContext.setUser;
+  // const { isLoading, setIsLoading } = isLoadingContext;
+  const setIsLoading = isLoadingContext.setIsLoading;
+
   const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
+
+    if (username === "" || password === "") {
+      alert("You need to provide valid username and password");
+      return;
+    }
+
+    setIsLoading(true);
 
     const res = await fetch("api/login", {
       method: "POST",
@@ -22,13 +39,13 @@ export default function Login() {
 
     const data = await res.json();
 
-    if (data.type !== "SUCCESS") {
-      alert(data.message);
-      return;
+    if (data.type === "SUCCESS") {
+      setUser(data.data);
+      // redirect to the home page
+      router.push("/");
     }
 
-    // redirect to the home page
-    router.push("/");
+    setIsLoading(false);
   }
 
   return (
