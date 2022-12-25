@@ -259,6 +259,44 @@ export default function Dashboard() {
     }
   }
 
+  async function handleDeleteUser(_id) {
+    const res = await fetch("/api/delete_user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id,
+      }),
+    });
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      // update the state
+      setUsers(users.filter((user) => user._id !== _id));
+    }
+  }
+
+  async function handleDeleteShortUrl(_id) {
+    const res = await fetch("/api/delete_url", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id,
+      }),
+    });
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      // update the state
+      setShortUrls(shortUrls.filter((shortUrl) => shortUrl._id !== _id));
+    }
+  }
+
   return (
     <>
       {/* <Navbar user={users} dashboard={true} setPopup={setPopup} /> */}
@@ -358,6 +396,7 @@ export default function Dashboard() {
                   <th>Clicks</th>
                   <th>Created By</th>
                   <th>Custom Domain</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -368,6 +407,16 @@ export default function Dashboard() {
                     <td>{url.clicks}</td>
                     <td>{url.createdBy}</td>
                     <td>{url.customDomain}</td>
+                    <td>
+                      <button
+                        className="btn red"
+                        onClick={() => {
+                          handleDeleteShortUrl(url._id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -381,6 +430,7 @@ export default function Dashboard() {
                 <tr>
                   <th>Username</th>
                   <th>Role</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -388,6 +438,18 @@ export default function Dashboard() {
                   <tr key={user._id}>
                     <td>{user.username}</td>
                     <td>{user.role}</td>
+                    <td>
+                      {user.role !== "admin" && (
+                        <button
+                          className="btn red"
+                          onClick={() => {
+                            handleDeleteUser(user._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -411,7 +473,7 @@ export default function Dashboard() {
                     <td>{domain.errorPage}</td>
                     <td>
                       <button
-                        className="btn"
+                        className="btn red"
                         style={{ fontSize: "13px", padding: "10px", margin: 0 }}
                         onClick={() => {
                           handleDeleteDomain(domain._id);
