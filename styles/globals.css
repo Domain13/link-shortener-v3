@@ -254,11 +254,10 @@ nav .links .menu .menu-div .option:hover {
 }
 
 /* logout button style  */
-nav .log-out {
+.red {
   background-color: rgba(255, 0, 0, 0.61) !important;
-
   padding: 0.5rem 1rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 button {

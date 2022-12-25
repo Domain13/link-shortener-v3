@@ -341,7 +341,9 @@ export default function Dashboard() {
             <p>
               Current Status: <b>{shouldRedirectOnLimit ? "On" : "Off"}</b>
             </p>
-            <input type="submit" value={shouldRedirectOnLimit ? "Off" : "On"} />
+            <button className="btn" type="submit">
+              {shouldRedirectOnLimit ? "Off" : "On"}
+            </button>
           </form>
         )}
 

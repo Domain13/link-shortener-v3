@@ -35,7 +35,6 @@ export default function Navbar() {
     if (data.type === "SUCCESS") {
       userContext.setUser(null);
       setIsLoading(false);
-      // router.push("/login");
     }
   }
 
@@ -48,19 +47,12 @@ export default function Navbar() {
       <div className="links">
         {user ? (
           <>
-            {/* {user || isDashboard ? ( */}
             <>
               <Link href="/">
                 <a className="link">Home</a>
               </Link>
             </>
-            {/* ) : (
-          <>
-          <p className="msg">You need to login first</p>
-          </>
-        )} */}
 
-            {/* {user && user.role === "admin" && ( */}
             {user.role === "admin" && (
               <Link href="/dashboard">
                 <a className="link">Dashboard</a>
@@ -131,7 +123,7 @@ export default function Navbar() {
                     </button>
 
                     <button
-                      className="option log-out"
+                      className="option red"
                       onClick={() => {
                         setOpenMenu(false);
                       }}
@@ -143,17 +135,11 @@ export default function Navbar() {
               </>
             )}
 
-            {/* {user || isDashboard ? ( */}
             <>
-              <button className="link" onClick={logout}>
+              <button className="link red" onClick={logout}>
                 Logout
               </button>
             </>
-            {/* ) : (
-          <>
-          <p className="msg">You need to login first</p>
-          </>
-        )} */}
           </>
         ) : (
           <p className="msg">You need to login first</p>
