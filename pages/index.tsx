@@ -11,6 +11,7 @@ import { useContext } from "react";
 // TODO: the backend api codes uses repeated code, make it into a function
 // TODO: Input validation
 // TODO: Store the token inside the State model
+// TODO: Add preloader after shorting the link
 
 export default function HomePage() {
   const userContext = useContext(UserContext);

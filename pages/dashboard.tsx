@@ -1,16 +1,5 @@
 // COMPLETE
 
-// await fetch("/api/register", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({
-//     username: "admin",
-//     password: "admin",
-//   }),
-// });
-
 import React from "react";
 import { useState } from "react";
 import { UserContext } from "../contexts/user";
@@ -232,7 +221,6 @@ export default function Dashboard() {
     // the input has only one value
     // it is a checkbox
     e.preventDefault();
-    const redirectConfig = e.target[0].checked;
 
     const res = await fetch("/api/change_redirect_config", {
       method: "POST",
@@ -245,7 +233,7 @@ export default function Dashboard() {
 
     if (data.type === "SUCCESS") {
       // update the state
-      setShouldRedirectOnLimit(redirectConfig);
+      setShouldRedirectOnLimit(!shouldRedirectOnLimit);
     }
   }
 

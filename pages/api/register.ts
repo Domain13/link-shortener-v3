@@ -1,5 +1,16 @@
 // COMPLETE
 
+// await fetch("/api/register", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({
+//     username: "admin",
+//     password: "admin",
+//   }),
+// });
+
 // create new user
 // only admins can do it (check user.role)
 
