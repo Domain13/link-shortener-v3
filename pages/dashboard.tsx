@@ -81,7 +81,7 @@ export default function Dashboard() {
     const domain = e.target[0].value;
     let errorPage = e.target[1].value;
 
-    if (!isURL(domain)) {
+    if (!isURL(domain, { require_protocol: true })) {
       alert("You need to give a valid url");
       return;
     }
@@ -114,7 +114,7 @@ export default function Dashboard() {
       setPopup(null);
 
       // update the domains state
-      setDomains([...domains, { domain, errorPage }]);
+      setDomains([...domains, datas.data]);
     }
   }
 
@@ -234,6 +234,25 @@ export default function Dashboard() {
     if (data.type === "SUCCESS") {
       // update the state
       setShouldRedirectOnLimit(!shouldRedirectOnLimit);
+    }
+  }
+
+  async function handleDeleteDomain(_id) {
+    const res = await fetch("/api/delete_domain", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id,
+      }),
+    });
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      // update the state
+      setDomains(domains.filter((domain) => domain._id !== _id));
     }
   }
 
@@ -377,6 +396,7 @@ export default function Dashboard() {
                 <tr>
                   <th>Domain</th>
                   <th>Error page</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -384,6 +404,17 @@ export default function Dashboard() {
                   <tr key={index}>
                     <td>{domain.domain}</td>
                     <td>{domain.errorPage}</td>
+                    <td>
+                      <button
+                        className="btn"
+                        style={{ fontSize: "13px", padding: "10px", margin: 0 }}
+                        onClick={() => {
+                          handleDeleteDomain(domain._id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,4 +1,5 @@
 import Domain from "../../models/Domain";
+import User from "../../models/User";
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import jwt from "jsonwebtoken";
