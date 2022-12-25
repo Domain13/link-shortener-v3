@@ -405,8 +405,8 @@ export default function Dashboard() {
                     <td>{url.shortCode}</td>
                     <td>{url.originalUrl}</td>
                     <td>{url.clicks}</td>
-                    <td>{url.createdBy}</td>
-                    <td>{url.customDomain}</td>
+                    <td>{url.username}</td>
+                    <td>{url.domain}</td>
                     <td>
                       <button
                         className="btn red"
