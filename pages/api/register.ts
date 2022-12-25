@@ -25,7 +25,7 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  const { username, password } = req.body;
+  const { username, password, domain } = req.body;
 
   // Get the adminUser and adminPassword from the cookies jwt token
   const { token } = req.cookies;

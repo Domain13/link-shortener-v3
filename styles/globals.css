@@ -300,6 +300,9 @@ table th {
   word-break: break-all;
   padding-right: 10px;
 }
+table thead tr th {
+  word-break: keep-all;
+}
 table td.l,
 table th.l {
   text-align: right;

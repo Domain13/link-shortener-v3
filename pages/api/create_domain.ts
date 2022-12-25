@@ -55,15 +55,15 @@ export default async function handler(
     });
   }
 
-  const errorPageWithDomain = errorPage
-    ? `${domain}/${errorPage}`
-    : `${domain}/404`;
+  // const errorPageWithDomain = errorPage
+  //   ? `${domain}/${errorPage}`
+  //   : `${domain}/404`;
 
   // Create a new domain
   // @ts-ignore
   const newDomain = await Domain.create({
     domain,
-    errorPage: errorPageWithDomain,
+    errorPage: errorPage || `${domain}/404`,
   });
 
   if (!newDomain) {

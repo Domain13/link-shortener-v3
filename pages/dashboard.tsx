@@ -89,10 +89,15 @@ export default function Dashboard() {
       return;
     }
 
-    // if the errorPage starts with / remove that
-    if (errorPage.startsWith("/")) {
-      errorPage = errorPage.substring(1);
+    if (errorPage !== "" && !isURL(errorPage, { require_protocol: true })) {
+      alert("You need to give a valid url");
+      return;
     }
+
+    // if the errorPage starts with / remove that
+    // if (errorPage.startsWith("/")) {
+    //   errorPage = errorPage.substring(1);
+    // }
 
     const res = await fetch("/api/create_domain", {
       method: "POST",
@@ -394,7 +399,6 @@ export default function Dashboard() {
                   <th>Short Code</th>
                   <th>Original Url</th>
                   <th>Clicks</th>
-                  <th>Created By</th>
                   <th>Custom Domain</th>
                   <th>Options</th>
                 </tr>
@@ -405,10 +409,13 @@ export default function Dashboard() {
                     <td>{url.shortCode}</td>
                     <td>{url.originalUrl}</td>
                     <td>{url.clicks}</td>
-                    <td>{url.username}</td>
                     <td>{url.domain}</td>
                     <td>
                       <button
+                        style={{
+                          fontSize: "0.8rem",
+                          wordBreak: "keep-all",
+                        }}
                         className="btn red"
                         onClick={() => {
                           handleDeleteShortUrl(url._id);
@@ -441,6 +448,10 @@ export default function Dashboard() {
                     <td>
                       {user.role !== "admin" && (
                         <button
+                          style={{
+                            fontSize: "0.8rem",
+                            wordBreak: "keep-all",
+                          }}
                           className="btn red"
                           onClick={() => {
                             handleDeleteUser(user._id);
@@ -474,7 +485,10 @@ export default function Dashboard() {
                     <td>
                       <button
                         className="btn red"
-                        style={{ fontSize: "13px", padding: "10px", margin: 0 }}
+                        style={{
+                          fontSize: "0.8rem",
+                          wordBreak: "keep-all",
+                        }}
                         onClick={() => {
                           handleDeleteDomain(domain._id);
                         }}
