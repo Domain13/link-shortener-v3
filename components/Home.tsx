@@ -1,14 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import { useRouter } from "next/router";
-import { IsLoadingContext } from "../contexts/isLoading";
-import { isUrl } from "validator";
+import { useEffect, useState } from "react";
+import { isURL } from "validator";
 
-export default function Home({}: //   domains,
-{
-  //   domains: { domain: string; errorPage: string }[];
-}) {
-  const isLoadingContext = useContext(IsLoadingContext);
-
+export default function Home() {
   const [url, setUrl] = useState("");
   const [domain, setDomain] = useState("");
   const [outputLink, setOutputLink] = useState("");
@@ -42,7 +35,7 @@ export default function Home({}: //   domains,
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isUrl(url) || domain === "") {
+    if (!isURL(url, { require_protocol: true }) || domain === "") {
       alert("You need to provide valid url and domain");
       return;
     }

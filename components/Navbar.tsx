@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,21 +7,7 @@ import { PopupContext } from "../contexts/popup";
 import { useContext } from "react";
 import { IsLoadingContext } from "../contexts/isLoading";
 
-export default function Navbar({}: // user,
-// dashboard,
-// setPopup,
-{
-  // user: { username: string; role: string } | null;
-  // dashboard: boolean;
-  // setPopup?: React.Dispatch<
-  //   | "CreateDomain"
-  //   | "CreateToken"
-  //   | "CreateUser"
-  //   | "ChangePassword"
-  //   | "RedirectConfig"
-  //   | null
-  // >;
-}) {
+export default function Navbar() {
   const userContext = useContext(UserContext);
   const user = userContext.user;
   const popupContext = useContext(PopupContext);

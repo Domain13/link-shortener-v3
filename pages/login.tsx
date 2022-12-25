@@ -6,7 +6,7 @@ import Login from "../components/Login";
 import { UserContext } from "../contexts/user";
 import { useContext } from "react";
 
-export default function () {
+export default function LoginPage() {
   const userContext = useContext(UserContext);
 
   if (userContext.user) {
@@ -14,7 +14,9 @@ export default function () {
       <div className="App">
         <h1>You are already logged in</h1>
         <Link href="/">
-          <a className="btn">Go to home</a>
+          <a href="/" className="btn">
+            Go to home
+          </a>
         </Link>
       </div>
     );

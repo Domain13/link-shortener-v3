@@ -1,12 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/user";
 import { UserType } from "../contexts/user";
-import { useContext } from "react";
 import { IsLoadingContext } from "../contexts/isLoading";
 import Navbar from "../components/Navbar";
-import { PopupContext, PopupContextType, PopupType } from "../contexts/popup";
+import { PopupContext, PopupType } from "../contexts/popup";
 
 function MyApp({ Component, pageProps }) {
   // make a post request to "/api/whoami" to get the user's info

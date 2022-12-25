@@ -12,24 +12,19 @@
 // });
 
 import React from "react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { UserContext } from "../contexts/user";
 import { useContext } from "react";
-import { IsLoadingContext } from "../contexts/isLoading";
 import { PopupContext } from "../contexts/popup";
 import { useEffect } from "react";
 import { isURL } from "validator";
 
 export default function Dashboard() {
-  const router = useRouter();
   const userContext = useContext(UserContext);
   const user = userContext.user;
   const popupContext = useContext(PopupContext);
   const popup = popupContext.popup;
   const setPopup = popupContext.setPopup;
-  const isLoadingContext = useContext(IsLoadingContext);
-  const setIsLoading = isLoadingContext.setIsLoading;
 
   const [shortUrls, setShortUrls] = useState([]);
   const [users, setUsers] = useState([]);
@@ -90,7 +85,7 @@ export default function Dashboard() {
       getToken();
       getShouldRedirectOnLimit();
     }
-  }, []);
+  }, [user]);
 
   async function handleCreateDomain(e) {
     e.preventDefault();

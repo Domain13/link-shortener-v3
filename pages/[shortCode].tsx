@@ -5,7 +5,7 @@ import ShortUrl from "../models/ShortUrl";
 import State from "../models/State";
 import React from "react";
 
-export default function () {
+export default function redirector() {
   return <h1>Redirecting...</h1>;
 }
 

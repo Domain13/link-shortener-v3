@@ -52,7 +52,7 @@ export default async function handler(
 
   if (!tokenResult) {
     // @ts-ignore
-    const tokenResultAgain = await Token.create({
+    await Token.create({
       token,
     });
   }

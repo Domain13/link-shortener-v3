@@ -6,8 +6,6 @@
 
 import User from "../../models/User";
 import bcrypt from "bcrypt";
-import { serialize, CookieSerializeOptions } from "cookie";
-import jwt from "jsonwebtoken";
 import dbConnect from "../../lib/dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
 

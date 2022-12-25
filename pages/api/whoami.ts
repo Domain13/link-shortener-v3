@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   await dbConnect();
 
   const { cookies } = req;
@@ -34,4 +34,4 @@ export default async (req, res) => {
       role: user.role,
     },
   });
-};
+}
