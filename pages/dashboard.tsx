@@ -195,12 +195,7 @@ export default function Dashboard() {
     const password = e.target[1].value;
     const code = e.target[2].value;
 
-    if (
-      username === "" ||
-      password === "" ||
-      domainForUserInput === "" ||
-      code === ""
-    ) {
+    if (username === "" || password === "" || domainForUserInput === "") {
       alert(
         "You need to provide valid username and password and domain and code"
       );
