@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { PopupContext } from "../contexts/popup";
 import { useEffect } from "react";
 import { isURL } from "validator";
+import Head from "next/head";
 
 export default function Dashboard() {
   const userContext = useContext(UserContext);
@@ -125,6 +126,8 @@ export default function Dashboard() {
 
       // update the domains state
       setDomains([...domains, datas.data]);
+
+      alert("Success");
     }
   }
 
@@ -350,7 +353,10 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* <Navbar user={users} dashboard={true} setPopup={setPopup} /> */}
+      <Head>
+        <title>Admin Pannel</title>
+      </Head>
+
       <div className="App">
         <h1>ADMIN PANNEL</h1>
 

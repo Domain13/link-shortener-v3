@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { isURL } from "validator";
 
@@ -92,9 +93,12 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Hello CPA</title>
+      </Head>
       <h1>URL Shortener</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Title" />
+        <label htmlFor="domain">Select your domain</label>
         <select
           value={domainInput}
           onChange={(e) => setDomainInput(e.target.value)}
@@ -105,8 +109,11 @@ export default function Home() {
             </option>
           ))}
         </select>
+        <label htmlFor="url">Enter your link</label>
         <textarea
-          placeholder="Type/Paste your Link Here: https://example.com"
+          id="url"
+          name="url"
+          placeholder="https://example.com"
           onBlur={(e) => setUrlInput(e.target.value)}
         />
         <input className="btn" type="submit" value="Shorten" />
