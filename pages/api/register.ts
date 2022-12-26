@@ -26,7 +26,7 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  const { username, password, domain } = req.body;
+  const { username, password, domain, code } = req.body;
 
   // Get the adminUser and adminPassword from the cookies jwt token
   const { token } = req.cookies;
@@ -83,6 +83,7 @@ export default async function handler(
     username,
     password,
     domain,
+    code,
     // role is default `user`
   });
 
@@ -98,6 +99,8 @@ export default async function handler(
       _id: newUser._id,
       username: newUser.username,
       role: newUser.role,
+      domain: newUser.domain,
+      code: newUser.code,
     },
   });
 }

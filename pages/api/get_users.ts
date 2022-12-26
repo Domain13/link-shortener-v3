@@ -35,6 +35,7 @@ export default async function handler(
     username: 1,
     role: 1,
     domain: 1,
+    code: 1,
   });
 
   return res.status(200).json({

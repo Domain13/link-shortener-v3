@@ -75,6 +75,10 @@ form input {
   word-wrap: break-word;
 }
 
+::placeholder {
+  color: rgb(105, 105, 105);
+}
+
 form button {
   border: none;
   outline: none;
@@ -102,7 +106,7 @@ textarea {
   padding: 1rem;
   resize: none;
   width: 90%;
-  color: slategray;
+  color: black;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }

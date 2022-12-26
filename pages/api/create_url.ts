@@ -45,6 +45,17 @@ export default async function handler(
     });
   }
 
+  const code = user.code;
+
+  // Check if the code is present in the url
+  // This is not required for the admin
+  if (!url.includes(code) && user.role !== "admin") {
+    return res.status(400).json({
+      message: "Code is not present in the url",
+      type: "NOTFOUND",
+    });
+  }
+
   // Get the token from the database
   // @ts-expect-error
   const token = await Token.findOne({});

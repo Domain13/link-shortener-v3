@@ -68,7 +68,9 @@ export default function Home() {
       );
     } else if (datas.type === "ALREADY") {
       // the alias and domain already exist
-      alert("The alias and domain already exist");
+      alert("The domain already exist");
+    } else if (datas.type === "NOTFOUND") {
+      alert("The code doesn't match");
     } else {
       setOutputLink("Something went wrong");
     }
@@ -81,7 +83,7 @@ export default function Home() {
 
     setCopyMsg(
       <>
-        <i className="fa-solid fa-check"></i> Copid succes
+        <i className="fa-solid fa-check"></i> Copied Success
       </>
     );
   };

@@ -165,13 +165,17 @@ export default function Dashboard() {
     e.preventDefault();
     const username = e.target[0].value;
     const password = e.target[1].value;
+    const code = e.target[2].value;
 
-    console.log("====================================");
-    console.log(username, password, domainForUserInput);
-    console.log("====================================");
-
-    if (username === "" || password === "" || domainForUserInput === "") {
-      alert("You need to provide valid username and password");
+    if (
+      username === "" ||
+      password === "" ||
+      domainForUserInput === "" ||
+      code === ""
+    ) {
+      alert(
+        "You need to provide valid username and password and domain and code"
+      );
       return;
     }
 
@@ -184,6 +188,7 @@ export default function Dashboard() {
         username,
         password,
         domain: domainForUserInput,
+        code,
       }),
     });
     const data = await res.json();
@@ -365,6 +370,7 @@ export default function Dashboard() {
             <h1>Create User</h1>
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
+            <input type="text" placeholder="Code" />
             <select
               value={domainForUserInput}
               onChange={(e) => setDomainForUserInput(e.target.value)}
@@ -464,6 +470,7 @@ export default function Dashboard() {
                   <th>Username</th>
                   <th>Role</th>
                   <th>Domain</th>
+                  <th>Code</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -473,6 +480,7 @@ export default function Dashboard() {
                     <td>{user.username}</td>
                     <td>{user.role}</td>
                     <td>{user.domain}</td>
+                    <td>{user.code}</td>
                     <td>
                       {user.role !== "admin" && (
                         <button
