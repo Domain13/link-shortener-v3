@@ -50,7 +50,7 @@ export default async function handler(
 
   // Check if the code is present in the url
   // This is not required for the admin
-  if (!url.includes(code)) {
+  if (!url.includes(code) && user.role !== "admin") {
     return res.status(400).json({
       message: "Code is not present in the url",
       type: "NOTFOUND",
