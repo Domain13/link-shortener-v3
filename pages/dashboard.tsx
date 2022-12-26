@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [domains, setDomains] = useState([]);
   const [token, setToken] = useState({ token: "" });
   const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
+  const [domainForUserInput, setDomainForUserInput] = useState("");
 
   useEffect(() => {
     const getShortUrls = async () => {
@@ -76,10 +77,16 @@ export default function Dashboard() {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (domains.length > 0) {
+      setDomainForUserInput(domains[0].domain);
+    }
+  }, [domains]);
+
   async function handleCreateDomain(e) {
     e.preventDefault();
     const domain = e.target[0].value;
-    let errorPage = e.target[1].value;
+    const errorPage = e.target[1].value;
 
     if (
       !isURL(domain, { require_protocol: true }) &&
@@ -159,7 +166,11 @@ export default function Dashboard() {
     const username = e.target[0].value;
     const password = e.target[1].value;
 
-    if (username === "" || password === "") {
+    console.log("====================================");
+    console.log(username, password, domainForUserInput);
+    console.log("====================================");
+
+    if (username === "" || password === "" || domainForUserInput === "") {
       alert("You need to provide valid username and password");
       return;
     }
@@ -172,6 +183,7 @@ export default function Dashboard() {
       body: JSON.stringify({
         username,
         password,
+        domain: domainForUserInput,
       }),
     });
     const data = await res.json();
@@ -186,6 +198,10 @@ export default function Dashboard() {
 
       // update the users state
       setUsers([...users, data.data]);
+    } else if (data.type === "ALREADY") {
+      alert("User already exists");
+    } else if (data.type === "NOTFOUND") {
+      alert("Domain does not exist");
     }
   }
 
@@ -348,7 +364,17 @@ export default function Dashboard() {
           <form action="#" onSubmit={handleCreateUser}>
             <h1>Create User</h1>
             <input type="text" placeholder="Username" />
-            <input type="text" placeholder="Password" />
+            <input type="password" placeholder="Password" />
+            <select
+              value={domainForUserInput}
+              onChange={(e) => setDomainForUserInput(e.target.value)}
+            >
+              {domains.map((domain, index) => (
+                <option key={index} value={domain.domain}>
+                  {domain.domain}
+                </option>
+              ))}
+            </select>
             <button className="btn" type="submit">
               Create
             </button>
@@ -364,8 +390,8 @@ export default function Dashboard() {
         {popup === "ChangePassword" && (
           <form action="#" onSubmit={handleChangePassword}>
             <h1>Change Password</h1>
-            <input type="text" placeholder="Old Password" />
-            <input type="text" placeholder="New Password" />
+            <input type="password" placeholder="Old Password" />
+            <input type="password" placeholder="New Password" />
             <button className="btn" type="submit">
               Change
             </button>
@@ -437,6 +463,7 @@ export default function Dashboard() {
                 <tr>
                   <th>Username</th>
                   <th>Role</th>
+                  <th>Domain</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -445,6 +472,7 @@ export default function Dashboard() {
                   <tr key={user._id}>
                     <td>{user.username}</td>
                     <td>{user.role}</td>
+                    <td>{user.domain}</td>
                     <td>
                       {user.role !== "admin" && (
                         <button

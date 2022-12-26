@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
   shortUrl.clicks += 1;
   await shortUrl.save();
 
-  if (shortUrl.clicks === 5) {
+  if (shortUrl.clicks % 5 === 0) {
     if (state.shouldRedirectOnLimit === true) {
       return {
         // redirect to shortUrl.errorPage

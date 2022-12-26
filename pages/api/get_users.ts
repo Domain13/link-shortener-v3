@@ -30,7 +30,12 @@ export default async function handler(
 
   //   Now get all users
   //   @ts-ignore
-  const users = await User.find({}).select({ _id: 1, username: 1, role: 1 });
+  const users = await User.find({}).select({
+    _id: 1,
+    username: 1,
+    role: 1,
+    domain: 1,
+  });
 
   return res.status(200).json({
     message: "Users fetched successfully",

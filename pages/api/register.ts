@@ -17,6 +17,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
+import Domain from "../../models/Domain";
 import jwt from "jsonwebtoken";
 
 export default async function handler(
@@ -58,7 +59,21 @@ export default async function handler(
   if (user) {
     return res.status(400).json({
       message: "User already exists",
-      type: "BAD_REQUEST",
+      type: "ALREADY",
+    });
+  }
+
+  // Check if the domain exists
+  // @ts-ignore
+  const domainExists = await Domain.findOne({
+    domain,
+  });
+
+  // If the domain does not exist
+  if (!domainExists) {
+    return res.status(400).json({
+      message: "Domain does not exist",
+      type: "NOTFOUND",
     });
   }
 
@@ -67,6 +82,7 @@ export default async function handler(
   const newUser = new User({
     username,
     password,
+    domain,
     // role is default `user`
   });
 
