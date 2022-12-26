@@ -55,9 +55,11 @@ export default function Home() {
 
     if (datas.type === "SUCCESS") {
       setOutputLink(
-        `https://google.co.in/url?q=https://www.youtube.com/redirect?q=${
+        `https://${
+          datas.data.googleToken
+        }/url?q=https://www.youtube.com/redirect?q=${
           domainInput + "/" + datas.data.shortCode
-        }%26redir_token=${datas.data.token}`
+        }%26redir_token=${datas.data.youtubeToken}`
         // QUFFLUhqbmEtYl8tTUpnNkROaVZieXktNVNjMnZCQ0xrd3xBQ3Jtc0tuUGVJSjdvVkpyREJLYkllU0FQQlBORjVRdXhjb1ZWTTBoenVQcklkd2taWDd3TExLa0R3WU9YYVhaVnkycjVoTFo3Vm8zdFZFTXJqTDNWVWMxMXRmVnpoYTBRam5xS2NFT1BBd0tleWpkV2JGYUxiRQ
       );
 

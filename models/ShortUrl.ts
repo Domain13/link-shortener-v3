@@ -32,7 +32,11 @@ const shortUrlSchema = new Schema({
   },
 
   ////////////////////////////////
-  token: {
+  youtubeToken: {
+    type: String,
+    required: true,
+  },
+  googleToken: {
     type: String,
     required: true,
   },

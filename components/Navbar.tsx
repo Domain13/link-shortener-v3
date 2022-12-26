@@ -87,11 +87,20 @@ export default function Navbar() {
                     <button
                       className="option"
                       onClick={() => {
-                        setPopup("CreateToken");
+                        setPopup("ChangeYoutubeToken");
                         setOpenMenu(false);
                       }}
                     >
-                      Change Token
+                      Change Youtube Token
+                    </button>
+                    <button
+                      className="option"
+                      onClick={() => {
+                        setPopup("ChangeGoogleToken");
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Change Google Token
                     </button>
                     <button
                       className="option"

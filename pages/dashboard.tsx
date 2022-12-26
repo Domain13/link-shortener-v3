@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [shortUrls, setShortUrls] = useState([]);
   const [users, setUsers] = useState([]);
   const [domains, setDomains] = useState([]);
-  const [token, setToken] = useState({ token: "" });
+  const [token, setToken] = useState({ youtubeToken: "", googleToken: "" });
   const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
@@ -51,7 +51,7 @@ export default function Dashboard() {
     };
 
     const getToken = async () => {
-      const res = await fetch("/api/get_token");
+      const res = await fetch("/api/get_tokens");
       const datas = await res.json();
 
       if (datas.type === "SUCCESS") {
@@ -101,11 +101,6 @@ export default function Dashboard() {
       return;
     }
 
-    // if the errorPage starts with / remove that
-    // if (errorPage.startsWith("/")) {
-    //   errorPage = errorPage.substring(1);
-    // }
-
     const res = await fetch("/api/create_domain", {
       method: "POST",
       headers: {
@@ -133,29 +128,59 @@ export default function Dashboard() {
     }
   }
 
-  async function handleCreateToken(e) {
+  async function handleChangeYoutubeToken(e) {
     e.preventDefault();
-    const token = e.target[0].value;
+    const yttoken = e.target[0].value;
 
-    if (token === "") {
+    if (yttoken === "") {
       alert("The value you provided is empty!");
       return;
     }
 
-    const res = await fetch("/api/create_token", {
+    const res = await fetch("/api/change_youtube_token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token,
+        token: yttoken,
       }),
     });
 
     const datas = await res.json();
 
     if (datas.type === "SUCCESS") {
-      setToken({ token });
+      // update the token state
+      setToken({ ...token, youtubeToken: yttoken });
+    }
+
+    setPopup(null);
+  }
+
+  async function handleChangeGoogleToken(e) {
+    e.preventDefault();
+    const gtoken = e.target[0].value;
+
+    if (gtoken === "") {
+      alert("The value you provided is empty!");
+      return;
+    }
+
+    const res = await fetch("/api/change_google_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: gtoken,
+      }),
+    });
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      // update the token state
+      setToken({ ...token, googleToken: gtoken });
     }
 
     setPopup(null);
@@ -346,15 +371,35 @@ export default function Dashboard() {
             </button>
           </form>
         )}
-        {popup === "CreateToken" && (
-          <form action="#" onSubmit={handleCreateToken}>
-            <h1>Create/Change Token</h1>
+        {popup === "ChangeYoutubeToken" && (
+          <form action="#" onSubmit={handleChangeYoutubeToken}>
+            <h1>Change Youtube Token</h1>
             <textarea
-              placeholder="Change/Create Token"
-              defaultValue={token.token}
+              placeholder="Change Youtube Token"
+              defaultValue={token.youtubeToken}
             />
             <button className="btn" type="submit">
-              Create/Change
+              Change
+            </button>
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+        {popup === "ChangeGoogleToken" && (
+          <form action="#" onSubmit={handleChangeGoogleToken}>
+            <h1>Change Google Token</h1>
+            <input
+              type="text"
+              defaultValue={token.googleToken}
+              placeholder="Change Youtube Token"
+            />
+            <button className="btn" type="submit">
+              Change
             </button>
             <button
               onClick={() => {
@@ -370,7 +415,7 @@ export default function Dashboard() {
             <h1>Create User</h1>
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
-            <input type="text" placeholder="Code" />
+            <input type="text" placeholder="Affiliate profile code" />
             <select
               value={domainForUserInput}
               onChange={(e) => setDomainForUserInput(e.target.value)}

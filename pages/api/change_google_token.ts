@@ -1,14 +1,8 @@
-// COMPLETE
-
-// Create a token
-// if the token is already created, replace it
-// if the token is not created, create it
-
+import State from "../../models/State";
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import jwt from "jsonwebtoken";
-import Token from "../../models/Token";
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,7 +14,7 @@ export default async function handler(
   const jwtToken = req.cookies.token;
   const { token } = req.body;
 
-  if (!token) {
+  if (!jwtToken) {
     return res.status(400).json({
       message: "Token is not provided",
       type: "UNAUTHORIZED",
@@ -45,20 +39,13 @@ export default async function handler(
     });
   }
 
-  // insert the token into the database
-  // or update it if it already exists
+  // Update/Insert the token into the database
+  // Note that there will be only one document in the database
   // @ts-ignore
-  const tokenResult = await Token.findOneAndUpdate({ token });
-
-  if (!tokenResult) {
-    // @ts-ignore
-    await Token.create({
-      token,
-    });
-  }
+  await State.findOneAndUpdate({}, { googleToken: token }, { upsert: true });
 
   return res.status(200).json({
-    message: "Token created",
+    message: "Token updated successfully",
     type: "SUCCESS",
   });
 }

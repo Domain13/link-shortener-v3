@@ -6,7 +6,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import ShortUrl from "../../models/ShortUrl";
-import Token from "../../models/Token";
+// import Token from "../../models/Token";
+import State from "../../models/State";
 import User from "../../models/User";
 import Domain from "../../models/Domain";
 import jwt from "jsonwebtoken";
@@ -38,7 +39,7 @@ export default async function handler(
   });
 
   // If there is no user with the given username
-  if (!user) {
+  if (!user || user.role !== "admin") {
     return res.status(400).json({
       message: "Username or password is incorrect",
       type: "UNAUTHORIZED",
@@ -56,14 +57,24 @@ export default async function handler(
     });
   }
 
-  // Get the token from the database
+  // Get the tokens from the database
   // @ts-expect-error
-  const token = await Token.findOne({});
+  // const token = await Token.findOne({});
 
-  if (!token) {
+  const { googleToken, youtubeToken } = await State.findOne({});
+
+  // if (!token) {
+  //   // server error
+  //   return res.status(500).json({
+  //     message: "Server error",
+  //     type: "SERVER_ERROR",
+  //   });
+  // }
+
+  if (!googleToken || !youtubeToken) {
     // server error
     return res.status(500).json({
-      message: "Server error",
+      message: "Youtube and google token should be present in the database.",
       type: "SERVER_ERROR",
     });
   }
@@ -86,10 +97,11 @@ export default async function handler(
   // @ts-expect-error
   const shortUrl = await ShortUrl.create({
     originalUrl: url,
-    token: token.token,
     domain,
     username: user.username,
     errorPage: domainExists.errorPage,
+    youtubeToken,
+    googleToken,
   });
 
   if (!shortUrl) {

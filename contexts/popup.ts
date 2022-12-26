@@ -2,7 +2,8 @@ import { createContext } from "react";
 
 export type PopupType =
   | "CreateDomain"
-  | "CreateToken"
+  | "ChangeYoutubeToken"
+  | "ChangeGoogleToken"
   | "CreateUser"
   | "ChangePassword"
   | "RedirectConfig"
