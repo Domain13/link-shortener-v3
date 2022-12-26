@@ -39,7 +39,7 @@ export default async function handler(
   });
 
   // If there is no user with the given username
-  if (!user || user.role !== "admin") {
+  if (!user) {
     return res.status(400).json({
       message: "Username or password is incorrect",
       type: "UNAUTHORIZED",
@@ -50,7 +50,7 @@ export default async function handler(
 
   // Check if the code is present in the url
   // This is not required for the admin
-  if (!url.includes(code) && user.role !== "admin") {
+  if (!url.includes(code)) {
     return res.status(400).json({
       message: "Code is not present in the url",
       type: "NOTFOUND",
@@ -89,7 +89,7 @@ export default async function handler(
     // Bad request
     return res.status(400).json({
       message: "Domain does not exist",
-      type: "BAD_REQUEST",
+      type: "NOTFOUND",
     });
   }
 
