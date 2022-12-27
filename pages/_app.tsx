@@ -8,6 +8,7 @@ import { IsLoadingContext } from "../contexts/isLoading";
 import Navbar from "../components/Navbar";
 import { PopupContext, PopupType } from "../contexts/popup";
 import LoadingBar from "react-top-loading-bar";
+import FadeLoader from "react-spinners/FadeLoader";
 
 function MyApp({ Component, pageProps }) {
   // make a post request to "/api/whoami" to get the user's info
@@ -72,16 +73,20 @@ function MyApp({ Component, pageProps }) {
               color="#ff0084"
               height={3}
               progress={progress}
-              // waitingTime={300}
               onLoaderFinished={() => setProgress(0)}
             />
-            {isLoading ? (
+            {isLoading && (
               <div id="preloader">
-                <div className="spinner"></div>
+                <FadeLoader
+                  className="spinner"
+                  color="#ff5500"
+                  loading={isLoading}
+                />
               </div>
-            ) : (
-              <Component {...pageProps} />
             )}
+            <main style={{ opacity: isLoading ? 0.2 : 1 }}>
+              <Component {...pageProps} />
+            </main>
           </PopupContext.Provider>
         </IsLoadingContext.Provider>
       </UserContext.Provider>

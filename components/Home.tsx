@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { isURL } from "validator";
+import { IsLoadingContext } from "../contexts/isLoading";
 
 export default function Home() {
   const [urlInput, setUrlInput] = useState("");
@@ -13,6 +14,8 @@ export default function Home() {
   );
   const [output, setOutput] = useState("d-none");
   const [domains, setDomains] = useState([]);
+
+  const isLoadingContext = useContext(IsLoadingContext);
 
   useEffect(() => {
     const fetchDomains = async () => {
@@ -35,6 +38,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    isLoadingContext.setIsLoading(true);
 
     if (!isURL(urlInput, { require_protocol: true }) || domainInput === "") {
       alert("You need to provide valid url and domain");
@@ -79,6 +83,7 @@ export default function Home() {
     }
 
     setOutput("output-link");
+    isLoadingContext.setIsLoading(false);
   };
 
   const handleCopy = () => {

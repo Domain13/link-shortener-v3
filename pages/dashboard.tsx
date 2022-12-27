@@ -8,6 +8,7 @@ import { PopupContext } from "../contexts/popup";
 import { useEffect } from "react";
 import { isURL } from "validator";
 import Head from "next/head";
+import { IsLoadingContext } from "../contexts/isLoading";
 
 export default function Dashboard() {
   const userContext = useContext(UserContext);
@@ -15,6 +16,8 @@ export default function Dashboard() {
   const popupContext = useContext(PopupContext);
   const popup = popupContext.popup;
   const setPopup = popupContext.setPopup;
+  const isLoadingContext = useContext(IsLoadingContext);
+  const setIsLoading = isLoadingContext.setIsLoading;
 
   const [shortUrls, setShortUrls] = useState([]);
   const [users, setUsers] = useState([]);
@@ -84,8 +87,9 @@ export default function Dashboard() {
     }
   }, [domains]);
 
-  async function handleCreateDomain(e) {
+  async function handleCreateDomain(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const domain = e.target[0].value;
     const errorPage = e.target[1].value;
 
@@ -102,6 +106,7 @@ export default function Dashboard() {
       return;
     }
 
+    setIsLoading(true);
     const res = await fetch("/api/create_domain", {
       method: "POST",
       headers: {
@@ -127,12 +132,15 @@ export default function Dashboard() {
       // update the domains state
       setDomains([...domains, datas.data]);
 
-      alert("Success");
+      // alert("Success");
     }
+
+    setIsLoading(false);
   }
 
-  async function handleChangeYoutubeToken(e) {
+  async function handleChangeYoutubeToken(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const yttoken = e.target[0].value;
 
     if (yttoken === "") {
@@ -140,6 +148,7 @@ export default function Dashboard() {
       return;
     }
 
+    setIsLoading(true);
     const res = await fetch("/api/change_youtube_token", {
       method: "POST",
       headers: {
@@ -158,10 +167,12 @@ export default function Dashboard() {
     }
 
     setPopup(null);
+    setIsLoading(false);
   }
 
-  async function handleChangeGoogleToken(e) {
+  async function handleChangeGoogleToken(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const gtoken = e.target[0].value;
 
     if (gtoken === "") {
@@ -169,6 +180,7 @@ export default function Dashboard() {
       return;
     }
 
+    setIsLoading(true);
     const res = await fetch("/api/change_google_token", {
       method: "POST",
       headers: {
@@ -187,10 +199,12 @@ export default function Dashboard() {
     }
 
     setPopup(null);
+    setIsLoading(false);
   }
 
-  async function handleCreateUser(e) {
+  async function handleCreateUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const username = e.target[0].value;
     const password = e.target[1].value;
     const code = e.target[2].value;
@@ -202,6 +216,7 @@ export default function Dashboard() {
       return;
     }
 
+    setIsLoading(true);
     const res = await fetch("/api/register", {
       method: "POST",
       headers: {
@@ -231,10 +246,13 @@ export default function Dashboard() {
     } else if (data.type === "NOTFOUND") {
       alert("Domain does not exist");
     }
+
+    setIsLoading(false);
   }
 
-  async function handleChangePassword(e) {
+  async function handleChangePassword(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const username = "admin";
     const password = e.target[0].value;
     const newPassword = e.target[1].value;
@@ -244,6 +262,7 @@ export default function Dashboard() {
       return;
     }
 
+    setIsLoading(true);
     const res = await fetch("/api/change_password", {
       method: "POST",
       headers: {
@@ -267,13 +286,17 @@ export default function Dashboard() {
     } else {
       alert("Wrong password");
     }
+
+    setIsLoading(false);
   }
 
-  async function handleChangeRedirectConfig(e) {
+  async function handleChangeRedirectConfig(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
     // the input has only one value
     // it is a checkbox
     e.preventDefault();
-
+    setIsLoading(true);
     const res = await fetch("/api/change_redirect_config", {
       method: "POST",
       headers: {
@@ -287,9 +310,12 @@ export default function Dashboard() {
       // update the state
       setShouldRedirectOnLimit(!shouldRedirectOnLimit);
     }
+
+    setIsLoading(false);
   }
 
-  async function handleDeleteDomain(_id) {
+  async function handleDeleteDomain(_id: string) {
+    setIsLoading(true);
     const res = await fetch("/api/delete_domain", {
       method: "POST",
       headers: {
@@ -306,9 +332,13 @@ export default function Dashboard() {
       // update the state
       setDomains(domains.filter((domain) => domain._id !== _id));
     }
+
+    setIsLoading(false);
   }
 
-  async function handleDeleteUser(_id) {
+  async function handleDeleteUser(_id: string) {
+    setIsLoading(true);
+
     const res = await fetch("/api/delete_user", {
       method: "POST",
       headers: {
@@ -325,9 +355,12 @@ export default function Dashboard() {
       // update the state
       setUsers(users.filter((user) => user._id !== _id));
     }
+
+    setIsLoading(false);
   }
 
-  async function handleDeleteShortUrl(_id) {
+  async function handleDeleteShortUrl(_id: string) {
+    setIsLoading(true);
     const res = await fetch("/api/delete_url", {
       method: "POST",
       headers: {
@@ -344,6 +377,8 @@ export default function Dashboard() {
       // update the state
       setShortUrls(shortUrls.filter((shortUrl) => shortUrl._id !== _id));
     }
+
+    setIsLoading(false);
   }
 
   return (
