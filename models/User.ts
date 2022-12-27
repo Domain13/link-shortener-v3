@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema({
   },
   domain: {
     type: String,
-    required: true,
   },
   code: {
     type: String,
