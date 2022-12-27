@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import jwt from "jsonwebtoken";
 import User from "../../models/User";
-import State from "../../models/State";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,6 +12,7 @@ export default async function handler(
   await dbConnect();
 
   const { token } = req.cookies;
+  const { _id } = req.body;
 
   if (!token) {
     return res.status(400).json({
@@ -41,22 +41,35 @@ export default async function handler(
 
   // Find the state
   // @ts-ignore
-  const state = await State.findOne({});
-  if (!state) {
-    return res.status(500).json({
-      message: "Server error",
-      type: "SERVER_ERROR",
+  // const state = await State.findOne({});
+  // if (!state) {
+  //   return res.status(500).json({
+  //     message: "Server error",
+  //     type: "SERVER_ERROR",
+  //   });
+  // }
+
+  // Find the User
+  // @ts-ignore
+  const user = await User.findOne({
+    _id,
+  });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "User does not exist",
+      type: "NOTFOUND",
     });
   }
 
   // If the state is found
   // If the state.shouldRedirectLimit is true make it false
-  if (state.shouldRedirectOnLimit === true) {
-    state.shouldRedirectOnLimit = false;
-    await state.save();
+  if (user.shouldRedirectOnLimit === true) {
+    user.shouldRedirectOnLimit = false;
+    await user.save();
   } else {
-    state.shouldRedirectOnLimit = true;
-    await state.save();
+    user.shouldRedirectOnLimit = true;
+    await user.save();
   }
 
   return res.status(200).json({

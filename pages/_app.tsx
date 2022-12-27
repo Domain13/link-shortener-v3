@@ -15,9 +15,10 @@ function MyApp({ Component, pageProps }) {
   // if the user is not logged in, redirect to the login page
   const router = useRouter();
   const [user, setUser] = useState<UserType | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [popup, setPopup] = useState<PopupType>(null);
   const [progress, setProgress] = useState(0);
+  const { redirectPage } = pageProps;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,8 +40,10 @@ function MyApp({ Component, pageProps }) {
     };
 
     if (!user) {
-      setIsLoading(true);
-      fetchUser();
+      if (!redirectPage) {
+        setIsLoading(true);
+        fetchUser();
+      }
     }
   }, [user]);
 
@@ -68,7 +71,8 @@ function MyApp({ Component, pageProps }) {
       <UserContext.Provider value={{ user, setUser }}>
         <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <PopupContext.Provider value={{ popup, setPopup }}>
-            <Navbar />
+            {/* <Navbar /> */}
+            {!redirectPage && <Navbar />}
             <LoadingBar
               color="#ff0084"
               height={3}
@@ -84,7 +88,14 @@ function MyApp({ Component, pageProps }) {
                 />
               </div>
             )}
-            <main style={{ opacity: isLoading ? 0.2 : 1 }}>
+            <main
+              style={{
+                opacity: isLoading ? 0.2 : 1,
+                background: redirectPage
+                  ? "white"
+                  : "linear-gradient(to left, #02aab0, #00cdac)",
+              }}
+            >
               <Component {...pageProps} />
             </main>
           </PopupContext.Provider>

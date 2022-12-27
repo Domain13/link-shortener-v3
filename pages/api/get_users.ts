@@ -36,6 +36,7 @@ export default async function handler(
     role: 1,
     domain: 1,
     code: 1,
+    shouldRedirectOnLimit: 1,
   });
 
   return res.status(200).json({

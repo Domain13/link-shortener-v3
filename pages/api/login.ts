@@ -50,17 +50,22 @@ export default async function handler(
     },
     process.env.JWT_SECRET,
     {
-      // 1hr
-      expiresIn: "1h",
+      // 30 days
+      expiresIn: "30d",
     }
   );
+
+  // Get the domain name
+  // console.log(req.headers.host);
 
   const cookieOptions: CookieSerializeOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 3600, // 1hr
+    maxAge: 30 * 24 * 60 * 60, // 30 days
     path: "/",
+    // any domain
+    // domain: req.headers.host,
   };
 
   res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));

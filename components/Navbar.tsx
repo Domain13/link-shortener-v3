@@ -120,7 +120,7 @@ export default function Navbar() {
                     >
                       Change Password
                     </button>
-
+                    {/* 
                     <button
                       className="option"
                       onClick={() => {
@@ -129,7 +129,7 @@ export default function Navbar() {
                       }}
                     >
                       Redirect Config
-                    </button>
+                    </button> */}
 
                     <button
                       className="option red"

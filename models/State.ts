@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const stateSchema = new Schema({
-  shouldRedirectOnLimit: {
-    type: Boolean,
-    default: true,
-  },
+  // shouldRedirectOnLimit: {
+  //   type: Boolean,
+  //   default: true,
+  // },
   googleToken: {
     type: String,
   },

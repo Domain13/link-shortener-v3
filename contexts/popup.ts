@@ -6,7 +6,6 @@ export type PopupType =
   | "ChangeGoogleToken"
   | "CreateUser"
   | "ChangePassword"
-  | "RedirectConfig"
   | null;
 
 export type PopupContextType = {

@@ -23,7 +23,7 @@ export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [domains, setDomains] = useState([]);
   const [token, setToken] = useState({ youtubeToken: "", googleToken: "" });
-  const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
+  // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
   useEffect(() => {
@@ -63,21 +63,21 @@ export default function Dashboard() {
       }
     };
 
-    const getShouldRedirectOnLimit = async () => {
-      const res = await fetch("/api/get_should_redirect_on_limit");
-      const datas = await res.json();
+    // const getShouldRedirectOnLimit = async () => {
+    //   const res = await fetch("/api/get_should_redirect_on_limit");
+    //   const datas = await res.json();
 
-      if (datas.type === "SUCCESS") {
-        setShouldRedirectOnLimit(datas.data);
-      }
-    };
+    //   if (datas.type === "SUCCESS") {
+    //     setShouldRedirectOnLimit(datas.data);
+    //   }
+    // };
 
     if (user) {
       getShortUrls();
       getUsers();
       getDomains();
       getToken();
-      getShouldRedirectOnLimit();
+      // getShouldRedirectOnLimit();
     }
   }, [user]);
 
@@ -86,6 +86,10 @@ export default function Dashboard() {
       setDomainForUserInput(domains[0].domain);
     }
   }, [domains]);
+
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
 
   async function handleCreateDomain(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -208,6 +212,7 @@ export default function Dashboard() {
     const username = e.target[0].value;
     const password = e.target[1].value;
     const code = e.target[2].value;
+    const shouldRedirectOnLimit = e.target[3].checked;
 
     if (username === "" || password === "" || domainForUserInput === "") {
       alert(
@@ -227,6 +232,7 @@ export default function Dashboard() {
         password,
         domain: domainForUserInput,
         code,
+        shouldRedirectOnLimit,
       }),
     });
     const data = await res.json();
@@ -290,25 +296,34 @@ export default function Dashboard() {
     setIsLoading(false);
   }
 
-  async function handleChangeRedirectConfig(
-    e: React.FormEvent<HTMLFormElement>
-  ) {
+  async function handleChangeRedirectConfig(_id: string) {
     // the input has only one value
     // it is a checkbox
-    e.preventDefault();
+
     setIsLoading(true);
     const res = await fetch("/api/change_redirect_config", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        _id,
+      }),
     });
 
     const data = await res.json();
 
     if (data.type === "SUCCESS") {
-      // update the state
-      setShouldRedirectOnLimit(!shouldRedirectOnLimit);
+      // update the users.shoulRedirectOnLimit state
+      setUsers(
+        users.map((user) => {
+          if (user._id === _id) {
+            user.shouldRedirectOnLimit = !user.shouldRedirectOnLimit;
+          }
+
+          return user;
+        })
+      );
     }
 
     setIsLoading(false);
@@ -452,6 +467,8 @@ export default function Dashboard() {
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
             <input type="text" placeholder="Affiliate profile code" />
+            <label htmlFor="check">Redirect to Error page</label>
+            <input type="checkbox" id="check" />
             <select
               value={domainForUserInput}
               onChange={(e) => setDomainForUserInput(e.target.value)}
@@ -491,7 +508,7 @@ export default function Dashboard() {
             </button>
           </form>
         )}
-        {popup === "RedirectConfig" && (
+        {/* {popup === "RedirectConfig" && (
           <form action="#" onSubmit={handleChangeRedirectConfig}>
             <h1>Redirect after 4 clicks? On/Off</h1>
             <p>
@@ -501,7 +518,7 @@ export default function Dashboard() {
               {shouldRedirectOnLimit ? "Off" : "On"}
             </button>
           </form>
-        )}
+        )} */}
 
         <div className="datas">
           <div className="data urls">
@@ -552,7 +569,8 @@ export default function Dashboard() {
                   <th>Role</th>
                   <th>Domain</th>
                   <th>Code</th>
-                  <th>Options</th>
+                  <th>Redirect</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -563,20 +581,38 @@ export default function Dashboard() {
                     <td>{user.domain}</td>
                     <td>{user.code}</td>
                     <td>
-                      {user.role !== "admin" && (
-                        <button
-                          style={{
-                            fontSize: "0.8rem",
-                            wordBreak: "keep-all",
-                          }}
-                          className="btn red"
-                          onClick={() => {
-                            handleDeleteUser(user._id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      )}
+                      <button
+                        className="btn"
+                        style={{
+                          fontSize: "0.8rem",
+                          wordBreak: "keep-all",
+                          margin: "0 0.2rem",
+                          padding: "0.8rem",
+                        }}
+                        onClick={() => {
+                          handleChangeRedirectConfig(user._id);
+                        }}
+                      >
+                        Turn {user.shouldRedirectOnLimit ? "Off" : "On"}
+                      </button>
+                    </td>{" "}
+                    <td>
+                      <>
+                        {user.role !== "admin" && (
+                          <button
+                            style={{
+                              fontSize: "0.8rem",
+                              wordBreak: "keep-all",
+                            }}
+                            className="btn red"
+                            onClick={() => {
+                              handleDeleteUser(user._id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </>
                     </td>
                   </tr>
                 ))}
@@ -623,3 +659,9 @@ export default function Dashboard() {
     </>
   );
 }
+
+/*
+shanto > no error >  https://google.co.in/url?q=https://www.youtube.com/redirect?q=http://localhost:3000/hFJPq3CTV%26redir_token=QUFFLUhqbmEtYl8tTUpnNkROaVZieXktNVNjMnZCQ0xrd3xBQ3Jtc0tuUGVJSjdvVkpyREJLYkllU0FQQlBORjVRdXhjb1ZWTTBoenVQcklkd2taWDd3TExLa0R3WU9YYVhaVnkycjVoTFo3Vm8zdFZFTXJqTDNWVWMxMXRmVnpoYTBRam5xS2NFT1BBd0tleWpkV2JGYUxiRQ
+
+ruhi > redirect error > https://google.co.in/url?q=https://www.youtube.com/redirect?q=http://localhost:3000/jZOqW1JOq%26redir_token=QUFFLUhqbmEtYl8tTUpnNkROaVZieXktNVNjMnZCQ0xrd3xBQ3Jtc0tuUGVJSjdvVkpyREJLYkllU0FQQlBORjVRdXhjb1ZWTTBoenVQcklkd2taWDd3TExLa0R3WU9YYVhaVnkycjVoTFo3Vm8zdFZFTXJqTDNWVWMxMXRmVnpoYTBRam5xS2NFT1BBd0tleWpkV2JGYUxiRQ
+*/
