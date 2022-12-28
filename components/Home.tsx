@@ -38,13 +38,13 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    isLoadingContext.setIsLoading(true);
 
     if (!isURL(urlInput, { require_protocol: true }) || domainInput === "") {
       alert("You need to provide valid url and domain");
       return;
     }
 
+    isLoadingContext.setIsLoading(true);
     const response = await fetch(`/api/create_url`, {
       method: "POST",
       headers: {

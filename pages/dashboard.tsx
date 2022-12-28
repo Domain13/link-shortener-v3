@@ -581,6 +581,7 @@ export default function Dashboard() {
                     <td>{user.domain}</td>
                     <td>{user.code}</td>
                     <td>
+                      Status: <b>{user.shouldRedirectOnLimit ? "On" : "Off"}</b>
                       <button
                         className="btn"
                         style={{
@@ -595,7 +596,7 @@ export default function Dashboard() {
                       >
                         Turn {user.shouldRedirectOnLimit ? "Off" : "On"}
                       </button>
-                    </td>{" "}
+                    </td>
                     <td>
                       <>
                         {user.role !== "admin" && (
