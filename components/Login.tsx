@@ -43,6 +43,8 @@ export default function Login() {
       setUser(data.data);
       // redirect to the home page
       router.push("/");
+    } else if (data.type === "UNAUTHORIZED") {
+      alert("Username or password is incorrect");
     }
 
     setIsLoading(false);
