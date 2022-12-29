@@ -55,7 +55,13 @@ export default function Redirector() {
           <h1>404 - Page not found</h1>
         </div>
       ) : (
-        <h2>Redirecting...</h2>
+        <h2
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Redirecting...
+        </h2>
       )}
     </>
   );
