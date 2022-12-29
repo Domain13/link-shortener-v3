@@ -102,6 +102,7 @@ export default async function handler(
     errorPage: domainExists.errorPage,
     youtubeToken,
     googleToken,
+    encoded: domainExists.encoded,
   });
 
   if (!shortUrl) {

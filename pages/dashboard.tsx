@@ -87,10 +87,6 @@ export default function Dashboard() {
     }
   }, [domains]);
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   async function handleCreateDomain(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -628,6 +624,7 @@ export default function Dashboard() {
                 <tr>
                   <th>Domain</th>
                   <th>Error page</th>
+                  <th>Encoded</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -636,6 +633,7 @@ export default function Dashboard() {
                   <tr key={index}>
                     <td>{domain.domain}</td>
                     <td>{domain.errorPage}</td>
+                    <td>{domain.encoded}</td>
                     <td>
                       <button
                         className="btn red"

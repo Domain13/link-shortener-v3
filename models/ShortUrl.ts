@@ -44,6 +44,11 @@ const shortUrlSchema = new Schema({
     type: Number,
     default: 0,
   },
+  encoded: {
+    type: String,
+    required: true,
+  },
+
   // createdAt: {
   //   type: Date,
   //   default: Date.now,
