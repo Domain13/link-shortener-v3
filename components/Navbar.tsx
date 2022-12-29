@@ -84,7 +84,7 @@ export default function Navbar() {
                     >
                       Add Custom Domain
                     </button>
-                    {/* <button
+                    <button
                       className="option"
                       onClick={() => {
                         setPopup("ChangeYoutubeToken");
@@ -92,8 +92,8 @@ export default function Navbar() {
                       }}
                     >
                       Change Youtube Token
-                    </button> */}
-                    <button
+                    </button>
+                    {/* <button
                       className="option"
                       onClick={() => {
                         setPopup("ChangeGoogleToken");
@@ -101,7 +101,7 @@ export default function Navbar() {
                       }}
                     >
                       Change Google Token
-                    </button>
+                    </button> */}
                     <button
                       className="option"
                       onClick={() => {
