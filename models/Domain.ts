@@ -28,6 +28,7 @@ const domainSchema = new Schema({
 domainSchema.pre("save", function (next) {
   const domain = this as any;
   const domainName = domain.domain;
+  console.log("Hello world");
 
   // const domainNameWithoutProtocolAndTLDAndWWWAndSubdomains = domainNameWithoutProtocolAndTLDAndWWW.split(
   //   "."
@@ -42,9 +43,23 @@ domainSchema.pre("save", function (next) {
 
   const domainNameProtocol = domainName.split("://")[0];
   const domainNameWithoutProtocol = domainName.split("://")[1];
-  const domainNameTLD = domainNameWithoutProtocol.split(".")[1];
-  const domainNameWithoutProtocolAndTLD =
-    domainNameWithoutProtocol.split(".")[0];
+  // const domainNameWWW = domainNameWithoutProtocol.split("www.")[0];
+  const domainNameWithoutWWW = domainNameWithoutProtocol.split("www.")[1];
+
+  // const domainNameTLD = domainNameWithoutProtocol.split(".")[1];
+  // const domainNameWithoutProtocolAndTLD =
+  //   domainNameWithoutProtocol.split(".")[0];
+
+  const domainNameTLD = domainNameWithoutWWW
+    ? domainNameWithoutWWW.split(".")[
+        domainNameWithoutWWW.split(".").length - 1
+      ]
+    : domainNameWithoutProtocol.split(".")[
+        domainNameWithoutProtocol.split(".").length - 1
+      ];
+  const domainNameWithoutProtocolAndTLD = domainNameWithoutWWW
+    ? domainNameWithoutWWW.split(".")[0]
+    : domainNameWithoutProtocol.split(".")[0];
 
   const encoded = domainNameWithoutProtocolAndTLD
     .split("")
@@ -56,9 +71,13 @@ domainSchema.pre("save", function (next) {
     .join("%");
 
   // Now join the protocol, encoded domain name, and TLD
-  domain.encoded = `${domainNameProtocol}://%${encoded}${
-    domainNameTLD ? `.${domainNameTLD}` : ""
-  }`;
+  // domain.encoded = `${domainNameProtocol}://%${encoded}${
+  //   domainNameTLD ? `.${domainNameTLD}` : ""
+  // }`;
+
+  domain.encoded = `${domainNameProtocol}://${
+    domainNameWithoutWWW ? "www." : ""
+  }%${encoded}${domainNameTLD ? `.${domainNameTLD}` : ""}`;
 
   next();
 });
