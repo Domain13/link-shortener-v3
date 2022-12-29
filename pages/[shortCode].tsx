@@ -41,7 +41,7 @@ export default function Redirector() {
 
   return (
     <>
-      {showError && (
+      {showError ? (
         <div
           style={{
             width: "100vw",
@@ -54,6 +54,8 @@ export default function Redirector() {
         >
           <h1>404 - Page not found</h1>
         </div>
+      ) : (
+        <h2>Redirecting...</h2>
       )}
     </>
   );
