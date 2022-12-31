@@ -76,7 +76,9 @@ export default function Home() {
 
         // https://www.tiktok.com/link/v2?aid=1988&lang=en&scene=bio_url&target=https://www.youtube.com/redirect?q=http://m%75%6c%61%74%72%312.site/link.php?ID=89379%26redir_token=QUFFLUhqa2c4RjJsZVpmMlZOWDRzTUFwa0NLeUNTMVM1QXxBQ3Jtc0ttZFk2LVowRUt3dGpweFR4Q1J5a0NvWG1ITm5zM0s0LWgteHRlcUVhdFR3bjIwLUJFRmcwUXpaOVE1UlVtckROUEcxSzNtVDljakgwU2hrWDFNVzVSa1llYkhTa0VHdUk5VFdwczN0OVI4bjBxeHZVYw
 
-        `https://www.tiktok.com/link/v2?aid=1988&lang=en&scene=bio_url&target=https://www.youtube.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
+        // `https://www.tiktok.com/link/v2?aid=1988&lang=en&scene=bio_url&target=https://www.youtube.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
+
+        `${datas.data.domain}/${datas.data.shortCode}`
 
         // QUFFLUhqbTVFWERGUFQ3enFxM0tWRUhwSGlNcEphZFFlUXxBQ3Jtc0ttR0Rfa2FiWG53X2JtdHB3QW9LREhoTTc5MmlHMnJZZXBlR3FGdFIyanA2aDZRdTNsR1lWSWFhVGJNenVkOUpkeWYwVGlQa0ZvZm1ld3JacUI1enhjLXlOVUs1dHl6ZzBwVjZzV18zMGRCbGwzWXRtVQ
       );

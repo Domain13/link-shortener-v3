@@ -107,9 +107,11 @@ export default async function handler(
   // },
   //   };
 
+  const redirectUrl = `https://www.tiktok.com/link/v2?aid=1988&lang=en&scene=bio_url&target=https://www.youtube.com/redirect?q=${shortUrl.originalUrl}%26redir_token=${shortUrl.youtubeToken}`;
+
   return res.json({
     message: "Redirect to the original url",
     type: "REDIRECT",
-    data: shortUrl.originalUrl,
+    data: redirectUrl,
   });
 }
