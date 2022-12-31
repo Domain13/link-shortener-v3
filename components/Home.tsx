@@ -112,7 +112,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Hello CPA</title>
+        <title>Hello</title>
       </Head>
       <h1>URL Shortener</h1>
       <form onSubmit={handleSubmit}>
