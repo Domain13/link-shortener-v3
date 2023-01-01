@@ -3,7 +3,6 @@
 
 import User from "../models/User";
 import jwt from "jsonwebtoken";
-import dbConnect from "./dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function isUser(

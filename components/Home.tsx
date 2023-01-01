@@ -78,7 +78,17 @@ export default function Home() {
 
         // `https://www.tiktok.com/link/v2?aid=1988&lang=en&scene=bio_url&target=https://www.youtube.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
 
-        `${datas.data.domain}/${datas.data.shortCode}`
+        // `${datas.data.domain}/${datas.data.shortCode}`
+
+        ////////////////////////////
+
+        // `https://click.snapchat.com/aVHG?&af_web_dp=https://www.yo%75%74%75be.com/redirect?q=http://mon%74%75%34.site/link.php?ID=101234%26redir_token=QUFFLUhqa1Nfc3R0azMxXzh4UDhMOUtHYmtieDJFVWVzd3xBQ3Jtc0ttU0kwLU5ubU8wR1JCd0FjZElYLWdnc0ljMGJjMm9OWUpsQTZONU56V0QydjlvY2Rmazd1c1VKSmpFZzIyM2M5bmdRNEpVdE5kZU1KX2NuWDF0b3JOSUVka0d3eUtneHlsaXRNeUlqQmVRNGZSVGNBWQ`
+
+        //// --------->
+
+        `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
+
+        //////////////////////////////////
 
         // QUFFLUhqbTVFWERGUFQ3enFxM0tWRUhwSGlNcEphZFFlUXxBQ3Jtc0ttR0Rfa2FiWG53X2JtdHB3QW9LREhoTTc5MmlHMnJZZXBlR3FGdFIyanA2aDZRdTNsR1lWSWFhVGJNenVkOUpkeWYwVGlQa0ZvZm1ld3JacUI1enhjLXlOVUs1dHl6ZzBwVjZzV18zMGRCbGwzWXRtVQ
       );

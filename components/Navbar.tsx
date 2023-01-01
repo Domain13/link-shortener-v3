@@ -93,6 +93,15 @@ export default function Navbar() {
                     >
                       Change Youtube Token
                     </button>
+                    <button
+                      className="option"
+                      onClick={() => {
+                        setPopup("ChangeFirstToken");
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Change First Token
+                    </button>
                     {/* <button
                       className="option"
                       onClick={() => {

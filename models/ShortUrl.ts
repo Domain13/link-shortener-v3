@@ -49,10 +49,11 @@ const shortUrlSchema = new Schema({
     required: true,
   },
 
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
+  ////////////////////////////
+  firstToken: {
+    type: String,
+    default: "",
+  },
 });
 
 // create a model

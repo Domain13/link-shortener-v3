@@ -22,7 +22,11 @@ export default function Dashboard() {
   const [shortUrls, setShortUrls] = useState([]);
   const [users, setUsers] = useState([]);
   const [domains, setDomains] = useState([]);
-  const [token, setToken] = useState({ youtubeToken: "", googleToken: "" });
+  const [token, setToken] = useState({
+    youtubeToken: "",
+    googleToken: "",
+    firstToken: "",
+  });
   // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
@@ -164,6 +168,38 @@ export default function Dashboard() {
     if (datas.type === "SUCCESS") {
       // update the token state
       setToken({ ...token, youtubeToken: yttoken });
+    }
+
+    setPopup(null);
+    setIsLoading(false);
+  }
+
+  async function handleChangeFirstToken(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const firstToken = e.target[0].value;
+
+    if (firstToken === "") {
+      alert("The value you provided is empty!");
+      return;
+    }
+
+    setIsLoading(true);
+    const res = await fetch("/api/change_first_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: firstToken,
+      }),
+    });
+
+    const datas = await res.json();
+
+    if (datas.type === "SUCCESS") {
+      // update the token state
+      setToken({ ...token, firstToken });
     }
 
     setPopup(null);
@@ -457,6 +493,27 @@ export default function Dashboard() {
             </button>
           </form>
         )}
+        {popup === "ChangeFirstToken" && (
+          <form action="#" onSubmit={handleChangeFirstToken}>
+            <h1>Change First Token</h1>
+            <input
+              type="text"
+              defaultValue={token.firstToken}
+              placeholder="Change First Token"
+            />
+            <button className="btn" type="submit">
+              Change
+            </button>
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+
         {popup === "CreateUser" && (
           <form action="#" onSubmit={handleCreateUser}>
             <h1>Create User</h1>
