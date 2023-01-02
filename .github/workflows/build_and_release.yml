@@ -30,7 +30,7 @@ jobs:
       #   run: ls -la
 
       - name: Build in Release Mode
-        run: cd && cargo build --release
+        run: cd scripts && cargo build --release
 
       - name: Read Project Version
         run: |
