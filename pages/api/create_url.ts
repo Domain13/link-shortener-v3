@@ -11,6 +11,7 @@ import State from "../../models/State";
 import User from "../../models/User";
 import Domain from "../../models/Domain";
 import jwt from "jsonwebtoken";
+import isUser from "../../lib/isUser";
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,34 +20,37 @@ export default async function handler(
   await dbConnect();
 
   const { url, domain } = req.body;
-  const jwtToken = req.cookies.token;
+  // const jwtToken = req.cookies.token;
 
-  if (!jwtToken) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
-  }
+  // if (!jwtToken) {
+  //   return res.status(400).json({
+  //     message: "Token is not provided",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
 
-  const decode = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
-    username: string;
-  };
+  // const decode = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
+  //   username: string;
+  // };
 
-  // Find the user with the given username
-  // @ts-expect-error
-  const user = await User.findOne({
-    username: decode.username,
-  });
+  // // Find the user with the given username
+  // // @ts-expect-error
+  // const user = await User.findOne({
+  //   username: decode.username,
+  // });
 
-  // If there is no user with the given username
-  if (!user) {
-    return res.status(400).json({
-      message: "Username or password is incorrect",
-      type: "UNAUTHORIZED",
-    });
-  }
+  // // If there is no user with the given username
+  // if (!user) {
+  //   return res.status(400).json({
+  //     message: "Username or password is incorrect",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
+
+  const user = await isUser(req, res);
 
   const code = user.code;
+  const firstToken = user.firstToken;
 
   // Check if the code is present in the url
   // This is not required for the admin
@@ -59,22 +63,13 @@ export default async function handler(
 
   // Get the tokens from the database
   // @ts-expect-error
-  // const token = await Token.findOne({});
-
-  const { googleToken, youtubeToken, firstToken } = await State.findOne({});
-
-  // if (!token) {
-  //   // server error
-  //   return res.status(500).json({
-  //     message: "Server error",
-  //     type: "SERVER_ERROR",
-  //   });
-  // }
+  const { googleToken, youtubeToken } = await State.findOne({});
 
   if (!googleToken || !youtubeToken || !firstToken) {
     // server error
     return res.status(500).json({
-      message: "Youtube and google token should be present in the database.",
+      message:
+        "Youtube and google and first tokens should be present in the database.",
       type: "SERVER_ERROR",
     });
   }

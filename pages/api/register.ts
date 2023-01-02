@@ -19,6 +19,7 @@ import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import Domain from "../../models/Domain";
 import jwt from "jsonwebtoken";
+import isAdmin from "../../lib/isAdmin";
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,42 +27,52 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  const { username, password, domain, code, shouldRedirectOnLimit } = req.body;
-
-  // Get the adminUser and adminPassword from the cookies jwt token
-  const { token } = req.cookies;
-
-  if (!token) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
-  }
-
-  const admin = jwt.verify(token, process.env.JWT_SECRET).username;
-
-  // If there is no adminUser with the given username
-  if (!admin || admin !== "admin") {
-    return res.status(400).json({
-      message: "Username or password is incorrect",
-      type: "UNAUTHORIZED",
-    });
-  }
-
-  // If the password is correct
-  // Check if the user already exists
-  // @ts-ignore
-  const user = await User.findOne({
+  const {
     username,
-  });
+    password,
+    domain,
+    code,
+    shouldRedirectOnLimit,
+    firstToken,
+  } = req.body;
 
-  // If the user already exists
-  if (user) {
-    return res.status(400).json({
-      message: "User already exists",
-      type: "ALREADY",
-    });
-  }
+  // // Get the adminUser and adminPassword from the cookies jwt token
+  // const { token } = req.cookies;
+
+  // if (!token) {
+  //   return res.status(400).json({
+  //     message: "Token is not provided",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
+
+  // const admin = jwt.verify(token, process.env.JWT_SECRET).username;
+
+  // // If there is no adminUser with the given username
+  // if (!admin || admin !== "admin") {
+  //   return res.status(400).json({
+  //     message: "Username or password is incorrect",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
+
+  // // If the password is correct
+  // // Check if the user already exists
+  // // @ts-ignore
+  // const user = await User.findOne({
+  //   username,
+  // });
+
+  // // If the user already exists
+  // if (user) {
+  //   return res.status(400).json({
+  //     message: "User already exists",
+  //     type: "ALREADY",
+  //   });
+  // }
+
+  // Check if the current user is an admin
+  await isAdmin(req, res);
 
   // Check if the domain exists
   // @ts-ignore
@@ -85,6 +96,8 @@ export default async function handler(
     domain,
     code,
     shouldRedirectOnLimit,
+    firstToken,
+
     // role is default `user`
   });
 
@@ -103,6 +116,7 @@ export default async function handler(
       domain: newUser.domain,
       code: newUser.code,
       shouldRedirectOnLimit: newUser.shouldRedirectOnLimit,
+      firstToken: newUser.firstToken,
     },
   });
 }

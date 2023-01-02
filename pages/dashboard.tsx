@@ -25,8 +25,11 @@ export default function Dashboard() {
   const [token, setToken] = useState({
     youtubeToken: "",
     googleToken: "",
-    firstToken: "",
   });
+  const [userIdForChangeFirstToken, setUserIdForChangeFirstToken] =
+    useState("");
+  const [userTokenForChangeFirstToken, setUserTokenForChangeFirstToken] =
+    useState("");
   // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
@@ -191,15 +194,23 @@ export default function Dashboard() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: firstToken,
+        firstToken,
+        _id: userIdForChangeFirstToken,
       }),
     });
 
     const datas = await res.json();
 
     if (datas.type === "SUCCESS") {
-      // update the token state
-      setToken({ ...token, firstToken });
+      // update the users state
+      setUsers(
+        users.map((user) => {
+          if (user._id === userIdForChangeFirstToken) {
+            return { ...user, firstToken };
+          }
+          return user;
+        })
+      );
     }
 
     setPopup(null);
@@ -244,11 +255,17 @@ export default function Dashboard() {
     const username = e.target[0].value;
     const password = e.target[1].value;
     const code = e.target[2].value;
-    const shouldRedirectOnLimit = e.target[3].checked;
+    const firstToken = e.target[3].value;
+    const shouldRedirectOnLimit = e.target[4].checked;
 
-    if (username === "" || password === "" || domainForUserInput === "") {
+    if (
+      username === "" ||
+      password === "" ||
+      domainForUserInput === "" ||
+      firstToken === ""
+    ) {
       alert(
-        "You need to provide valid username and password and domain and code"
+        "You need to provide valid username and password and domain and first token"
       );
       return;
     }
@@ -264,6 +281,7 @@ export default function Dashboard() {
         password,
         domain: domainForUserInput,
         code,
+        firstToken,
         shouldRedirectOnLimit,
       }),
     });
@@ -273,6 +291,8 @@ export default function Dashboard() {
       // remove the input values
       e.target[0].value = "";
       e.target[1].value = "";
+      e.target[2].value = "";
+      e.target[3].value = "";
 
       // close the popup
       setPopup(null);
@@ -498,7 +518,7 @@ export default function Dashboard() {
             <h1>Change First Token</h1>
             <input
               type="text"
-              defaultValue={token.firstToken}
+              defaultValue={userTokenForChangeFirstToken}
               placeholder="Change First Token"
             />
             <button className="btn" type="submit">
@@ -520,6 +540,7 @@ export default function Dashboard() {
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
             <input type="text" placeholder="Affiliate profile code" />
+            <input type="text" placeholder="First Token" />
             <label htmlFor="check">Redirect to Error page</label>
             <input type="checkbox" id="check" />
             <select
@@ -624,6 +645,7 @@ export default function Dashboard() {
                   <th>Code</th>
                   <th>Redirect</th>
                   <th>Delete</th>
+                  <th>Change First Token</th>
                 </tr>
               </thead>
               <tbody>
@@ -667,6 +689,22 @@ export default function Dashboard() {
                           </button>
                         )}
                       </>
+                    </td>
+                    <td>
+                      <button
+                        style={{
+                          fontSize: "0.8rem",
+                          wordBreak: "keep-all",
+                        }}
+                        className="btn"
+                        onClick={() => {
+                          setPopup("ChangeFirstToken");
+                          setUserIdForChangeFirstToken(user._id);
+                          setUserTokenForChangeFirstToken(user.firstToken);
+                        }}
+                      >
+                        Change
+                      </button>
                     </td>
                   </tr>
                 ))}

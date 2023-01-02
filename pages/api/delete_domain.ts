@@ -8,6 +8,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await dbConnect();
+
   const { token } = req.cookies;
   const { _id } = req.body;
 
@@ -21,8 +23,6 @@ export default async function handler(
   const { username } = jwt.verify(token, process.env.JWT_SECRET) as {
     username: string;
   };
-
-  await dbConnect();
 
   // Find the adminUser with the given username
   // @ts-ignore

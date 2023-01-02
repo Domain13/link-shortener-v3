@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  firstToken: {
+    type: String,
+    default: "",
+  },
 });
 
 userSchema.pre("save", function (next) {

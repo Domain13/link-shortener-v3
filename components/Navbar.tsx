@@ -93,7 +93,7 @@ export default function Navbar() {
                     >
                       Change Youtube Token
                     </button>
-                    <button
+                    {/* <button
                       className="option"
                       onClick={() => {
                         setPopup("ChangeFirstToken");
@@ -101,7 +101,7 @@ export default function Navbar() {
                       }}
                     >
                       Change First Token
-                    </button>
+                    </button> */}
                     {/* <button
                       className="option"
                       onClick={() => {

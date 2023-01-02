@@ -12,9 +12,9 @@ const stateSchema = new Schema({
   youtubeToken: {
     type: String,
   },
-  firstToken: {
-    type: String,
-  },
+  // firstToken: {
+  //   type: String,
+  // },
 });
 
 export default mongoose.models.State || mongoose.model("State", stateSchema);
