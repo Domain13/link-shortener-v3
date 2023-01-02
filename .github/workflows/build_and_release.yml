@@ -9,13 +9,16 @@ jobs:
   build_and_release:
     runs-on: ubuntu-latest
     steps:
+      - name: List Files
+        run: ls -la
+
+      - name: Go to scripts directory
+        run: cd link-shortener/scripts
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-
-      # - name: Go to scripts directory
-      #   run: pwd && ls && cd scripts
 
       - name: Build in Release Mode
         run: cargo build --manifest-path link-shortener/scripts/Cargo.toml --release
