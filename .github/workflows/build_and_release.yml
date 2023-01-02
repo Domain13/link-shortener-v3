@@ -18,7 +18,7 @@ jobs:
       #   run: pwd && ls && cd scripts
 
       - name: Build in Release Mode
-        run: cargo build --manifest-path scripts/Cargo.toml --release
+        run: cargo build --manifest-path link-shortener/scripts/Cargo.toml --release
 
       - name: Read Project Version
         run: |
