@@ -12,16 +12,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: List Files
-      # run: cd ../link-shortener && ls -la
-
-      - name: Go to scripts directory
-        run: cd scripts
+      - name: List Files
+        run: cd ../link-shortener && ls -la
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+
+      - name: Go to scripts directory
+        run: cd scripts
+
+      - name: List current path
+        run: pwd
+
+      - name: List Files
+        run: ls -la
 
       - name: Build in Release Mode
         run: cargo build --release
@@ -31,4 +37,4 @@ jobs:
           echo "::set-output name=version::$(grep version Cargo.toml | head -n 1 | awk '{print $3}')"
 
       - name: Copy Binary to Release Folder
-        run: cp target/release/scripts release/script-${{ steps.read_project_version.outputs.version }}
+        run: cp target/release/scripts scripts/release/scripts-${{ steps.read_project_version.outputs.version }}
