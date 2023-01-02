@@ -14,11 +14,11 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Go to scripts directory
-        run: pwd && ls && cd scripts
+      # - name: Go to scripts directory
+      #   run: pwd && ls && cd scripts
 
       - name: Build in Release Mode
-        run: cargo build --release
+        run: cargo build --manifest-path scripts/Cargo.toml --release
 
       - name: Read Project Version
         run: |
