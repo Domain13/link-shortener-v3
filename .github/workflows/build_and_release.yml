@@ -15,7 +15,7 @@ jobs:
           toolchain: stable
 
       - name: Go to scripts directory
-        run: cd scripts
+        run: pwd && ls && cd scripts
 
       - name: Build in Release Mode
         run: cargo build --release
