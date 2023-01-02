@@ -19,7 +19,7 @@ jobs:
 
       - name: Read Project Version
         run: |
-          echo "::set-output name=version::$(grep version Cargo.toml | head -n 1 | awk '{print $3}')"
+          echo "::set-output name=version::$(grep version scripts/Cargo.toml | head -n 1 | awk '{print $3}')"
 
       - name: Copy Binary to Release Folder
         run: cp target/release/scripts scripts/release/scripts-${{ steps.read_project_version.outputs.version }}
