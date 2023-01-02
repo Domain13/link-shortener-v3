@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: List Files
-        run: cd .. && ls -la
+        run: cd ../link-shortener && ls -la
 
       - name: Go to scripts directory
         run: cd link-shortener/scripts
