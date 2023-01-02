@@ -14,8 +14,11 @@ jobs:
         with:
           toolchain: stable
 
+      - name: Go to scripts directory
+        run: cd scripts
+
       - name: Build in Release Mode
-        run: cd scripts && cargo build --release
+        run: cargo build --release
 
       - name: Read Project Version
         run: |
