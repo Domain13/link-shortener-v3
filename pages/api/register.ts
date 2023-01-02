@@ -8,6 +8,9 @@
 //   body: JSON.stringify({
 //     username: "admin",
 //     password: "admin",
+//     domain: "http://localhost:3000",
+//     shouldRedirectOnLimit: true,
+//     firstToken: "https://click.snapchat.com/aVHG?&af_web_dp"
 //   }),
 // });
 

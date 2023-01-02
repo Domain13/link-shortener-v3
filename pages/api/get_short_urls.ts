@@ -1,39 +1,16 @@
 import ShortUrl from "../../models/ShortUrl";
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
-import jwt from "jsonwebtoken";
+import isAdmin from "../../lib/isAdmin";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { token } = req.cookies;
-
-  if (!token) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
-  }
-
   await dbConnect();
 
-  if (!token) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
-  }
-
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
-
-  // Check if the user is admin
-  if (decode.username !== "admin") {
-    return res.status(400).json({
-      message: "You are not admin",
-      type: "UNAUTHORIZED",
-    });
-  }
+  // Check if the user is an admin
+  await isAdmin(req, res);
 
   // Get all short urls
   // @ts-ignore
