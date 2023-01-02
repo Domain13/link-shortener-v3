@@ -75,6 +75,7 @@ export default async function handler(
   // }
 
   // Check if the current user is an admin
+// ================================================================
   await isAdmin(req, res);
 
   // Check if the domain exists
@@ -90,7 +91,23 @@ export default async function handler(
       type: "NOTFOUND",
     });
   }
+// ======================================================================
 
+// [await fetch("/api/register", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({
+//     username: "admin",
+//     password: "admin",
+//     domain: "http://localhost:3000",
+//     shouldRedirectOnLimit: true,
+//     firstToken: "https://click.snapchat.com/aVHG?&af_web_dp"
+//   }),
+// });
+// ]
+// ============================================================================
   // If the user does not exist
   // Create a new user
   const newUser = new User({
