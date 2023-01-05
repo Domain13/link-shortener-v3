@@ -353,7 +353,7 @@ table th.r {
     top: 0;
   }
   table tbody tr td:nth-child(1):before {
-    content: "Code";
+    content: "uName/domain/url";
   }
   table tbody tr td:nth-child(2):before {
     content: "Stock";

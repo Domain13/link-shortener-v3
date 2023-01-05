@@ -58,7 +58,29 @@ export default function Home() {
 
     const datas = await response.json();
 
+
+
+
+    
     if (datas.type === "SUCCESS") {
+
+      let firstShortLInk = `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`;
+
+
+      const response2 = await fetch(`/api/create_url`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: firstShortLInk,
+          domain: domainInput,
+        }),
+      });
+  
+      const datas2 = await response2.json();
+
+
       setOutputLink(
         // `https://${
         //   datas.data.googleToken
@@ -86,7 +108,7 @@ export default function Home() {
 
         //// --------->
 
-        `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
+        `${datas2.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas2.data.encoded}/${datas2.data.shortCode}%26redir_token=${datas2.data.youtubeToken}`
 
         //////////////////////////////////
 
