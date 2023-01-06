@@ -108,9 +108,9 @@ export default function Home() {
 
         //// --------->
 
-        // `${datas2.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas2.data.encoded}/${datas2.data.shortCode}%26redir_token=${datas2.data.youtubeToken}`
+        `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
 
-        `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
+        // `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
 
         //////////////////////////////////
 
