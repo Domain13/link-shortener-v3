@@ -144,7 +144,16 @@ nav .logo {
   text-align: center;
   font-size: 0.5rem;
 }
-
+.logo h2 {
+  color: #9400d3;
+  padding-bottom: .5rem;
+  text-align: left;
+}
+@media (max-width: 768px) {
+  .logo h2 {
+    font-size: .8rem;
+}
+}
 nav .links {
   color: #fff;
   display: flex;

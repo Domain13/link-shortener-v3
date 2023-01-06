@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <nav>
       <div className="logo">
-        <h1>Url Shortener</h1>
+      <h2>শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের ওয়াটসয়্যাপ নাম্বারে যোগাযোগ করুন... <br /><br /> ০১৬৬০০৩৭৩৫৯ </h2>
       </div>
 
       <div className="links">
