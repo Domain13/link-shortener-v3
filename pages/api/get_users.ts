@@ -1,32 +1,35 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
-import jwt from "jsonwebtoken";
+import isAdmin from "../../lib/isAdmin";
 import User from "../../models/User";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { token } = req.cookies;
+  // const { token } = req.cookies;
 
   await dbConnect();
 
-  if (!token) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
-  }
+  // if (!token) {
+  //   return res.status(400).json({
+  //     message: "Token is not provided",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
 
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
+  // const decode = jwt.verify(token, process.env.JWT_SECRET);
+
+  // // Check if the user is admin
+  // if (decode.username !== "admin") {
+  //   return res.status(400).json({
+  //     message: "You are not admin",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
 
   // Check if the user is admin
-  if (decode.username !== "admin") {
-    return res.status(400).json({
-      message: "You are not admin",
-      type: "UNAUTHORIZED",
-    });
-  }
+  await isAdmin(req, res);
 
   //   Now get all users
   //   @ts-ignore
