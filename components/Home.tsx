@@ -64,21 +64,21 @@ export default function Home() {
     
     if (datas.type === "SUCCESS") {
 
-      let firstShortLInk = `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`;
+      // let firstShortLInk = `${datas.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas.data.encoded}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`;
 
 
-      const response2 = await fetch(`/api/create_url`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url: firstShortLInk,
-          domain: domainInput,
-        }),
-      });
+      // const response2 = await fetch(`/api/create_url`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     url: firstShortLInk,
+      //     domain: domainInput,
+      //   }),
+      // });
   
-      const datas2 = await response2.json();
+      // const datas2 = await response2.json();
 
 
       setOutputLink(
@@ -108,13 +108,15 @@ export default function Home() {
 
         //// --------->
 
-        `${datas2.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas2.data.encoded}/${datas2.data.shortCode}%26redir_token=${datas2.data.youtubeToken}`
+        // `${datas2.data.firstToken}=https://www.yo%75%74%75be.com/redirect?q=${datas2.data.encoded}/${datas2.data.shortCode}%26redir_token=${datas2.data.youtubeToken}`
+
+        `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
 
         //////////////////////////////////
 
         // QUFFLUhqbTVFWERGUFQ3enFxM0tWRUhwSGlNcEphZFFlUXxBQ3Jtc0ttR0Rfa2FiWG53X2JtdHB3QW9LREhoTTc5MmlHMnJZZXBlR3FGdFIyanA2aDZRdTNsR1lWSWFhVGJNenVkOUpkeWYwVGlQa0ZvZm1ld3JacUI1enhjLXlOVUs1dHl6ZzBwVjZzV18zMGRCbGwzWXRtVQ
       );
-
+        console.log(datas)
       setCopyMsg(
         <>
           <i className="fa-solid fa-copy"></i> Copy
