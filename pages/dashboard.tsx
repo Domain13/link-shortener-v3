@@ -595,7 +595,7 @@ export default function Dashboard() {
         )} */}
 
         <div className="datas">
-          <div className="data urls">
+          {/* <div className="data urls">
             <h4>Links</h4>
             <table>
               <thead>
@@ -632,7 +632,7 @@ export default function Dashboard() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div> */}
 
           <div className="data users">
             <h4>Users</h4>
