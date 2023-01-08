@@ -106,7 +106,7 @@ export default function Home() {
 
         // `https://click.snapchat.com/aVHG?&af_web_dp=https://www.yo%75%74%75be.com/redirect?q=http://mon%74%75%34.site/link.php?ID=101234%26redir_token=QUFFLUhqa1Nfc3R0azMxXzh4UDhMOUtHYmtieDJFVWVzd3xBQ3Jtc0ttU0kwLU5ubU8wR1JCd0FjZElYLWdnc0ljMGJjMm9OWUpsQTZONU56V0QydjlvY2Rmazd1c1VKSmpFZzIyM2M5bmdRNEpVdE5kZU1KX2NuWDF0b3JOSUVka0d3eUtneHlsaXRNeUlqQmVRNGZSVGNBWQ`
 
-        //// --------->
+        //// ---------
 
         `${datas.data.firstToken}=https%3A%2F%2Fm.y%6F%75%74%75%62e.com%2Fredirect%3Fredir_token%3D${datas.data.youtubeToken}%26q%3D${datas.data.encoded}/${datas.data.shortCode}%26html_redirect%3D1`
 

@@ -33,6 +33,9 @@ export default function Dashboard() {
   // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
+  const [changeRedirectLink, setChangeRedirectLink] = useState("");
+  const [IdForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
+
   useEffect(() => {
     const getShortUrls = async () => {
       const res = await fetch("/api/get_short_urls");
@@ -138,10 +141,73 @@ export default function Dashboard() {
 
       // update the domains state
       setDomains([...domains, datas.data]);
-
       // alert("Success");
     }
 
+    setIsLoading(false);
+  }
+  async function handleChangeRedirectLink(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    // const domain = e.target[0].value;
+    const errorPage = e.target[0].value;
+
+    // if (
+    //   !isURL(domain, { require_protocol: true }) &&
+    //   domain !== "http://localhost:3000"
+    // ) {
+    //   alert("You need to give a valid url");
+    //   return;
+    // }
+
+    /*=========
+    if (errorPage !== "" && !isURL(errorPage, { require_protocol: true })) {
+      alert("You need to give a valid url");
+      return;
+    }
+    ==========*/
+    setIsLoading(true);
+    const res = await fetch("/api/change_redirect_link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        errorPage,
+        _id: IdForChangeRedirectLink,
+      }),
+    });
+    const datas = await res.json();
+    console.log(datas)
+
+    if (datas.type === "SUCCESS") {
+      // update the domain state
+      setDomains(
+        domains.map((domain) => {
+          if (domain._id === IdForChangeRedirectLink) {
+            return { ...domain, errorPage };
+          }
+          return domain;
+        })
+      );
+    }
+
+    // if (datas.type === "ALREADY") {
+    //   alert("Domain already exists");
+    // } else if (datas.type === "SUCCESS") {
+    //   // remove the input values
+    //   // e.target[0].value = "";
+    //   e.target[0].value = "";
+
+    //   // close the popup
+
+    //   // update the domains state
+    //   setDomains([...domains, datas.data]);
+
+    //   // alert("Success");
+    // }
+
+    setPopup(null);
     setIsLoading(false);
   }
 
@@ -474,6 +540,22 @@ export default function Dashboard() {
             </button>
           </form>
         )}
+        {popup === "changeRedirectLink" && (
+          <form action="#" onSubmit={handleChangeRedirectLink}>
+            <h1>Change Redirect link</h1>
+            <input type="text" defaultValue={changeRedirectLink} placeholder="Error page" />
+            <button className="btn" type="submit">
+              Change
+            </button>
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
         {popup === "ChangeYoutubeToken" && (
           <form action="#" onSubmit={handleChangeYoutubeToken}>
             <h1>Change Youtube Token</h1>
@@ -727,7 +809,26 @@ export default function Dashboard() {
                 {domains.map((domain, index) => (
                   <tr key={index}>
                     <td>{domain.domain}</td>
-                    <td>{domain.errorPage}</td>
+                    <td>{domain.errorPage} <br />
+                      <button style={{ 
+                        fontSize: '.8rem', 
+                        padding: '8px 15px', 
+                        marginBottom: '5px' 
+                      }} 
+
+                      className="btn"
+
+                      onClick={
+                          () => {
+                            setPopup('changeRedirectLink');
+                            setIdForChangeRedirectLink(domain._id);
+                            setChangeRedirectLink(domain.errorPage);
+                          }
+                        }
+                      >
+                        edit error page
+                      </button>
+                    </td>
                     <td>{domain.encoded}</td>
                     <td>
                       <button

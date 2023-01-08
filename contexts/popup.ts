@@ -7,6 +7,7 @@ export type PopupType =
   | "CreateUser"
   | "ChangePassword"
   | "ChangeFirstToken"
+  | "changeRedirectLink"
   | null;
 
 export type PopupContextType = {
