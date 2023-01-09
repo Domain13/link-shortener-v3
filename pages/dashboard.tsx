@@ -33,6 +33,9 @@ export default function Dashboard() {
   // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
+  const [changeRedirectLink, setChangeRedirectLink] = useState("");
+  const [IdForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
+
   useEffect(() => {
     const getShortUrls = async () => {
       const res = await fetch("/api/get_short_urls");
@@ -138,10 +141,73 @@ export default function Dashboard() {
 
       // update the domains state
       setDomains([...domains, datas.data]);
-
       // alert("Success");
     }
 
+    setIsLoading(false);
+  }
+  async function handleChangeRedirectLink(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    // const domain = e.target[0].value;
+    const errorPage = e.target[0].value;
+
+    // if (
+    //   !isURL(domain, { require_protocol: true }) &&
+    //   domain !== "http://localhost:3000"
+    // ) {
+    //   alert("You need to give a valid url");
+    //   return;
+    // }
+
+    /*=========
+    if (errorPage !== "" && !isURL(errorPage, { require_protocol: true })) {
+      alert("You need to give a valid url");
+      return;
+    }
+    ==========*/
+    setIsLoading(true);
+    const res = await fetch("/api/change_redirect_link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        errorPage,
+        _id: IdForChangeRedirectLink,
+      }),
+    });
+    const datas = await res.json();
+    console.log(datas)
+
+    if (datas.type === "SUCCESS") {
+      // update the domain state
+      setDomains(
+        domains.map((domain) => {
+          if (domain._id === IdForChangeRedirectLink) {
+            return { ...domain, errorPage };
+          }
+          return domain;
+        })
+      );
+    }
+
+    // if (datas.type === "ALREADY") {
+    //   alert("Domain already exists");
+    // } else if (datas.type === "SUCCESS") {
+    //   // remove the input values
+    //   // e.target[0].value = "";
+    //   e.target[0].value = "";
+
+    //   // close the popup
+
+    //   // update the domains state
+    //   setDomains([...domains, datas.data]);
+
+    //   // alert("Success");
+    // }
+
+    setPopup(null);
     setIsLoading(false);
   }
 
@@ -474,6 +540,22 @@ export default function Dashboard() {
             </button>
           </form>
         )}
+        {popup === "changeRedirectLink" && (
+          <form action="#" onSubmit={handleChangeRedirectLink}>
+            <h1>Change Redirect link</h1>
+            <input type="text" defaultValue={changeRedirectLink} placeholder="Error page" />
+            <button className="btn" type="submit">
+              Change
+            </button>
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
         {popup === "ChangeYoutubeToken" && (
           <form action="#" onSubmit={handleChangeYoutubeToken}>
             <h1>Change Youtube Token</h1>
@@ -610,11 +692,11 @@ export default function Dashboard() {
               <tbody>
                 {shortUrls.map((url) => (
                   <tr key={url._id}>
-                    <td data-th="Short Code">{url.shortCode}</td>
-                    <td data-th="Original Url">{url.originalUrl}</td>
-                    <td data-th="Clicks">{url.clicks}</td>
-                    <td data-th="Custom Domain">{url.domain}</td>
-                    <td data-th="Option">
+                    <td>{url.shortCode}</td>
+                    <td>{url.originalUrl}</td>
+                    <td>{url.clicks}</td>
+                    <td>{url.domain}</td>
+                    <td>
                       <button
                         style={{
                           fontSize: "0.8rem",
@@ -651,18 +733,19 @@ export default function Dashboard() {
               <tbody>
                 {users.map((user) => (
                   <tr key={user._id}>
-                    <td data-th="Username">{user.username}</td>
-                    <td data-th="Role">{user.role}</td>
-                    <td data-th="Domain">{user.domain}</td>
-                    <td data-th="Code">{user.code}</td>
-                    <td data-th="Redirect" className="redirect">
+                    <td>{user.username}</td>
+                    <td>{user.role}</td>
+                    <td>{user.domain}</td>
+                    <td>{user.code}</td>
+                    <td>
                       Status: <b>{user.shouldRedirectOnLimit ? "On" : "Off"}</b>
                       <button
                         className="btn"
                         style={{
-                          fontSize: "0.7rem",
+                          fontSize: "0.8rem",
                           wordBreak: "keep-all",
-                          padding: "8px 12px",
+                          margin: "0 0.2rem",
+                          padding: "0.8rem",
                         }}
                         onClick={() => {
                           handleChangeRedirectConfig(user._id);
@@ -671,7 +754,7 @@ export default function Dashboard() {
                         Turn {user.shouldRedirectOnLimit ? "Off" : "On"}
                       </button>
                     </td>
-                    <td data-th="Delete">
+                    <td>
                       <>
                         {user.role !== "admin" && (
                           <button
@@ -689,7 +772,7 @@ export default function Dashboard() {
                         )}
                       </>
                     </td>
-                    <td data-th="Change first token">
+                    <td>
                       <button
                         style={{
                           fontSize: "0.8rem",
@@ -725,10 +808,29 @@ export default function Dashboard() {
               <tbody>
                 {domains.map((domain, index) => (
                   <tr key={index}>
-                    <td data-th="Domain">{domain.domain}</td>
-                    <td data-th="Error page">{domain.errorPage}</td>
-                    <td data-th="Encoded">{domain.encoded}</td>
-                    <td data-th="Option">
+                    <td>{domain.domain}</td>
+                    <td>{domain.errorPage} <br />
+                      <button style={{ 
+                        fontSize: '.8rem', 
+                        padding: '8px 15px', 
+                        marginBottom: '5px' 
+                      }} 
+
+                      className="btn"
+
+                      onClick={
+                          () => {
+                            setPopup('changeRedirectLink');
+                            setIdForChangeRedirectLink(domain._id);
+                            setChangeRedirectLink(domain.errorPage);
+                          }
+                        }
+                      >
+                        edit error page
+                      </button>
+                    </td>
+                    <td>{domain.encoded}</td>
+                    <td>
                       <button
                         className="btn red"
                         style={{

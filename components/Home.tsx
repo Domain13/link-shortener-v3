@@ -108,7 +108,7 @@ export default function Home() {
 
         //// ---------
 
-        `${datas.data.firstToken}=https%3A%2F%2Fm.y%6F%75%74%75%62e.com%2Fredirect%3Fredir_token%3D${datas.data.youtubeToken}%26q%3D${datas.data.encoded}/${datas.data.shortCode}%26html_redirect%3D1`
+        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}&html_redirect=1`
 
         // `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
 
@@ -116,7 +116,7 @@ export default function Home() {
 
         // QUFFLUhqbTVFWERGUFQ3enFxM0tWRUhwSGlNcEphZFFlUXxBQ3Jtc0ttR0Rfa2FiWG53X2JtdHB3QW9LREhoTTc5MmlHMnJZZXBlR3FGdFIyanA2aDZRdTNsR1lWSWFhVGJNenVkOUpkeWYwVGlQa0ZvZm1ld3JacUI1enhjLXlOVUs1dHl6ZzBwVjZzV18zMGRCbGwzWXRtVQ
       );
-        console.log(datas)
+
       setCopyMsg(
         <>
           <i className="fa-solid fa-copy"></i> Copy
