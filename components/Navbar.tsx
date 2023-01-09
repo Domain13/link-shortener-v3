@@ -59,7 +59,7 @@ console.log(user)
               </Link>
             )}
             {user.role === "user" && (
-              <p style={{borderRadius: '1rem', padding: '5px 10px', background: 'gray', display: 'flex'}}><img height={'30px'} src="./user.png" alt="user icon" />{user.username}</p>
+              <p style={{borderRadius: '1rem', padding: '5px 10px', background: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px'}}><img height={'25px'} src="./user.png" alt="user icon" />  {user.username}</p>
             )}
             {isDashboard && (
               <>
