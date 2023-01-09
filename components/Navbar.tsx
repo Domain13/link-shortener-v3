@@ -37,11 +37,11 @@ export default function Navbar() {
       setIsLoading(false);
     }
   }
-
+console.log(user)
   return (
     <nav>
       <div className="logo">
-      <h2>শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের ওয়াটসয়্যাপ নাম্বারে যোগাযোগ করুন... <br /><br /> ০১৬৬০০৩৭৩৫৯ </h2>
+      <h2>শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের Whatsapp নাম্বারে যোগাযোগ করুন... <br /> ০১৬৬০০৩৭৩৫৯ </h2>
       </div>
 
       <div className="links">
@@ -58,7 +58,9 @@ export default function Navbar() {
                 <a className="link">Dashboard</a>
               </Link>
             )}
-
+            {user.role === "user" && (
+              <p style={{borderRadius: '1rem', padding: '5px 10px', background: 'gray', display: 'flex'}}><img height={'30px'} src="./user.png" alt="user icon" />{user.username}</p>
+            )}
             {isDashboard && (
               <>
                 <div className="menu">
