@@ -34,6 +34,11 @@ main{
 form h1 {
   font-size: 1.2rem;
 }
+hr {
+    border-top: 2px solid #fff;
+    width: 100%;
+    border-color: #fff;
+}
 /* common button style  */
 .btn {
   background-color: springgreen;
@@ -131,10 +136,12 @@ textarea {
 }
 
 label {
-  color: lightgray;
-  align-self: flex-start;
-  text-indent: 0.5rem;
-  margin-top: .5rem;
+  color: #000;
+  align-self: center;
+  margin: .2rem 0;
+  padding: 2px 0;
+  width: 100%;
+  border-radius: 5px;
 }
 select {
   padding: 1rem 0.5rem;
@@ -173,11 +180,19 @@ nav .logo {
 .logo img{
   height: 3rem;
 }
-.logo h2 {
+.notice{
   color: springgreen;
   padding-bottom: .5rem;
   text-align: left;
   text-shadow: 0 3px 3px #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+marquee{
+  max-width: 200px !important;
+  background-color: tomato;
+  padding-top: 6px;
+  border-radius: 5px;
 }
 nav .links {
   color: #fff;
@@ -233,13 +248,12 @@ nav .links .link:active {
     padding: 1rem 0;
     margin-top: 140px;
 }
-
 }
 
 
 @media (max-width:320px) {
   select {
-    margin: 0 -10%;
+    margin: 0 -7%;
   }
 }
 

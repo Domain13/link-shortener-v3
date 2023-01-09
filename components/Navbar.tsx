@@ -41,26 +41,45 @@ console.log(user)
   return (
     <nav>
       <div className="logo">
-      <h2>শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের Whatsapp নাম্বারে যোগাযোগ করুন... <br /> ০১৬৬০০৩৭৩৫৯ </h2>
+      {
+        user && user.role == "user" ? (
+          <p className="link" style={{
+            borderRadius: '1rem',
+            padding: '5px 10px',
+            background: 'gray',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            gap: '5px',
+            color: 'springgreen',
+            textShadow: '0 2px 2px #000',
+            fontSize: '.8rem'
+            }}>
+            <img style={{height: '25px'}} src="./user.png" alt="user icon" /> {user.username}
+        </p>
+
+          ) : (
+            <h2 className="notice">শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের Whatsapp নাম্বারে যোগাযোগ করুন... <br /> ০১৬৬০০৩৭৩৫৯ </h2>
+            )
+          }
       </div>
 
       <div className="links">
         {user ? (
           <>
-            <>
+            {user.role === "admin" && (
               <Link href="/">
                 <a className="link">Home</a>
               </Link>
-            </>
-
+            )}
             {user.role === "admin" && (
               <Link href="/dashboard">
                 <a className="link">Dashboard</a>
               </Link>
             )}
-            {user.role === "user" && (
-              <p style={{borderRadius: '1rem', padding: '5px 10px', background: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px'}}><img height={'25px'} src="./user.png" alt="user icon" />  {user.username}</p>
-            )}
+            {/* {user.role === "user" && (
+
+            )} */}
             {isDashboard && (
               <>
                 <div className="menu">

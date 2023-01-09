@@ -328,8 +328,8 @@ export default function Dashboard() {
       username === "" ||
       password === "" ||
       domainForUserInput === "" 
-      // ||
-      // firstToken === ""
+      ||
+      firstToken === ""
     ) {
       alert(
         "You need to provide valid username and password and domain and first token"

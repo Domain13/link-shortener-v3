@@ -112,7 +112,7 @@ export default function Home() {
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         `${datas.data.firstToken}https://www.yo%75%74%75be.com/redirect?q=${encodLink}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
-        
+
         // `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
 
         //////////////////////////////////
@@ -155,6 +155,9 @@ export default function Home() {
       </Head>
       <h1>URL Shortener</h1>
       <form onSubmit={handleSubmit}>
+        <marquee className="notice" behavior="scroll" direction="left">শর্টনার এবং যে কোনো আপডেট এর জন্য নিচের Whatsapp নাম্বারে যোগাযোগ করুন...</marquee>
+      <a href="tel:+8801660037359" style={{display: 'flex'}} className="notice"><img style={{filter: 'drop-shadow(0 3px 3px #000)', height: '25px'}} src="./whatsapp.png" alt="Whatsapp icon" /> ০১৬৬০০৩৭৩৫৯ </a>
+        <hr />
         <label htmlFor="domain">Select your domain</label>
         <select
           value={domainInput}
