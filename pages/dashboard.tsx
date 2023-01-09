@@ -327,8 +327,9 @@ export default function Dashboard() {
     if (
       username === "" ||
       password === "" ||
-      domainForUserInput === "" ||
-      firstToken === ""
+      domainForUserInput === "" 
+      // ||
+      // firstToken === ""
     ) {
       alert(
         "You need to provide valid username and password and domain and first token"

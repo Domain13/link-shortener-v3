@@ -80,6 +80,7 @@ export default function Home() {
   
       // const datas2 = await response2.json();
 
+      const encodLink = encodeURIComponent(domainInput);
 
       setOutputLink(
         // `https://${
@@ -108,7 +109,7 @@ export default function Home() {
 
         //// ---------
 
-        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}&html_redirect=1`
+        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         // `https://za.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${domainInput}/${datas.data.shortCode}`
 
