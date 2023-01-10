@@ -109,7 +109,9 @@ export default function Home() {
 
         //// ---------
 
-        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
+        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
+
+        `https://www.youtube.com/redirect?q=${encodLink}/${datas.data.shortCode}`
 
         // `${datas.data.firstToken}https://www.yo%75%74%75be.com/redirect?q=${encodLink}/${datas.data.shortCode}%26redir_token=${datas.data.youtubeToken}`
 
