@@ -111,7 +111,12 @@ export default function Home() {
 
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
-        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&html_redirect=1&q=${encodLink}/${datas.data.shortCode}`
+        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&html_redirect=1&q=${encodLink}/${datas.data.shortCode}`
+
+        
+        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.fr%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
+
+        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=http://facebook.com/l.php?u=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         // https://www.youtube.com/redirect?q=${encodLink}/${datas.data.shortCode}
 
