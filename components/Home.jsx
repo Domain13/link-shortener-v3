@@ -118,7 +118,9 @@ export default function Home() {
 
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=http://facebook.com/l.php?u=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
-        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.ca%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
+        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.ca%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
+        
+        `https://www.google.co.za/url?q=${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY`
 
         // https://www.youtube.com/redirect?q=${encodLink}/${datas.data.shortCode}
 
