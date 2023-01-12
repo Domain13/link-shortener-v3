@@ -89,10 +89,7 @@ export default function Home() {
         //   /* domainInput */ datas.data.encoded + "/" + datas.data.shortCode
         // }%26redir_token=${datas.data.youtubeToken}`
         //
-        //
-        // QUFFLUhqbmEtYl8tTUpnNkROaVZieXktNVNjMnZCQ0xrd3xBQ3Jtc0tuUGVJSjdvVkpyREJLYkllU0FQQlBORjVRdXhjb1ZWTTBoenVQcklkd2taWDd3TExLa0R3WU9YYVhaVnkycjVoTFo3Vm8zdFZFTXJqTDNWVWMxMXRmVnpoYTBRam5xS2NFT1BBd0tleWpkV2JGYUxiRQ
-
-        // `https://www.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${datas.data.googleToken}%2Furl%3Fq%3D${datas.data.encoded}/${datas.data.shortCode}%26sa%3DD%26sntz%3D1%26usg%3DAOvVaw27yxYrnRF4u9JVhDFfNSCl&html_redirect=1`
+   
 
         // working one
         // `https://www.youtube.com/redirect?event=comments&redir_token=QUFFLUhqbDZEWHVhVG1ZWW1OcFZiZGJNQ2NDdVI5VzIxZ3xBQ3Jtc0ttaHVmWjB1S1k5U3hpb3ZCZW56ZDVFZE9BdHU4ZkgtTHFpYi14U2dJN0ExZl80Ukp2UHFsLUJ2X2JNWVlkX1hHb0RrRnlqN3hsMVk1SGdQZ0ZZSy1yMmY5Z0ZFcjlPLVRORHRodms2b2pudmhTa1JpOA&q=google.co.jp%2Furl%3Fq%3Dhttp%253A%252F%252Flocalhost%253A3000/tfIDNg0O4%26sa%3DD%26sntz%3D1%26usg%3DAOvVaw27yxYrnRF4u9JVhDFfNSCl&html_redirect=1`
@@ -109,18 +106,14 @@ export default function Home() {
 
         //// ---------
 
-        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
-
-        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&html_redirect=1&q=${encodLink}/${datas.data.shortCode}`
-
-        
-        // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.fr%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=http://facebook.com/l.php?u=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.ca%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
-        
-        `https://www.google.co.za/url?q=${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY`
+
+        // `https://www.google.co.za/url?q=${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY`
+
+        `https://www.youtube.nl/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.nl%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
         // https://www.youtube.com/redirect?q=${encodLink}/${datas.data.shortCode}
 
