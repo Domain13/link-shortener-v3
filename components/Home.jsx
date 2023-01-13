@@ -113,7 +113,9 @@ export default function Home() {
 
         // `https://www.google.co.za/url?q=${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY`
 
-        `https://www.youtube.nl/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.nl%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY&html_redirect=1`
+        // `https://www.youtube.nl/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.nl%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}&sa=D&sntz=1&usg=AOvVaw2T66DeaeNd-xuz6JWd33MY&html_redirect=1`
+
+        `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=https%3A%2F%2Fwww.google.ca%2Furl%3Fq%3D${encodLink}/${datas.data.shortCode}%26sa%3DD%26sntz%3D1%26usg%3DAOvVaw3IvPMMA_qOQF8ZNlQeELzf&html_redirect=1`
 
         // `${domainInput}/${datas.data.shortCode}`
 
