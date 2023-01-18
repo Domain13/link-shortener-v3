@@ -119,7 +119,7 @@ export default function Home() {
 
         `https://www.youtube.com/redirect?event=comments&redir_token=${datas.data.youtubeToken}&q=${encodLink}/${datas.data.shortCode}&html_redirect=1`
 
-
+        //ki baler somossa hoilo
         // `https://www.youtube.com/redirect?redir_token=${datas.data.youtubeToken}&q=%68%74%74%70%3a%2f%2f%67%6f%6f%67%6c%65%61%64%73%2e%67%2e%64%6f%75%62%6c%65%63%6c%69%63%6b%2e%6e%65%74/pcs/click?adurl=${encodLink}/${datas.data.shortCode}&c=R,6,65f05392-f8de-4117-b270-51af0e396896E,&typo=4&html_redirect=1`
 
         
