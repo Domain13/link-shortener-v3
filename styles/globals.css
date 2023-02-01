@@ -490,3 +490,25 @@ table td:before {
   position: absolute;
 
 }
+.landing-page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fc5c7d, #6a82fb);
+  flex-direction: column;
+}
+.btn-offer {
+  background: #fff;
+  border: 0;
+  font-size: 20px;
+  padding: 1rem 4rem;
+  position: relative;
+  animation-name: shake;
+  animation-duration: 9s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  cursor: pointer;
+  color: #000;
+  margin: 3rem 0;
+}

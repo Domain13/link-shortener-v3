@@ -37,7 +37,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
       <Head>
         <title>Join my profile</title>
       </Head>
-
+      
       <div className="landing-page">
         {/* <a className="btn btn-offer" href={link}>
           Join Free
