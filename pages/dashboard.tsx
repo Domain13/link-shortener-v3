@@ -327,8 +327,7 @@ export default function Dashboard() {
     if (
       username === "" ||
       password === "" ||
-      domainForUserInput === "" 
-      ||
+      domainForUserInput === "" ||
       firstToken === ""
     ) {
       alert(
@@ -598,11 +597,11 @@ export default function Dashboard() {
         )}
         {popup === "ChangeFirstToken" && (
           <form action="#" onSubmit={handleChangeFirstToken}>
-            <h1>Change First Token</h1>
+            <h1>Facebook token</h1>
             <input
               type="text"
               defaultValue={userTokenForChangeFirstToken}
-              placeholder="Change First Token"
+              placeholder="Change first token"
             />
             <button className="btn" type="submit">
               Change
@@ -623,7 +622,7 @@ export default function Dashboard() {
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
             <input type="text" placeholder="Affiliate profile code" />
-            <input type="text" placeholder="First Token" />
+            <input type="text" placeholder="Add First Token" />
             <label htmlFor="check">Redirect to Error page</label>
             <input type="checkbox" id="check" />
             <select
@@ -728,7 +727,7 @@ export default function Dashboard() {
                   <th>Code</th>
                   <th>Redirect</th>
                   <th>Delete</th>
-                  <th>Change First Token</th>
+                  <th>Change Fb Token</th>
                 </tr>
               </thead>
               <tbody>

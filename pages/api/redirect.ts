@@ -8,33 +8,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // const { token } = req.cookies;
   const { shortCode } = req.body;
 
   await dbConnect();
-
-  // if (!token) {
-  //   // redirect to 404
-  //   return res.redirect("/404");
-  // }
-
-  // Verify the token
-  // const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-  // Find the user
-  // @ts-ignore
-  // const loggedUser = await User.findOne({
-  //   username: decoded.username,
-  // });
-
-  // If the user is not found
-  // if (!loggedUser) {
-  //   // note found
-  //   return res.json({
-  //     message: "User is not logged in",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
 
   // Find the short url in the database
   // @ts-ignore
@@ -57,9 +33,6 @@ export default async function handler(
     username: shortUrl.username,
   });
 
-  // console.log("User by short url: ", user);
-  // console.log("Logged user: ", loggedUser);
-
   // If the user is not found return 404
   if (!user) {
     return res.json({
@@ -68,29 +41,12 @@ export default async function handler(
     });
   }
 
-  // If the user is not the same as the logged in user return 404
-  // if (user.username !== loggedUser.username) {
-  //   // return res.redirect("/404");
-  //   return res.json({
-  //     message: "User is not the same as the logged in user",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
-
   // +1 to the clicks
   shortUrl.clicks += 1;
   await shortUrl.save();
 
   if (shortUrl.clicks % 5 === 0) {
     if (user.shouldRedirectOnLimit === true) {
-      //   return {
-      //     // redirect to shortUrl.errorPage
-      //     redirect: {
-      //       destination: shortUrl.errorPage,
-      //       permanent: true,
-      //     },
-      //   };
-
       return res.json({
         message: "Redirect to the error page",
         type: "REDIRECT",

@@ -1,8 +1,3 @@
-// create a mongoose schema
-// const mongoose = require('mongoose');
-// const Schema = mongoose.Schema;
-// const shortId = require('shortid');
-
 import mongoose from "mongoose";
 import shortId from "shortid";
 import { Schema } from "mongoose";

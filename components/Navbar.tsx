@@ -37,7 +37,6 @@ export default function Navbar() {
       setIsLoading(false);
     }
   }
-console.log(user)
   return (
     <nav>
       <div className="logo">
@@ -52,7 +51,7 @@ console.log(user)
             alignItems: 'center',
             gap: '5px',
             color: 'springgreen',
-            textShadow: '0 2px 2px #000',
+            // textShadow: '0 2px 2px #000',
             fontSize: '.8rem'
             }}>
             <img style={{height: '25px'}} src="./user.png" alt="user icon" /> {user.username}
@@ -77,9 +76,6 @@ console.log(user)
                 <a className="link">Dashboard</a>
               </Link>
             )}
-            {/* {user.role === "user" && (
-
-            )} */}
             {isDashboard && (
               <>
                 <div className="menu">
