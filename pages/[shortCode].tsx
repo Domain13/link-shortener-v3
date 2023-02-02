@@ -53,7 +53,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
             // }, 2000);
           }}
         >
-          Join Free
+          Click Here
         </button>
         <img
           style={{

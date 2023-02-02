@@ -512,3 +512,28 @@ table td:before {
   color: #000;
   margin: 3rem 0;
 }
+button:hover {
+  animation-name: shakeAnim;
+}
+
+@keyframes shakeAnim {
+  0% {top: 0}
+  1% {top: -5}
+  2% {top: 8px}
+  3% {top: -10px}
+  4% {top: 8px}
+  5% {top: -10px}
+  6% {top: 5}
+  7% {top: 0}
+}
+
+@keyframes shake {
+  0% {top: 0}
+  1% {top: -5}
+  2% {top: 8px}
+  3% {top: -10px}
+  4% {top: 8px}
+  5% {top: -10px}
+  6% {top: 5}
+  7% {top: 0}
+}
