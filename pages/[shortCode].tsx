@@ -23,7 +23,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
     <>
       <Head>
         <title>Join my profile</title>
-        <link rel="shortcut icon" href="snap.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="profile.png" type="image/x-icon" />
       </Head>
 
       <div className="landing-page">
