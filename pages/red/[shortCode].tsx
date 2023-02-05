@@ -17,9 +17,9 @@ export async function getServerSideProps(context) {
     shortCode,
   });
 
-  // console.log("====================================");
-  // console.log("The ShortUrl found is: ", shortUrl);
-  // console.log("====================================");
+  console.log("====================================");
+  console.log("The ShortUrl found is: ", shortUrl);
+  console.log("====================================");
 
   // If there is no short url with the given short url return 404.
   // TODO: Redirect to a errorPage included in the short url or
