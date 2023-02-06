@@ -1,36 +1,39 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import State from "../models/State";
 import dbConnect from "../lib/dbConnect";
-import { useEffect } from "react";
+import ShortUrl from "../models/ShortUrl";
+import User from "../models/User";
 
 export default function RedirectLandingPage({ host, youtubeToken }) {
   const router = useRouter();
   const { shortCode } = router.query;
 
-  // const link = `https://www.youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${router.query.shortCode}&html_redirect=1`;
-  // const link = `https://${host}/red/${router.query.shortCode}`;
-  const link =
-    "vnd.youtube://youtube.com/redirect?event=comments&redir_token=" +
-    youtubeToken +
-    "&q=" +
-    host +
-    "/red/" +
-    router.query.shortCode +
-    "&html_redirect=1" +
-    "&html_redirect=1";
+  // const link =
+  //   "vnd.youtube://youtube.com/redirect?event=comments&redir_token=" +
+  //   youtubeToken +
+  //   "&q=" +
+  //   host +
+  //   "/red/" +
+  //   shortCode +
+  //   "&html_redirect=1" +
+  //   "&html_redirect=1";
+  // let link: string;
+  const [link, setLink] = useState<string>("");
 
-  // useEffect(() => {
-  //   function killPopup() {
-  //     window.removeEventListener("pagehide", killPopup);
-  //   }
-
-  //   window.addEventListener("pagehide", killPopup);
-
-  //   return () => {
-  //     window.removeEventListener("pagehide", killPopup);
-  //   };
-  // }, []);
+  useEffect(() => {
+    // Check if the user is on mobile
+    if (/Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
+      setLink(
+        `vnd.youtube://youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${shortCode}&html_redirect=1&html_redirect=1`
+      );
+    } else {
+      setLink(
+        `https://www.youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${shortCode}&html_redirect=1&html_redirect=1`
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -39,21 +42,14 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
       </Head>
 
       <div className="landing-page">
-        {/* <a className="btn btn-offer" href={link}>
-          Join Free
-        </a> */}
         <button
           className="btn btn-offer"
           onClick={() => {
             // redirect
             router.push(link);
-
-            // setTimeout(() => {
-            //   router.push(link);
-            // }, 2000);
           }}
         >
-          Click Here
+          Join Free
         </button>
         <img
           style={{
@@ -69,23 +65,13 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
   );
 }
 
-// Set a initialProp `redirectPage` to true
-// RedirectLandingPage.getInitialProps = () => {
-//   return {
-//     redirectPage: true,
-//   };
-// };
-
 export async function getServerSideProps(context) {
-  // get the origin
-  // console.log(context.req.headers.host);
+  const { shortCode } = context.query;
 
   await dbConnect();
 
   // @ts-ignore
-  const state = await State.findOne({ shortCode: context.query.shortCode });
-
-  console.log(state);
+  const state = await State.findOne({ shortCode });
 
   if (!state) {
     return {
@@ -93,7 +79,45 @@ export async function getServerSideProps(context) {
     };
   }
 
-  console.log("Host: ", context.req.headers.host);
+  // // Find the short url in the database
+  // // @ts-ignore
+  // const shortUrl = await ShortUrl.findOne({
+  //   shortCode,
+  // });
+
+  // if (!shortUrl) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
+
+  // // Find the user of the short url
+  // // @ts-ignore
+  // const user = await User.findOne({
+  //   username: shortUrl.username,
+  // });
+
+  // // If the user is not found return 404
+  // if (!user) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
+
+  // // +1 to the clicks
+  // shortUrl.clicks += 1;
+  // await shortUrl.save();
+
+  // if (shortUrl.clicks % 5 === 0) {
+  //   if (user.shouldRedirectOnLimit === true) {
+  //     return {
+  //       redirect: {
+  //         destination: shortUrl.errorPage,
+  //         permanent: true,
+  //       },
+  //     };
+  //   }
+  // }
 
   return {
     props: {
