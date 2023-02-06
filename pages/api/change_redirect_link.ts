@@ -74,6 +74,7 @@ export default async function handler(
   console.log("_id: ", _id);
   console.log("errorPage: ", errorPage);
 
+  // @ts-ignore
   const changeLink = await Domain.findOneAndUpdate(
     { _id },
     {
