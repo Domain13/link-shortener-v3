@@ -63,7 +63,7 @@ export default async function handler(
   // @ts-ignore
   const newDomain = await Domain.create({
     domain,
-    errorPage: errorPage || `${domain}/404`,
+    errorPage: errorPage || `${domain}/red/404`,
   });
 
   if (!newDomain) {
