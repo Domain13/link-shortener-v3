@@ -89,6 +89,8 @@ export default async function handler(
     });
   }
 
+  console.log(changeLink);
+
   return res.status(200).json({
     message: "Redirect page updated",
     type: "SUCCESS",

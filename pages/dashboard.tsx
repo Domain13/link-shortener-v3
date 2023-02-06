@@ -19,7 +19,7 @@ export default function Dashboard() {
   const isLoadingContext = useContext(IsLoadingContext);
   const setIsLoading = isLoadingContext.setIsLoading;
 
-  const [shortUrls, setShortUrls] = useState([]);
+  // const [shortUrls, setShortUrls] = useState([]);
   const [users, setUsers] = useState([]);
   const [domains, setDomains] = useState([]);
   const [token, setToken] = useState({
@@ -36,14 +36,14 @@ export default function Dashboard() {
   const [idForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
 
   useEffect(() => {
-    const getShortUrls = async () => {
-      const res = await fetch("/api/get_short_urls");
-      const datas = await res.json();
+    // const getShortUrls = async () => {
+    //   const res = await fetch("/api/get_short_urls");
+    //   const datas = await res.json();
 
-      if (datas.type === "SUCCESS") {
-        setShortUrls(datas.data);
-      }
-    };
+    //   if (datas.type === "SUCCESS") {
+    //     setShortUrls(datas.data);
+    //   }
+    // };
 
     const getUsers = async () => {
       const res = await fetch("/api/get_users");
@@ -82,7 +82,7 @@ export default function Dashboard() {
     // };
 
     if (user) {
-      getShortUrls();
+      // getShortUrls();
       getUsers();
       getDomains();
       getToken();
