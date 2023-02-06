@@ -33,7 +33,7 @@ export default function Dashboard() {
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
   const [changeRedirectLink, setChangeRedirectLink] = useState("");
-  const [IdForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
+  const [idForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
 
   useEffect(() => {
     const getShortUrls = async () => {
@@ -96,8 +96,6 @@ export default function Dashboard() {
     }
   }, [domains]);
 
-  console.log("codes:   ", codes);
-
   async function handleCreateDomain(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -147,6 +145,7 @@ export default function Dashboard() {
 
     setIsLoading(false);
   }
+
   async function handleChangeRedirectLink(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -175,7 +174,7 @@ export default function Dashboard() {
       },
       body: JSON.stringify({
         errorPage,
-        _id: IdForChangeRedirectLink,
+        _id: idForChangeRedirectLink,
       }),
     });
     const datas = await res.json();
@@ -185,7 +184,7 @@ export default function Dashboard() {
       // update the domain state
       setDomains(
         domains.map((domain) => {
-          if (domain._id === IdForChangeRedirectLink) {
+          if (domain._id === idForChangeRedirectLink) {
             return { ...domain, errorPage };
           }
           return domain;
@@ -885,9 +884,9 @@ export default function Dashboard() {
                         }}
                         className="btn"
                         onClick={() => {
-                          setPopup("changeRedirectLink");
                           setIdForChangeRedirectLink(domain._id);
                           setChangeRedirectLink(domain.errorPage);
+                          setPopup("changeRedirectLink");
                         }}
                       >
                         edit error page

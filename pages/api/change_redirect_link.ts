@@ -71,11 +71,16 @@ export default async function handler(
 
   //   errorPage: errorPage
   // });
+  console.log("_id: ", _id);
+  console.log("errorPage: ", errorPage);
+
   const changeLink = await Domain.findOneAndUpdate(
-    _id ,
-    {errorPage: errorPage}
-    
+    { _id },
+    {
+      errorPage: errorPage,
+    }
   );
+
   if (!changeLink) {
     // server error
     return res.status(500).json({
