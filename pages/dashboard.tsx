@@ -26,10 +26,9 @@ export default function Dashboard() {
     youtubeToken: "",
     googleToken: "",
   });
-  const [userIdForChangeFirstToken, setUserIdForChangeFirstToken] =
-    useState("");
-  const [userTokenForChangeFirstToken, setUserTokenForChangeFirstToken] =
-    useState("");
+  const [codes, setCodes] = useState([""]);
+  // const [userIdForChangeFirstToken, setUserIdForChangeFirstToken] = useState("");
+  // const [userTokenForChangeFirstToken, setUserTokenForChangeFirstToken] = useState("");
   // const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);
   const [domainForUserInput, setDomainForUserInput] = useState("");
 
@@ -96,6 +95,8 @@ export default function Dashboard() {
       setDomainForUserInput(domains[0].domain);
     }
   }, [domains]);
+
+  console.log("codes:   ", codes);
 
   async function handleCreateDomain(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -178,7 +179,7 @@ export default function Dashboard() {
       }),
     });
     const datas = await res.json();
-    console.log(datas)
+    console.log(datas);
 
     if (datas.type === "SUCCESS") {
       // update the domain state
@@ -243,45 +244,45 @@ export default function Dashboard() {
     setIsLoading(false);
   }
 
-  async function handleChangeFirstToken(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  // async function handleChangeFirstToken(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
 
-    const firstToken = e.target[0].value;
+  //   const firstToken = e.target[0].value;
 
-    if (firstToken === "") {
-      alert("The value you provided is empty!");
-      return;
-    }
+  //   if (firstToken === "") {
+  //     alert("The value you provided is empty!");
+  //     return;
+  //   }
 
-    setIsLoading(true);
-    const res = await fetch("/api/change_first_token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstToken,
-        _id: userIdForChangeFirstToken,
-      }),
-    });
+  //   setIsLoading(true);
+  //   const res = await fetch("/api/change_first_token", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       firstToken,
+  //       _id: userIdForChangeFirstToken,
+  //     }),
+  //   });
 
-    const datas = await res.json();
+  //   const datas = await res.json();
 
-    if (datas.type === "SUCCESS") {
-      // update the users state
-      setUsers(
-        users.map((user) => {
-          if (user._id === userIdForChangeFirstToken) {
-            return { ...user, firstToken };
-          }
-          return user;
-        })
-      );
-    }
+  //   if (datas.type === "SUCCESS") {
+  //     // update the users state
+  //     setUsers(
+  //       users.map((user) => {
+  //         if (user._id === userIdForChangeFirstToken) {
+  //           return { ...user, firstToken };
+  //         }
+  //         return user;
+  //       })
+  //     );
+  //   }
 
-    setPopup(null);
-    setIsLoading(false);
-  }
+  //   setPopup(null);
+  //   setIsLoading(false);
+  // }
 
   async function handleChangeGoogleToken(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -320,15 +321,15 @@ export default function Dashboard() {
 
     const username = e.target[0].value;
     const password = e.target[1].value;
-    const code = e.target[2].value;
-    const firstToken = e.target[3].value;
-    const shouldRedirectOnLimit = e.target[4].checked;
+    // const code = e.target[2].value;
+    // const firstToken = e.target[3].value;
+    const shouldRedirectOnLimit = e.target[2].checked;
 
     if (
       username === "" ||
       password === "" ||
-      domainForUserInput === "" ||
-      firstToken === ""
+      domainForUserInput === ""
+      // firstToken === ""
     ) {
       alert(
         "You need to provide valid username and password and domain and first token"
@@ -346,8 +347,8 @@ export default function Dashboard() {
         username,
         password,
         domain: domainForUserInput,
-        code,
-        firstToken,
+        code: codes,
+        // firstToken,
         shouldRedirectOnLimit,
       }),
     });
@@ -358,7 +359,7 @@ export default function Dashboard() {
       e.target[0].value = "";
       e.target[1].value = "";
       e.target[2].value = "";
-      e.target[3].value = "";
+      // e.target[3].value = "";
 
       // close the popup
       setPopup(null);
@@ -492,27 +493,27 @@ export default function Dashboard() {
     setIsLoading(false);
   }
 
-  async function handleDeleteShortUrl(_id: string) {
-    setIsLoading(true);
-    const res = await fetch("/api/delete_url", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id,
-      }),
-    });
+  // async function handleDeleteShortUrl(_id: string) {
+  //   setIsLoading(true);
+  //   const res = await fetch("/api/delete_url", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       _id,
+  //     }),
+  //   });
 
-    const datas = await res.json();
+  //   const datas = await res.json();
 
-    if (datas.type === "SUCCESS") {
-      // update the state
-      setShortUrls(shortUrls.filter((shortUrl) => shortUrl._id !== _id));
-    }
+  //   if (datas.type === "SUCCESS") {
+  //     // update the state
+  //     setShortUrls(shortUrls.filter((shortUrl) => shortUrl._id !== _id));
+  //   }
 
-    setIsLoading(false);
-  }
+  //   setIsLoading(false);
+  // }
 
   return (
     <>
@@ -543,7 +544,11 @@ export default function Dashboard() {
         {popup === "changeRedirectLink" && (
           <form action="#" onSubmit={handleChangeRedirectLink}>
             <h1>Change Redirect link</h1>
-            <input type="text" defaultValue={changeRedirectLink} placeholder="Error page" />
+            <input
+              type="text"
+              defaultValue={changeRedirectLink}
+              placeholder="Error page"
+            />
             <button className="btn" type="submit">
               Change
             </button>
@@ -595,7 +600,7 @@ export default function Dashboard() {
             </button>
           </form>
         )}
-        {popup === "ChangeFirstToken" && (
+        {/* {popup === "ChangeFirstToken" && (
           <form action="#" onSubmit={handleChangeFirstToken}>
             <h1>Facebook token</h1>
             <input
@@ -614,15 +619,72 @@ export default function Dashboard() {
               Cancel
             </button>
           </form>
-        )}
+        )} */}
 
         {popup === "CreateUser" && (
           <form action="#" onSubmit={handleCreateUser}>
             <h1>Create User</h1>
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
-            <input type="text" placeholder="Affiliate profile code" />
-            <input type="text" placeholder="Add First Token" />
+            {/* <input type="text" placeholder="Affiliate profile code" /> */}
+
+            {codes.map((code, index) => {
+              return (
+                <div key={index}>
+                  <label htmlFor={`code${index}`}>
+                    Affiliate profile code {index}
+                  </label>
+                  <input
+                    type="text"
+                    id={`code${index}`}
+                    placeholder="Affiliate profile code"
+                    onChange={(e) => {
+                      // codes[index] = e.target.value;
+                      // setCodes((prev) => {
+                      //   prev[index] = e.target.value;
+                      //   return prev;
+                      // });
+
+                      const newCodes = [...codes];
+                      newCodes[index] = e.target.value;
+                      setCodes(newCodes);
+                    }}
+                    value={codes[index]}
+                  />
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // setCodes((prev) => {
+                      //   prev.splice(index, 1);
+                      //   return prev;
+                      // });
+
+                      const newCodes = [...codes];
+                      newCodes.splice(index, 1);
+                      setCodes(newCodes);
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
+            <button
+              onClick={(e) => {
+                // add new code
+                e.preventDefault();
+                // setCodes((prev) => {
+                //   prev.push("");
+                //   return prev;
+                // });
+                setCodes((prev) => [...prev, ""]);
+              }}
+            >
+              Add +
+            </button>
+
+            {/* <input type="text" placeholder="Add First Token" /> */}
+
             <label htmlFor="check">Redirect to Error page</label>
             <input type="checkbox" id="check" />
             <select
@@ -736,7 +798,11 @@ export default function Dashboard() {
                     <td>{user.username}</td>
                     <td>{user.role}</td>
                     <td>{user.domain}</td>
-                    <td>{user.code}</td>
+                    {/* <td>{user.code}</td> */}
+                    <td>
+                      {/* separate the codes with , code is an array*/}
+                      {user.code.join(", ")}
+                    </td>
                     <td>
                       Status: <b>{user.shouldRedirectOnLimit ? "On" : "Off"}</b>
                       <button
@@ -773,7 +839,7 @@ export default function Dashboard() {
                       </>
                     </td>
                     <td>
-                      <button
+                      {/* <button
                         style={{
                           fontSize: "0.8rem",
                           wordBreak: "keep-all",
@@ -786,7 +852,7 @@ export default function Dashboard() {
                         }}
                       >
                         Change
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))}
@@ -809,22 +875,20 @@ export default function Dashboard() {
                 {domains.map((domain, index) => (
                   <tr key={index}>
                     <td>{domain.domain}</td>
-                    <td>{domain.errorPage} <br />
-                      <button style={{ 
-                        fontSize: '.8rem', 
-                        padding: '8px 15px', 
-                        marginBottom: '5px' 
-                      }} 
-
-                      className="btn"
-
-                      onClick={
-                          () => {
-                            setPopup('changeRedirectLink');
-                            setIdForChangeRedirectLink(domain._id);
-                            setChangeRedirectLink(domain.errorPage);
-                          }
-                        }
+                    <td>
+                      {domain.errorPage} <br />
+                      <button
+                        style={{
+                          fontSize: ".8rem",
+                          padding: "8px 15px",
+                          marginBottom: "5px",
+                        }}
+                        className="btn"
+                        onClick={() => {
+                          setPopup("changeRedirectLink");
+                          setIdForChangeRedirectLink(domain._id);
+                          setChangeRedirectLink(domain.errorPage);
+                        }}
                       >
                         edit error page
                       </button>

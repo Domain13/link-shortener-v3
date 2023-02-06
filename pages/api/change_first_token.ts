@@ -8,46 +8,51 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await dbConnect();
+  // await dbConnect();
 
-  // Check if the user is admin
-  await isAdmin(req, res);
+  // // Check if the user is admin
+  // await isAdmin(req, res);
 
-  const { _id, firstToken } = req.body;
+  // const { _id, firstToken } = req.body;
 
+  // // // @ts-ignore
+  // //   await State.findOneAndUpdate({}, { firstToken: token }, { upsert: true });
+
+  // //   return res.status(200).json({
+  // //     message: "Token updated successfully",
+  // //     type: "SUCCESS",
+  // //   });
+
+  // // Find the user with the given username
   // // @ts-ignore
-  //   await State.findOneAndUpdate({}, { firstToken: token }, { upsert: true });
+  // const user = await User.findOne({
+  //   _id,
+  // });
 
-  //   return res.status(200).json({
-  //     message: "Token updated successfully",
-  //     type: "SUCCESS",
+  // // If there is no user with the given username
+  // if (!user) {
+  //   return res.status(400).json({
+  //     message: "Username or password not found",
+  //     type: "NOTFOUND",
   //   });
+  // }
 
-  // Find the user with the given username
-  // @ts-ignore
-  const user = await User.findOne({
-    _id,
-  });
+  // // Update the token
+  // // @ts-ignore
+  // const updatedUser = await User.findOneAndUpdate(
+  //   { _id },
+  //   {
+  //     firstToken,
+  //   }
+  // );
 
-  // If there is no user with the given username
-  if (!user) {
-    return res.status(400).json({
-      message: "Username or password not found",
-      type: "NOTFOUND",
-    });
-  }
-
-  // Update the token
-  // @ts-ignore
-  const updatedUser = await User.findOneAndUpdate(
-    { _id },
-    {
-      firstToken,
-    }
-  );
+  // return res.status(200).json({
+  //   message: "Token updated successfully",
+  //   type: "SUCCESS",
+  // });
 
   return res.status(200).json({
-    message: "Token updated successfully",
-    type: "SUCCESS",
+    message: "This feature is not available right now",
+    type: "NOTAVAILABLE",
   });
 }

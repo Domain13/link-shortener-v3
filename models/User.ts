@@ -1,6 +1,3 @@
-// const mongoose = require("mongoose");
-// const bcrypt = require("bcrypt");
-
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -23,17 +20,19 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   code: {
-    type: String,
-    default: "",
+    // type: String,
+    // default: "",
+    type: Array,
+    default: [],
   },
   shouldRedirectOnLimit: {
     type: Boolean,
     default: true,
   },
-  firstToken: {
-    type: String,
-    default: "",
-  },
+  // firstToken: {
+  //   type: String,
+  //   default: "",
+  // },
 });
 
 userSchema.pre("save", function (next) {

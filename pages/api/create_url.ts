@@ -49,12 +49,32 @@ export default async function handler(
 
   const user = await isUser(req, res);
 
-  const code = user.code;
-  const firstToken = user.firstToken;
+  const code = user.code; // code is an array
+  // const firstToken = user.firstToken;
 
   // Check if the code is present in the url
   // This is not required for the admin
-  if (!url.includes(code) && user.role !== "admin") {
+  // if (!url.includes(code) && user.role !== "admin") {
+  //   return res.status(400).json({
+  //     message: "Code is not present in the url",
+  //     type: "NOTFOUND",
+  //   });
+  // }
+
+  // Check if the codes are present in the url
+  // This is not required for the admin
+  let isCodePresent = false;
+  // Need to loop through the array
+  if (user.role !== "admin") {
+    code.forEach((c) => {
+      if (url.includes(c)) {
+        isCodePresent = true;
+        return;
+      }
+    });
+  }
+
+  if (!isCodePresent && user.role !== "admin") {
     return res.status(400).json({
       message: "Code is not present in the url",
       type: "NOTFOUND",
@@ -65,7 +85,8 @@ export default async function handler(
   // @ts-expect-error
   const { googleToken, youtubeToken } = await State.findOne({});
 
-  if (!googleToken || !youtubeToken || !firstToken) {
+  // if (!googleToken || !youtubeToken || !firstToken) {
+  if (!googleToken || !youtubeToken) {
     // server error
     return res.status(500).json({
       message:
@@ -97,7 +118,7 @@ export default async function handler(
     errorPage: domainExists.errorPage,
     youtubeToken,
     googleToken,
-    firstToken,
+    // firstToken,
     encoded: domainExists.encoded,
   });
 

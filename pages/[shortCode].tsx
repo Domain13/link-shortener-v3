@@ -10,16 +10,6 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
   const router = useRouter();
   const { shortCode } = router.query;
 
-  // const link =
-  //   "vnd.youtube://youtube.com/redirect?event=comments&redir_token=" +
-  //   youtubeToken +
-  //   "&q=" +
-  //   host +
-  //   "/red/" +
-  //   shortCode +
-  //   "&html_redirect=1" +
-  //   "&html_redirect=1";
-  // let link: string;
   const [link, setLink] = useState<string>("");
 
   useEffect(() => {
@@ -78,46 +68,6 @@ export async function getServerSideProps(context) {
       notFound: true,
     };
   }
-
-  // // Find the short url in the database
-  // // @ts-ignore
-  // const shortUrl = await ShortUrl.findOne({
-  //   shortCode,
-  // });
-
-  // if (!shortUrl) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-
-  // // Find the user of the short url
-  // // @ts-ignore
-  // const user = await User.findOne({
-  //   username: shortUrl.username,
-  // });
-
-  // // If the user is not found return 404
-  // if (!user) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-
-  // // +1 to the clicks
-  // shortUrl.clicks += 1;
-  // await shortUrl.save();
-
-  // if (shortUrl.clicks % 5 === 0) {
-  //   if (user.shouldRedirectOnLimit === true) {
-  //     return {
-  //       redirect: {
-  //         destination: shortUrl.errorPage,
-  //         permanent: true,
-  //       },
-  //     };
-  //   }
-  // }
 
   return {
     props: {

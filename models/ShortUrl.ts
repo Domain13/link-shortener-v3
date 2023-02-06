@@ -45,10 +45,10 @@ const shortUrlSchema = new Schema({
   },
 
   ////////////////////////////
-  firstToken: {
-    type: String,
-    default: "",
-  },
+  // firstToken: {
+  //   type: String,
+  //   default: "",
+  // },
 });
 
 // create a model

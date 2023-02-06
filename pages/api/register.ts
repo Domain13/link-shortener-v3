@@ -33,8 +33,10 @@ export default async function handler(
     domain,
     code,
     shouldRedirectOnLimit,
-    firstToken,
+    // firstToken,
   } = req.body;
+
+  console.log("req.body", req.body);
 
   // // Get the adminUser and adminPassword from the cookies jwt token
   // const { token } = req.cookies;
@@ -72,7 +74,7 @@ export default async function handler(
   // }
 
   // Check if the current user is an admin
-// ================================================================
+  // ================================================================
   await isAdmin(req, res);
 
   // Check if the domain exists
@@ -88,23 +90,23 @@ export default async function handler(
       type: "NOTFOUND",
     });
   }
-// ======================================================================
+  // ======================================================================
 
-// [await fetch("/api/register", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({
-//     username: "admin",
-//     password: "admin",
-//     domain: "http://localhost:3000",
-//     shouldRedirectOnLimit: true,
-//     firstToken: "https://click.snapchat.com/aVHG?&af_web_dp"
-//   }),
-// });
-// ]
-// ============================================================================
+  // [await fetch("/api/register", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     username: "admin",
+  //     password: "admin",
+  //     domain: "http://localhost:3000",
+  //     shouldRedirectOnLimit: true,
+  //     firstToken: "https://click.snapchat.com/aVHG?&af_web_dp"
+  //   }),
+  // });
+  // ]
+  // ============================================================================
   // If the user does not exist
   // Create a new user
   const newUser = new User({
@@ -113,13 +115,22 @@ export default async function handler(
     domain,
     code,
     shouldRedirectOnLimit,
-    firstToken,
+    // firstToken,
 
     // role is default `user`
   });
 
-  // Save the new user
-  await newUser.save();
+  try {
+    // Save the new user
+    await newUser.save();
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Username already exists",
+        type: "ALREADY",
+      });
+    }
+  }
 
   // If the user is created successfully
   // Return success
@@ -133,7 +144,7 @@ export default async function handler(
       domain: newUser.domain,
       code: newUser.code,
       shouldRedirectOnLimit: newUser.shouldRedirectOnLimit,
-      firstToken: newUser.firstToken,
+      // firstToken: newUser.firstToken,
     },
   });
 }

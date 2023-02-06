@@ -6,7 +6,7 @@ export type PopupType =
   | "ChangeGoogleToken"
   | "CreateUser"
   | "ChangePassword"
-  | "ChangeFirstToken"
+  // | "ChangeFirstToken"
   | "changeRedirectLink"
   | null;
 
