@@ -10,20 +10,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
   const router = useRouter();
   const { shortCode } = router.query;
 
-  const [link, setLink] = useState<string>("");
-
-  useEffect(() => {
-    // Check if the user is on mobile
-    if (/Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
-      setLink(
-        `vnd.youtube://youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${shortCode}&html_redirect=1&html_redirect=1`
-      );
-    } else {
-      setLink(
-        `https://www.youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${shortCode}&html_redirect=1&html_redirect=1`
-      );
-    }
-  }, []);
+  const link = `vnd.youtube://youtube.com/redirect?event=comments&redir_token=${youtubeToken}&q=${host}/red/${shortCode}&html_redirect=1&html_redirect=1`;
 
   return (
     <>
