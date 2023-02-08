@@ -35,6 +35,10 @@ export default function Dashboard() {
   const [changeRedirectLink, setChangeRedirectLink] = useState("");
   const [idForChangeRedirectLink, setIdForChangeRedirectLink] = useState("");
 
+  const [domainForChange, setDomainForChange] = useState("");
+  const [userIdForDomainChange, setUserIdForDomainChange] = useState("");
+  const [usernameForDomainChange, setUsernameForDomainChange] = useState("");
+
   useEffect(() => {
     // const getShortUrls = async () => {
     //   const res = await fetch("/api/get_short_urls");
@@ -60,6 +64,7 @@ export default function Dashboard() {
 
       if (datas.type === "SUCCESS") {
         setDomains(datas.data);
+        setDomainForUserInput(datas.data[0].domain);
       }
     };
 
@@ -492,6 +497,45 @@ export default function Dashboard() {
     setIsLoading(false);
   }
 
+  async function handleChangeDomain(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const res = await fetch("/api/change_domain", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        domain: domainForChange,
+        _id: userIdForDomainChange,
+      }),
+    });
+
+    const datas = await res.json();
+
+    console.log(datas);
+
+    if (datas.type === "SUCCESS") {
+      // update the state
+      // setDomains(datas.data);
+      setUsers(
+        users.map((user) => {
+          if (user._id === userIdForDomainChange) {
+            user.domain = domainForChange;
+          }
+
+          return user;
+        })
+      );
+
+      // close the popup
+      setPopup(null);
+    }
+
+    setIsLoading(false);
+  }
+
   // async function handleDeleteShortUrl(_id: string) {
   //   setIsLoading(true);
   //   const res = await fetch("/api/delete_url", {
@@ -708,6 +752,34 @@ export default function Dashboard() {
             </button>
           </form>
         )}
+        {popup === "ChangeDomain" && (
+          <form action="#" onSubmit={handleChangeDomain}>
+            <h1>Change Domain</h1>
+            <p>
+              Username: <b>{usernameForDomainChange}</b>
+            </p>
+            <select
+              value={domainForChange}
+              onChange={(e) => setDomainForChange(e.target.value)}
+            >
+              {domains.map((domain, index) => (
+                <option key={index} value={domain.domain}>
+                  {domain.domain}
+                </option>
+              ))}
+            </select>
+            <button className="btn" type="submit">
+              Change
+            </button>
+            <button
+              onClick={() => {
+                setPopup(null);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
         {popup === "ChangePassword" && (
           <form action="#" onSubmit={handleChangePassword}>
             <h1>Change Password</h1>
@@ -796,7 +868,31 @@ export default function Dashboard() {
                   <tr key={user._id}>
                     <td>{user.username}</td>
                     <td>{user.role}</td>
-                    <td>{user.domain}</td>
+                    <td>
+                      {
+                        <>
+                          <p>{user.domain}</p>
+
+                          <button
+                            className="btn"
+                            style={{
+                              fontSize: "0.8rem",
+                              wordBreak: "keep-all",
+                              margin: "0 0.2rem",
+                              padding: "0.8rem",
+                            }}
+                            onClick={() => {
+                              setDomainForChange(user.domain);
+                              setUserIdForDomainChange(user._id);
+                              setUsernameForDomainChange(user.username);
+                              setPopup("ChangeDomain");
+                            }}
+                          >
+                            Change
+                          </button>
+                        </>
+                      }
+                    </td>
                     {/* <td>{user.code}</td> */}
                     <td>
                       {/* separate the codes with , code is an array*/}

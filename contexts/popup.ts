@@ -8,6 +8,7 @@ export type PopupType =
   | "ChangePassword"
   // | "ChangeFirstToken"
   | "changeRedirectLink"
+  | "ChangeDomain"
   | null;
 
 export type PopupContextType = {
