@@ -44,7 +44,6 @@ export default async function handler(
     message: "Tokens fetched successfully",
     data: {
       youtubeToken: state.youtubeToken,
-      googleToken: state.googleToken,
     },
     type: "SUCCESS",
   });
