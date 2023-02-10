@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { UsersContext } from "../contexts/users";
+import { PopupContext } from "../../../contexts/popup";
+import { UserInfoForChangeDomainContext } from "../contexts/userInfoForChangeDomain";
 import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
 
@@ -10,6 +12,17 @@ export default function Users() {
   // ********* getting the states from the contexts *************** //
   const users = usersContext.users;
   const setUsers = usersContext.setUsers;
+
+  const {
+    domainForChange,
+    setDomainForChange,
+    userIdForDomainChange,
+    setUserIdForDomainChange,
+    usernameForDomainChange,
+    setUsernameForDomainChange,
+  } = useContext(UserInfoForChangeDomainContext);
+
+  const { setPopup } = useContext(PopupContext);
 
   // ************************** //
 
@@ -54,11 +67,30 @@ export default function Users() {
             <tr key={user._id} className={index % 2 === 0 ? "even" : "odd"}>
               <td>{user.username}</td>
               <td>{user.role}</td>
-              <td>{user.domain}</td>
+              <td>
+                {
+                  <div className="text-with-button">
+                    <p className="text">{user.domain}</p>
+                    <button
+                      className="btn green"
+                      onClick={() => {
+                        setDomainForChange(user.domain);
+                        setUserIdForDomainChange(user._id);
+                        setUsernameForDomainChange(user.username);
+                        setPopup("ChangeDomain");
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                }
+              </td>
               <td>{user.affiliateCodes.join(", ")}</td>
               <td>
-                <div className="options">
-                  Status: <b>{user.shouldRedirectOnLimit ? "On" : "Off"}</b>
+                <div className="text-with-button">
+                  <p className="text">
+                    Status: <b>{user.shouldRedirectOnLimit ? "On" : "Off"}</b>
+                  </p>
                   <PostButton
                     path="/api/change_redirect_config"
                     body={{

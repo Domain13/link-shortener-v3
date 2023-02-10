@@ -12,6 +12,7 @@ import { UserIdForChangeRedirectLinkContext } from "../components/dashboard/cont
 import { CurrentRedirectLinkContext } from "../components/dashboard/contexts/currentRedirectLink";
 import { UsersContext } from "../components/dashboard/contexts/users";
 import { TokenContext } from "../components/dashboard/contexts/tokens";
+import { UserInfoForChangeDomainContext } from "../components/dashboard/contexts/userInfoForChangeDomain";
 import Table from "../components/dashboard/table/Table";
 
 const get = async (url: string) => {
@@ -36,6 +37,9 @@ export default function Dashboard() {
   const [currentRedirectLink, setCurrentRedirectLink] = useState("");
   const [userIdForChangeRedirectLink, setUserIdForChangeRedirectLink] =
     useState("");
+  const [domainForChange, setDomainForChange] = useState("");
+  const [userIdForDomainChange, setUserIdForDomainChange] = useState("");
+  const [usernameForDomainChange, setUsernameForDomainChange] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -69,11 +73,22 @@ export default function Dashboard() {
           >
             <UsersContext.Provider value={{ users, setUsers }}>
               <TokenContext.Provider value={{ token, setToken }}>
-                <div className="Admin">
-                  <h1 className="header-text">ADMIN PANNEL</h1>
-                  <Popup />
-                  <Table />
-                </div>
+                <UserInfoForChangeDomainContext.Provider
+                  value={{
+                    domainForChange,
+                    setDomainForChange,
+                    userIdForDomainChange,
+                    setUserIdForDomainChange,
+                    usernameForDomainChange,
+                    setUsernameForDomainChange,
+                  }}
+                >
+                  <div className="Admin">
+                    <h1 className="header-text">ADMIN PANNEL</h1>
+                    <Popup />
+                    <Table />
+                  </div>
+                </UserInfoForChangeDomainContext.Provider>
               </TokenContext.Provider>
             </UsersContext.Provider>
           </CurrentRedirectLinkContext.Provider>

@@ -4,6 +4,7 @@ import ChangeYoutubeToken from "./ChangeYoutubeToken";
 import CreateUser from "./CreateUser";
 import ChangePassword from "./ChangePassword";
 import ChangeRedirectLink from "./ChangeRedirectLink";
+import ChangeDomain from "./ChangeDomain";
 import { PopupContext } from "../../../contexts/popup";
 
 export default function Popup() {
@@ -17,6 +18,7 @@ export default function Popup() {
       {popup === "ChangePassword" && <ChangePassword />}
       {popup === "CreateUser" && <CreateUser />}
       {popup === "ChangeRedirectLink" && <ChangeRedirectLink />}
+      {popup === "ChangeDomain" && <ChangeDomain />}
     </>
   );
 }

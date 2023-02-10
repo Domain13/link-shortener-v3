@@ -4,4 +4,5 @@ export type PopupType =
   | "CreateUser"
   | "ChangePassword"
   | "ChangeRedirectLink"
+  | "ChangeDomain"
   | null;
