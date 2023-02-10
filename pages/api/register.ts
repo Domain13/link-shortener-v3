@@ -1,24 +1,7 @@
-// COMPLETE
-
-// await fetch("/api/register", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({
-//     username: "admin",
-//     password: "admin",
-//   }),
-// });
-
-// create new user
-// only admins can do it (check user.role)
-
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import Domain from "../../models/Domain";
-import jwt from "jsonwebtoken";
 import isAdmin from "../../lib/isAdmin";
 
 export default async function handler(
@@ -27,56 +10,10 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  const {
-    username,
-    password,
-    domain,
-    code,
-    shouldRedirectOnLimit,
-    // firstToken,
-  } = req.body;
-
-  console.log("req.body", req.body);
-
-  // // Get the adminUser and adminPassword from the cookies jwt token
-  // const { token } = req.cookies;
-
-  // if (!token) {
-  //   return res.status(400).json({
-  //     message: "Token is not provided",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
-
-  // const admin = jwt.verify(token, process.env.JWT_SECRET).username;
-
-  // // If there is no adminUser with the given username
-  // if (!admin || admin !== "admin") {
-  //   return res.status(400).json({
-  //     message: "Username or password is incorrect",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
-
-  // // If the password is correct
-  // // Check if the user already exists
-  // // @ts-ignore
-  // const user = await User.findOne({
-  //   username,
-  // });
-
-  // // If the user already exists
-  // if (user) {
-  //   return res.status(400).json({
-  //     message: "User already exists",
-  //     type: "ALREADY",
-  //   });
-  // }
   const { username, password, domain, affiliateCodes, shouldRedirectOnLimit } =
     req.body;
 
   // Check if the current user is an admin
-  // ================================================================
   await isAdmin(req, res);
 
   // Check if the domain exists
@@ -92,23 +29,7 @@ export default async function handler(
       type: "NOTFOUND",
     });
   }
-  // ======================================================================
 
-  // [await fetch("/api/register", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     username: "admin",
-  //     password: "admin",
-  //     domain: "http://localhost:3000",
-  //     shouldRedirectOnLimit: true,
-  //     firstToken: "https://click.snapchat.com/aVHG?&af_web_dp"
-  //   }),
-  // });
-  // ]
-  // ============================================================================
   // If the user does not exist
   // Create a new user
   const newUser = new User({
@@ -117,9 +38,6 @@ export default async function handler(
     domain,
     affiliateCodes,
     shouldRedirectOnLimit,
-    // firstToken,
-
-    // role is default `user`
   });
 
   try {
