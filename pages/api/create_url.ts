@@ -83,14 +83,12 @@ export default async function handler(
 
   // Get the tokens from the database
   // @ts-expect-error
-  const { googleToken, youtubeToken } = await State.findOne({});
+  const { youtubeToken } = await State.findOne({});
 
-  // if (!googleToken || !youtubeToken || !firstToken) {
-  if (!googleToken || !youtubeToken) {
+  if (!youtubeToken) {
     // server error
     return res.status(500).json({
-      message:
-        "Youtube and google and first tokens should be present in the database.",
+      message: "Youtube tokens should be present in the database.",
       type: "SERVER_ERROR",
     });
   }
@@ -117,9 +115,6 @@ export default async function handler(
     username: user.username,
     errorPage: domainExists.errorPage,
     youtubeToken,
-    googleToken,
-    // firstToken,
-    encoded: domainExists.encoded,
   });
 
   if (!shortUrl) {
