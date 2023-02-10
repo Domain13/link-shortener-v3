@@ -1,0 +1,17 @@
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.363);
+  border-radius: 5px;
+  padding: 2rem;
+  z-index: 10;
+  background: linear-gradient(#ff5f6d, #ffc371);
+
+  .cancel-button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+}

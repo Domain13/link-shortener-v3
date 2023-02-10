@@ -5,9 +5,8 @@ body {
   min-height: 100vh;
   position: relative;
 }
-main{
+main {
   background: linear-gradient(#ff5f6d, #ffc371) !important;
-
 }
 * {
   padding: 0;
@@ -35,16 +34,16 @@ form h1 {
   font-size: 1.2rem;
 }
 hr {
-    border-top: 2px solid #fff;
-    width: 100%;
-    border-color: #fff;
+  border-top: 2px solid #fff;
+  width: 100%;
+  border-color: #fff;
 }
 /* common button style  */
 .btn {
   background-color: springgreen;
   color: #fff;
-  padding: .8rem 2.5rem;
-  box-shadow:  0 0 5px rgba(0, 0, 0, 0.363);
+  padding: 0.8rem 2.5rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.363);
   font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
@@ -54,16 +53,16 @@ hr {
   border: none;
   text-decoration: none;
   margin: 0;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
-button img{
+button img {
   height: 2rem;
 }
-button{
+button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .2rem;
+  gap: 0.2rem;
 }
 .btn:hover,
 .btn:active {
@@ -82,7 +81,7 @@ form {
   align-items: center;
   flex-direction: column;
   padding: 2rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   max-width: 75%;
 }
@@ -91,7 +90,7 @@ form input {
   outline: none;
   padding: 1rem;
   margin: 0.3rem 0;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   word-wrap: break-word;
 }
@@ -138,7 +137,7 @@ textarea {
 label {
   color: #000;
   align-self: center;
-  margin: .2rem 0;
+  margin: 0.2rem 0;
   padding: 2px 0;
   width: 100%;
   border-radius: 5px;
@@ -147,7 +146,7 @@ select {
   padding: 1rem 0.5rem;
   outline: 0;
   border: none;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   align-self: stretch;
 }
 
@@ -175,20 +174,20 @@ nav .logo {
   display: inline-block;
   display: flex;
   align-items: flex-end;
-  gap: .5rem;
+  gap: 0.5rem;
 }
-.logo img{
+.logo img {
   height: 3rem;
 }
-.notice{
+.notice {
   color: springgreen;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   text-align: left;
   text-shadow: 0 3px 3px #000;
   font-weight: bold;
   text-decoration: none;
 }
-marquee{
+marquee {
   max-width: 200px !important;
   background-color: tomato;
   padding-top: 6px;
@@ -231,13 +230,13 @@ nav .links .link:active {
   h2 {
     font-size: 1.5rem;
   }
-  .logo{
+  .logo {
     flex-direction: column;
   }
-  .logo h2{
-    font-size: .8rem;
+  .logo h2 {
+    font-size: 0.8rem;
   }
-  .logo img{
+  .logo img {
     align-self: flex-start;
   }
   .App > h1 {
@@ -247,11 +246,10 @@ nav .links .link:active {
     text-align: center;
     padding: 1rem 0;
     margin-top: 140px;
-}
+  }
 }
 
-
-@media (max-width:320px) {
+@media (max-width: 320px) {
   select {
     margin: 0 -7%;
   }
@@ -321,27 +319,26 @@ nav .links .menu .menu-div .option:hover {
   overflow-y: scroll;
   border-radius: 1rem;
 }
-.users{
+.users {
   margin-top: 5px !important;
 }
 /* scrollbar style  */
 
-.data::-webkit-scrollbar{
+.data::-webkit-scrollbar {
   background-color: gray;
   border-radius: 1rem;
-  width: .5rem;
+  width: 0.5rem;
 }
-.data::-webkit-scrollbar-thumb{
+.data::-webkit-scrollbar-thumb {
   background-color: springgreen;
   border-radius: 1rem;
 }
-.data::-webkit-scrollbar-track{
+.data::-webkit-scrollbar-track {
   margin: 0;
 }
-.data::-webkit-scrollbar-track-piece{
+.data::-webkit-scrollbar-track-piece {
   margin: 0;
 }
-
 
 .data h4 {
   background-color: rgba(0, 255, 128, 0.267);
@@ -364,7 +361,7 @@ nav .links .menu .menu-div .option:hover {
 .red {
   background-color: rgba(255, 0, 0, 0.61) !important;
   padding: 0.5rem 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   color: #fff !important;
 }
@@ -372,7 +369,6 @@ button {
   cursor: pointer !important;
 }
 /* ============================================================================= */
-
 
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
 table {
@@ -398,7 +394,7 @@ table td {
   display: block;
   word-break: break-all;
 }
-.redirect{
+.redirect {
   text-align: center;
 }
 table td:first-child {
@@ -436,7 +432,6 @@ table td {
   table td:last-child {
     padding-right: 0;
   }
-
 }
 
 h1 {
@@ -444,7 +439,6 @@ h1 {
   letter-spacing: -1px;
   color: #34495e;
 }
-
 
 table tr {
   border-color: #46637f;
@@ -469,7 +463,6 @@ table td:before {
   color: yellowgreen;
 }
 
-
 /* ================================================================================= */
 #preloader {
   position: fixed;
@@ -488,9 +481,8 @@ table td:before {
 /* Style the loading spinner */
 #preloader .spinner {
   position: absolute;
-
 }
-.landing-page{
+.landing-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -517,23 +509,55 @@ button:hover {
 }
 
 @keyframes shakeAnim {
-  0% {top: 0}
-  1% {top: -5}
-  2% {top: 8px}
-  3% {top: -10px}
-  4% {top: 8px}
-  5% {top: -10px}
-  6% {top: 5}
-  7% {top: 0}
+  0% {
+    top: 0;
+  }
+  1% {
+    top: -5;
+  }
+  2% {
+    top: 8px;
+  }
+  3% {
+    top: -10px;
+  }
+  4% {
+    top: 8px;
+  }
+  5% {
+    top: -10px;
+  }
+  6% {
+    top: 5;
+  }
+  7% {
+    top: 0;
+  }
 }
 
 @keyframes shake {
-  0% {top: 0}
-  1% {top: -5}
-  2% {top: 8px}
-  3% {top: -10px}
-  4% {top: 8px}
-  5% {top: -10px}
-  6% {top: 5}
-  7% {top: 0}
+  0% {
+    top: 0;
+  }
+  1% {
+    top: -5;
+  }
+  2% {
+    top: 8px;
+  }
+  3% {
+    top: -10px;
+  }
+  4% {
+    top: 8px;
+  }
+  5% {
+    top: -10px;
+  }
+  6% {
+    top: 5;
+  }
+  7% {
+    top: 0;
+  }
 }

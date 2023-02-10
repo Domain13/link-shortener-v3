@@ -1,0 +1,39 @@
+html,
+body {
+  font-family: "Roboto", Helvetica Neue, sans-serif;
+  min-height: 100vh;
+  position: relative;
+  // background: linear-gradient(#ff5f6d, #ffc371);
+  background-color: rgb(179, 8, 88);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 400ms ease;
+}
+
+main {
+  height: 93vh;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+@import "./utility.scss";
+@import "./navbar.scss";
+@import "./popup.scss";
+@import "./form.scss";
+@import "./home.scss";
+@import "./admin-info.scss";
+@import "./preloader.scss";
+@import "./table.scss";
+@import "./admin.scss";
+@import "./landing-page.scss";
+
+@media screen and (max-width: 650px) {
+  main {
+    height: 85vh;
+  }
+}

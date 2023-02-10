@@ -1,0 +1,24 @@
+.admin-info {
+  width: 25rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  width: 20rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 1px #000;
+
+  .scroll {
+    color: springgreen;
+    background-color: rgb(251, 61, 28);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .phone {
+    color: springgreen;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+}
