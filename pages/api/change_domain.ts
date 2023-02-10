@@ -10,7 +10,15 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  await isAdmin(req, res);
+  // Check if the user is admin
+  try {
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   const { _id, domain } = req.body;
 

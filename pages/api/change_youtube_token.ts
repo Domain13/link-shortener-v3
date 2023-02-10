@@ -11,8 +11,15 @@ export default async function handler(
 
   const { token } = req.body;
 
-  // Check if the user is admin
-  await isAdmin(req, res);
+  try {
+    // Check if the user is admin
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   // Update/Insert the token into the database
   // Note that there will be only one document in the database

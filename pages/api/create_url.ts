@@ -13,7 +13,18 @@ export default async function handler(
 
   const { url, domain } = req.body;
 
-  const user = await isUser(req, res);
+  let user = null;
+
+  // Check if the user is authenticated or not
+  try {
+    user = await isUser(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
+
   const codes = user.affiliateCodes; // code is an array
 
   // Check if the codes are present in the url

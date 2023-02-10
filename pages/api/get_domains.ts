@@ -11,7 +11,16 @@ export default async function handler(
   await dbConnect();
 
   // Check if the user is authenticated or not
-  const user = await isUser(req, res);
+  let user = null;
+
+  try {
+    user = await isUser(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   let domainsToReturn = [];
   // Get the domains of the user

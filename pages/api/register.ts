@@ -14,7 +14,14 @@ export default async function handler(
     req.body;
 
   // Check if the current user is an admin
-  await isAdmin(req, res);
+  try {
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   // Check if the domain exists
   // @ts-ignore

@@ -54,6 +54,7 @@ export default function Home() {
 
       setOutputLink(link);
       setCopyMsg("Copy");
+      setUrlInput("");
     } else if (json.type === "NOTFOUND") {
       alert("The domain not found");
     } else if (json.type === "UNAUTHORIZED") {
@@ -103,6 +104,7 @@ export default function Home() {
               id="url"
               name="url"
               placeholder="https://example.com"
+              value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
             />
           </div>

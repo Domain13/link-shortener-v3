@@ -11,8 +11,15 @@ export default async function handler(
 
   await dbConnect();
 
-  // Check if the user is admin or not
-  await isAdmin(req, res);
+  try {
+    // Check if the user is admin or not
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   // Find the user with the given _id
   // @ts-ignore

@@ -11,8 +11,15 @@ export default async function handler(
 
   const { _id } = req.body;
 
-  // Check if the user is admin
-  await isAdmin(req, res);
+  try {
+    // Check if the user is admin
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   // Find the User
   // @ts-ignore

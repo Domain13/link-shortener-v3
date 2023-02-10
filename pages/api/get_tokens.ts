@@ -9,8 +9,15 @@ export default async function handler(
 ) {
   await dbConnect();
 
-  // Check if the user is admin
-  await isAdmin(req, res);
+  try {
+    // Check if the user is admin
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   //   get first tokens
   //  @ts-ignore
