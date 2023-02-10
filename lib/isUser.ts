@@ -13,10 +13,7 @@ export default async function isUser(
   const jwtToken = req.cookies.token;
 
   if (!jwtToken) {
-    return res.status(400).json({
-      message: "Token is not provided",
-      type: "UNAUTHORIZED",
-    });
+    throw new Error("Token is not provided");
   }
 
   const { username } = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
@@ -30,11 +27,15 @@ export default async function isUser(
   });
 
   // If there is no user with the given username
+  // if (!user) {
+  //   return res.status(400).json({
+  //     message: "Username or password is incorrect",
+  //     type: "UNAUTHORIZED",
+  //   });
+  // }
+  // throw error
   if (!user) {
-    return res.status(400).json({
-      message: "Username or password is incorrect",
-      type: "UNAUTHORIZED",
-    });
+    throw new Error("There is no user with the given username");
   }
 
   return user;

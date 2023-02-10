@@ -1,8 +1,3 @@
-// COMPLETE
-
-// logout the user
-// user's token is inside the cookie
-
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

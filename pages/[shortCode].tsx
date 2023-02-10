@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import State from "../models/State";
 import dbConnect from "../lib/dbConnect";
-import ShortUrl from "../models/ShortUrl";
-import User from "../models/User";
+import Image from "next/image";
+import SnapchatPic from "../public/snap-pic.webp";
 
 export default function RedirectLandingPage({ host, youtubeToken }) {
   const router = useRouter();
@@ -18,7 +17,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
         <title>Join my profile</title>
       </Head>
 
-      <div className="landing-page">
+      <div className="LandingPage">
         <button
           className="btn btn-offer"
           onClick={() => {
@@ -28,15 +27,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
         >
           Join Free
         </button>
-        <img
-          style={{
-            width: "100%",
-            borderRadius: "1.5rem",
-            border: ".2rem solid #fff",
-          }}
-          src="snap-pic.webp"
-          alt="snapchat"
-        />
+        <img src="snap-pic.webp" alt="snapchat" />
       </div>
     </>
   );

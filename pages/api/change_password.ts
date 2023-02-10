@@ -1,9 +1,3 @@
-// COMPLETE
-
-// change the user's password
-// only the user can change their own password
-// get the admin's token from the cookies and verify it
-
 import User from "../../models/User";
 import bcrypt from "bcrypt";
 import dbConnect from "../../lib/dbConnect";

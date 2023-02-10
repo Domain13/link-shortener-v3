@@ -3,18 +3,24 @@ import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import isAdmin from "../../lib/isAdmin";
 
+// Change the domain of the user
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   await dbConnect();
 
-  await isAdmin(req, res);
+  // Check if the user is admin
+  try {
+    await isAdmin(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
   const { _id, domain } = req.body;
-
-  console.log("User id: ", _id);
-  console.log("Domain: ", domain);
 
   // Find the user with the given _id
   // @ts-ignore

@@ -1,16 +1,8 @@
-// COMPLETE
-
-// create short urls
-// only authenticated users can access this route
-
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import ShortUrl from "../../models/ShortUrl";
-// import Token from "../../models/Token";
 import State from "../../models/State";
-import User from "../../models/User";
 import Domain from "../../models/Domain";
-import jwt from "jsonwebtoken";
 import isUser from "../../lib/isUser";
 
 export default async function handler(
@@ -20,53 +12,27 @@ export default async function handler(
   await dbConnect();
 
   const { url, domain } = req.body;
-  // const jwtToken = req.cookies.token;
 
-  // if (!jwtToken) {
-  //   return res.status(400).json({
-  //     message: "Token is not provided",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
+  let user = null;
 
-  // const decode = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
-  //   username: string;
-  // };
+  // Check if the user is authenticated or not
+  try {
+    user = await isUser(req, res);
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+      type: "UNAUTHORIZED",
+    });
+  }
 
-  // // Find the user with the given username
-  // // @ts-expect-error
-  // const user = await User.findOne({
-  //   username: decode.username,
-  // });
-
-  // // If there is no user with the given username
-  // if (!user) {
-  //   return res.status(400).json({
-  //     message: "Username or password is incorrect",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
-
-  const user = await isUser(req, res);
-
-  const code = user.code; // code is an array
-  // const firstToken = user.firstToken;
-
-  // Check if the code is present in the url
-  // This is not required for the admin
-  // if (!url.includes(code) && user.role !== "admin") {
-  //   return res.status(400).json({
-  //     message: "Code is not present in the url",
-  //     type: "NOTFOUND",
-  //   });
-  // }
+  const codes = user.affiliateCodes; // code is an array
 
   // Check if the codes are present in the url
   // This is not required for the admin
   let isCodePresent = false;
   // Need to loop through the array
   if (user.role !== "admin") {
-    code.forEach((c) => {
+    codes.forEach((c: string) => {
       if (url.includes(c)) {
         isCodePresent = true;
         return;
@@ -77,20 +43,18 @@ export default async function handler(
   if (!isCodePresent && user.role !== "admin") {
     return res.status(400).json({
       message: "Code is not present in the url",
-      type: "NOTFOUND",
+      type: "UNAUTHORIZED",
     });
   }
 
   // Get the tokens from the database
   // @ts-expect-error
-  const { googleToken, youtubeToken } = await State.findOne({});
+  const { youtubeToken } = await State.findOne({});
 
-  // if (!googleToken || !youtubeToken || !firstToken) {
-  if (!googleToken || !youtubeToken) {
+  if (!youtubeToken) {
     // server error
     return res.status(500).json({
-      message:
-        "Youtube and google and first tokens should be present in the database.",
+      message: "Youtube tokens should be present in the database.",
       type: "SERVER_ERROR",
     });
   }
@@ -102,7 +66,6 @@ export default async function handler(
   });
 
   if (!domainExists) {
-    // Bad request
     return res.status(400).json({
       message: "Domain does not exist",
       type: "NOTFOUND",
@@ -117,13 +80,9 @@ export default async function handler(
     username: user.username,
     errorPage: domainExists.errorPage,
     youtubeToken,
-    googleToken,
-    // firstToken,
-    encoded: domainExists.encoded,
   });
 
   if (!shortUrl) {
-    // server error
     return res.status(500).json({
       message: "Server error",
       type: "SERVER_ERROR",

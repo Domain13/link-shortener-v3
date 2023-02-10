@@ -11,7 +11,6 @@ const shortUrlSchema = new Schema({
     type: String,
     default: shortId.generate,
   },
-  ////////////////////////////
 
   domain: {
     type: String,
@@ -26,12 +25,7 @@ const shortUrlSchema = new Schema({
     required: true,
   },
 
-  ////////////////////////////////
   youtubeToken: {
-    type: String,
-    required: true,
-  },
-  googleToken: {
     type: String,
     required: true,
   },
@@ -39,16 +33,6 @@ const shortUrlSchema = new Schema({
     type: Number,
     default: 0,
   },
-  encoded: {
-    type: String,
-    required: true,
-  },
-
-  ////////////////////////////
-  // firstToken: {
-  //   type: String,
-  //   default: "",
-  // },
 });
 
 // create a model

@@ -1,5 +1,3 @@
-// COMPLETE
-
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import bcrypt from "bcrypt";
@@ -55,17 +53,12 @@ export default async function handler(
     }
   );
 
-  // Get the domain name
-  // console.log(req.headers.host);
-
   const cookieOptions: CookieSerializeOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 30 * 24 * 60 * 60, // 30 days
     path: "/",
-    // any domain
-    // domain: req.headers.host,
   };
 
   res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));

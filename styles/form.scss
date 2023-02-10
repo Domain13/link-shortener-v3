@@ -1,0 +1,89 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 2px #000;
+  z-index: 5;
+
+  .header {
+    font-size: 2rem;
+    text-align: center;
+    color: rgb(200, 3, 255);
+  }
+
+  .text {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: white;
+    text-shadow: none;
+  }
+
+  .form-wrapper {
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+
+    label,
+    input,
+    textarea {
+      font-size: 1.5rem;
+    }
+
+    label {
+      color: cyan;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+  }
+
+  .label-input {
+    input,
+    textarea {
+      padding: 0.5rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      background-color: rgb(255, 91, 91);
+      color: #ededed;
+      // text-shadow: 0 0 1px #000;
+      font-family: sans-serif;
+      font-weight: normal;
+    }
+
+    textarea {
+      height: 15rem;
+      resize: vertical;
+    }
+  }
+
+  .select {
+    select {
+      padding: 0.5rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      background-color: rgb(255, 91, 91);
+      color: #fff;
+      text-shadow: 0 0 1px #000;
+      font-size: 1.5rem;
+    }
+  }
+
+  .checkbox {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    input {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  button,
+  input[type="submit"] {
+    font-size: 1.5rem;
+    text-shadow: 0 0 2px #000;
+  }
+}

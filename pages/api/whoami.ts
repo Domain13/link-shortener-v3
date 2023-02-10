@@ -1,37 +1,29 @@
 import jwt from "jsonwebtoken";
 import dbConnect from "../../lib/dbConnect";
+import isUser from "../../lib/isUser";
 import User from "../../models/User";
 
 export default async function handler(req, res) {
   await dbConnect();
 
-  const { cookies } = req;
-  const { token } = cookies;
+  try {
+    const user = await isUser(req, res);
 
-  if (!token) {
+    if (user) {
+      return res.status(200).json({
+        message: "User is logged in",
+        type: "SUCCESS",
+        data: {
+          _id: user._id,
+          username: user.username,
+          role: user.role,
+        },
+      });
+    }
+  } catch (error) {
     return res.status(400).json({
-      message: "User is not logged in",
+      message: error.message,
       type: "UNAUTHORIZED",
     });
   }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  // @ts-ignore
-  const user = await User.findOne({ username: decoded.username });
-  if (!user) {
-    return res.status(400).json({
-      message: "User not exists",
-      type: "UNAUTHORIZED",
-    });
-  }
-
-  return res.status(200).json({
-    message: "User is logged in",
-    type: "SUCCESS",
-    data: {
-      _id: user._id,
-      username: user.username,
-      role: user.role,
-    },
-  });
 }

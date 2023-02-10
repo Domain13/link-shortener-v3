@@ -1,0 +1,141 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 7vh;
+  padding: 1rem;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 5;
+  background-color: rgb(179, 8, 88);
+
+  .logo {
+    text-transform: uppercase;
+
+    .user-logo {
+      border-radius: 1rem;
+      padding: 5px 10px;
+      background-color: gray;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: springgreen;
+      font-size: 1rem;
+    }
+
+    .notice {
+      font-size: 1rem;
+      color: springgreen;
+      text-shadow: 0 3px 3px #000;
+    }
+  }
+
+  .links {
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .links-without-logout {
+      display: flex;
+      align-items: center;
+    }
+
+    .link {
+      margin: 0 20px;
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      &:hover {
+        color: yellow;
+      }
+    }
+
+    .logout-button {
+      padding: 0.5rem 1rem;
+    }
+
+    .menu {
+      position: relative;
+
+      .menu-button {
+        color: inherit;
+        font-weight: bold;
+        text-transform: uppercase;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        .down-arrow {
+          transform: rotate(180deg);
+          background-color: #004244;
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      .menu-div {
+        transform: scaleY(0);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 10%;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+        transform-origin: top;
+        background: rgb(244, 49, 140);
+        z-index: 999;
+
+        .option {
+          font-size: 1rem;
+          color: inherit;
+          text-decoration: none;
+          font-weight: bold;
+          text-transform: uppercase;
+          background-color: transparent;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          width: 250px;
+          height: 50px;
+
+          &:hover {
+            background: darkviolet;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  nav {
+    height: 15vh;
+
+    .links {
+      .link {
+        font-size: 0.8rem;
+        margin: 0 5px;
+      }
+    }
+
+    .links-without-logout {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}

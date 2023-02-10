@@ -1,15 +1,5 @@
 import { createContext } from "react";
-
-export type PopupType =
-  | "CreateDomain"
-  | "ChangeYoutubeToken"
-  | "ChangeGoogleToken"
-  | "CreateUser"
-  | "ChangePassword"
-  // | "ChangeFirstToken"
-  | "changeRedirectLink"
-  | "ChangeDomain"
-  | null;
+import { PopupType } from "../types/popup";
 
 export type PopupContextType = {
   popup: PopupType;

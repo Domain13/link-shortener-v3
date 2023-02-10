@@ -1,0 +1,89 @@
+.LandingPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh !important;
+  background: linear-gradient(to bottom, #fc5c7d, #6a82fb);
+  flex-direction: column;
+
+  .btn-offer {
+    text-shadow: none;
+    background: #fff;
+    border: 0;
+    font-size: 20px;
+    padding: 1rem 4rem;
+    position: relative;
+    animation-name: shake;
+    animation-duration: 9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    cursor: pointer;
+    color: #000;
+    margin: 3rem 0;
+    text-transform: uppercase;
+
+    &:hover {
+      animation-name: shakeAnim;
+    }
+  }
+
+  img {
+    width: 100%;
+    border-radius: 1.5rem;
+    border: 2px solid #fff;
+  }
+}
+
+@keyframes shakeAnim {
+  0% {
+    top: 0;
+  }
+  1% {
+    top: -5;
+  }
+  2% {
+    top: 8px;
+  }
+  3% {
+    top: -10px;
+  }
+  4% {
+    top: 8px;
+  }
+  5% {
+    top: -10px;
+  }
+  6% {
+    top: 5;
+  }
+  7% {
+    top: 0;
+  }
+}
+
+@keyframes shake {
+  0% {
+    top: 0;
+  }
+  1% {
+    top: -5;
+  }
+  2% {
+    top: 8px;
+  }
+  3% {
+    top: -10px;
+  }
+  4% {
+    top: 8px;
+  }
+  5% {
+    top: -10px;
+  }
+  6% {
+    top: 5;
+  }
+  7% {
+    top: 0;
+  }
+}

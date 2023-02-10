@@ -8,15 +8,16 @@ export default async function isAdmin(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const user = await isUser(req, res);
+  try {
+    const user = await isUser(req, res);
 
-  // If the user is not an admin
-  if (user.role !== "admin") {
-    return res.status(400).json({
-      message: "You are not an admin",
-      type: "UNAUTHORIZED",
-    });
+    // If the user is not an admin
+    if (user.role !== "admin") {
+      throw new Error("You are not an admin");
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
   }
-
-  return user;
 }
