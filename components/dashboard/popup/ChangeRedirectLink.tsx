@@ -9,35 +9,17 @@ import { SendType } from "../../utils/Form";
 import PopupForm from "../../utils/PopupForm";
 
 export default function ChangeRedirectLink() {
-  // ********* getting the contexts *************** //
-  const popupContext = useContext(PopupContext);
-  const isLoadingContext = useContext(IsLoadingContext);
-  const domainContext = useContext(DomainContext);
-  const userIdForChangeRedirectLinkContext = useContext(
+  const { setPopup } = useContext(PopupContext);
+  const { setIsLoading } = useContext(IsLoadingContext);
+  const { domains, setDomains } = useContext(DomainContext);
+  const { userIdForChangeRedirectLink } = useContext(
     UserIdForChangeRedirectLinkContext
   );
-  const currentRedirectLinkContext = useContext(CurrentRedirectLinkContext);
+  const { currentRedirectLink } = useContext(CurrentRedirectLinkContext);
 
-  // ********* getting the states from the contexts *************** //
-  const setPopup = popupContext.setPopup;
-
-  const setIsLoading = isLoadingContext.setIsLoading;
-
-  const domains = domainContext.domains;
-  const setDomains = domainContext.setDomains;
-
-  const userIdForChangeRedirectLink =
-    userIdForChangeRedirectLinkContext.userIdForChangeRedirectLink;
-  const currentRedirectLink = currentRedirectLinkContext.currentRedirectLink;
-
-  // *************** Local State ***************** //
   const [errorPage, setErrorPage] = useState(currentRedirectLink);
 
   async function handleChangeRedirectLink(send: SendType) {
-    // e.preventDefault();
-
-    // const errorPage = e.target[0].value;
-
     if (
       !isURL(errorPage, { require_protocol: true }) &&
       errorPage !== "http://localhost:3000"
@@ -45,19 +27,6 @@ export default function ChangeRedirectLink() {
       alert("You need to give a valid url");
       return;
     }
-
-    // setIsLoading(true);
-    // const res = await fetch("/api/change_redirect_link", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     errorPage,
-    //     _id: userIdForChangeRedirectLink,
-    //   }),
-    // });
-    // const datas = await res.json();
 
     const json = await send("/api/change_redirect_link", {
       errorPage,

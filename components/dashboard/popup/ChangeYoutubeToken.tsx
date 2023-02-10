@@ -4,14 +4,8 @@ import PopupForm from "../../utils/PopupForm";
 import { SendType } from "../../utils/Form";
 
 export default function ChangeYoutubeToken() {
-  // ********* getting the contexts *************** //
-  const tokenContext = useContext(TokenContext);
+  const { token, setToken } = useContext(TokenContext);
 
-  // ********* getting the states from the contexts *************** //
-  const token = tokenContext.token;
-  const setToken = tokenContext.setToken;
-
-  // ************** Local State ****************** //
   const [youtubeToken, setYoutubeToken] = useState("");
 
   useEffect(() => {
@@ -45,7 +39,6 @@ export default function ChangeYoutubeToken() {
         <div className="form-wrapper label-input">
           <label htmlFor="youtubeToken">Youtube Token</label>
           <textarea
-            // placeholder="Change Youtube Token"
             name="youtubeToken"
             id="youtubeToken"
             value={youtubeToken}

@@ -2,18 +2,11 @@ import React, { useContext, useState } from "react";
 import { isURL } from "validator";
 import { DomainContext } from "../contexts/domain";
 import PopupForm from "../../utils/PopupForm";
-import { ReturnedJsonType } from "../../../types/json";
 import { SendType } from "../../utils/Form";
 
 export default function CreateDomain() {
-  // ********* getting the contexts *************** //
-  const domainContext = useContext(DomainContext);
+  const { domains, setDomains } = useContext(DomainContext);
 
-  // ********* getting the states from the contexts *************** //
-  const domains = domainContext.domains;
-  const setDomains = domainContext.setDomains;
-
-  // *************** Local State ***************** //
   const [domain, setDomain] = useState("");
   const [errorPage, setErrorPage] = useState("");
 

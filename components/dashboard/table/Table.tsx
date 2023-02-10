@@ -4,8 +4,7 @@ import Domains from "./Domains";
 import { PopupContext } from "../../../contexts/popup";
 
 export default function Table() {
-  const popupContext = useContext(PopupContext);
-  const popup = popupContext.popup;
+  const { popup } = useContext(PopupContext);
 
   return (
     <div

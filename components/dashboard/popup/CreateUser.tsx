@@ -6,17 +6,9 @@ import { ReturnedJsonType } from "../../../types/json";
 import { SendType } from "../../utils/Form";
 
 export default function CreateUser() {
-  // ********* getting the contexts *************** //
-  const domainContext = useContext(DomainContext);
-  const usersContext = useContext(UsersContext);
+  const { domains } = useContext(DomainContext);
+  const { users, setUsers } = useContext(UsersContext);
 
-  // ********* getting the states from the contexts *************** //
-  const domains = domainContext.domains;
-
-  const users = usersContext.users;
-  const setUsers = usersContext.setUsers;
-
-  // ********* local states *************** //
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [shouldRedirectOnLimit, setShouldRedirectOnLimit] = useState(false);

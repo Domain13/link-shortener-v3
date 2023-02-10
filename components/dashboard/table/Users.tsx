@@ -6,19 +6,10 @@ import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
 
 export default function Users() {
-  // ********* getting the contexts *************** //
-  const usersContext = useContext(UsersContext);
-
-  // ********* getting the states from the contexts *************** //
-  const users = usersContext.users;
-  const setUsers = usersContext.setUsers;
-
+  const { users, setUsers } = useContext(UsersContext);
   const {
-    domainForChange,
     setDomainForChange,
-    userIdForDomainChange,
     setUserIdForDomainChange,
-    usernameForDomainChange,
     setUsernameForDomainChange,
   } = useContext(UserInfoForChangeDomainContext);
 

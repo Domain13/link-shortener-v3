@@ -7,27 +7,12 @@ import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
 
 export default function Domains() {
-  // ********* getting the contexts *************** //
-  const domainContext = useContext(DomainContext);
-  const popupContext = useContext(PopupContext);
-  const currentRedirectLinkContext = useContext(CurrentRedirectLinkContext);
-  const userIdForChangeRedirectLinkContext = useContext(
+  const { domains, setDomains } = useContext(DomainContext);
+  const { setPopup } = useContext(PopupContext);
+  const { setCurrentRedirectLink } = useContext(CurrentRedirectLinkContext);
+  const { setUserIdForChangeRedirectLink } = useContext(
     UserIdForChangeRedirectLinkContext
   );
-
-  // ********* getting the states from the contexts *************** //
-  const domains = domainContext.domains;
-  const setDomains = domainContext.setDomains;
-
-  const setPopup = popupContext.setPopup;
-
-  const setCurrentRedirectLink =
-    currentRedirectLinkContext.setCurrentRedirectLink;
-
-  const setUserIdForChangeRedirectLink =
-    userIdForChangeRedirectLinkContext.setUserIdForChangeRedirectLink;
-
-  // ************************** //
 
   async function afterDeleteDomain(json: ReturnedJsonType, body: any) {
     if (json.type === "SUCCESS") {
@@ -58,12 +43,6 @@ export default function Domains() {
               <td>
                 <div className="options">
                   <button
-                    // style={{
-                    //   // TODO
-                    //   fontSize: ".8rem",
-                    //   padding: "8px 15px",
-                    //   marginBottom: "5px",
-                    // }}
                     className="btn green"
                     onClick={() => {
                       setUserIdForChangeRedirectLink(domain._id);
@@ -80,12 +59,6 @@ export default function Domains() {
                     }}
                     afterPost={afterDeleteDomain}
                     className="btn red"
-                    // extra={{
-                    //   style: {
-                    //     fontSize: "0.8rem",
-                    //     wordBreak: "keep-all",
-                    //   },
-                    // }}
                   >
                     Delete
                   </PostButton>

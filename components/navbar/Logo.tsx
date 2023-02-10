@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/user";
 
 export default function Logo() {
-  const userContext = useContext(UserContext);
-  const user = userContext.user;
+  const { user } = useContext(UserContext);
 
   return (
     <div className="logo">

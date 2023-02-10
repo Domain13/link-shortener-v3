@@ -3,7 +3,6 @@ import { SendType } from "../../utils/Form";
 import PopupForm from "../../utils/PopupForm";
 
 export default function ChangePassword() {
-  // *************** Local State ***************** //
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 

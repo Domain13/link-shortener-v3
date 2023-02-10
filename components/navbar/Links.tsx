@@ -8,8 +8,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/user";
 
 export default function Links() {
-  const userContext = useContext(UserContext);
-  const user = userContext.user;
+  const { user } = useContext(UserContext);
 
   const router = useRouter();
   const isDashboard = router.pathname === ("/dashboard" || "/admin");

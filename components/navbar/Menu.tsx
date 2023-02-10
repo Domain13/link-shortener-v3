@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { PopupContext } from "../../contexts/popup";
 
 export default function Menu() {
-  const popupContext = useContext(PopupContext);
-  const setPopup = popupContext.setPopup;
+  const { setPopup } = useContext(PopupContext);
+
   const [openMenu, setOpenMenu] = useState(false);
 
   return (

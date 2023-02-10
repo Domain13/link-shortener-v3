@@ -4,8 +4,7 @@ import PostButton from "../utils/PostButton";
 import { UserContext } from "../../contexts/user";
 
 export default function Logout() {
-  const userContext = useContext(UserContext);
-  const setUser = userContext.setUser;
+  const { setUser } = useContext(UserContext);
 
   function afterLogout(json: ReturnedJsonType) {
     if (json.type === "SUCCESS") {
