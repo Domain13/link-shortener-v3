@@ -1,16 +1,8 @@
-// COMPLETE
-
-// create short urls
-// only authenticated users can access this route
-
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../lib/dbConnect";
 import ShortUrl from "../../models/ShortUrl";
-// import Token from "../../models/Token";
 import State from "../../models/State";
-import User from "../../models/User";
 import Domain from "../../models/Domain";
-import jwt from "jsonwebtoken";
 import isUser from "../../lib/isUser";
 
 export default async function handler(
@@ -20,32 +12,6 @@ export default async function handler(
   await dbConnect();
 
   const { url, domain } = req.body;
-  // const jwtToken = req.cookies.token;
-
-  // if (!jwtToken) {
-  //   return res.status(400).json({
-  //     message: "Token is not provided",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
-
-  // const decode = jwt.verify(jwtToken, process.env.JWT_SECRET) as {
-  //   username: string;
-  // };
-
-  // // Find the user with the given username
-  // // @ts-expect-error
-  // const user = await User.findOne({
-  //   username: decode.username,
-  // });
-
-  // // If there is no user with the given username
-  // if (!user) {
-  //   return res.status(400).json({
-  //     message: "Username or password is incorrect",
-  //     type: "UNAUTHORIZED",
-  //   });
-  // }
 
   const user = await isUser(req, res);
   const codes = user.affiliateCodes; // code is an array
