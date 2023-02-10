@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UsersContext } from "../contexts/users";
 import { PopupContext } from "../../../contexts/popup";
 import { UserInfoForChangeDomainContext } from "../contexts/userInfoForChangeDomain";
+import { ChangeAffiliateCodesContext } from "../contexts/changeAffiliateCode";
 import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
 
@@ -12,7 +13,11 @@ export default function Users() {
     setUserIdForDomainChange,
     setUsernameForDomainChange,
   } = useContext(UserInfoForChangeDomainContext);
-
+  const {
+    setUserIdForChangeAffiliateCodes,
+    setAffiliateCodesForChange,
+    setUsernameForChangeAffiliateCodes,
+  } = useContext(ChangeAffiliateCodesContext);
   const { setPopup } = useContext(PopupContext);
 
   // ************************** //
@@ -76,7 +81,24 @@ export default function Users() {
                   </div>
                 }
               </td>
-              <td>{user.affiliateCodes.join(", ")}</td>
+              <td>
+                {
+                  <div className="text-with-button">
+                    <p className="text">{user.affiliateCodes.join(", ")}</p>
+                    <button
+                      className="btn green"
+                      onClick={() => {
+                        setUserIdForChangeAffiliateCodes(user._id);
+                        setAffiliateCodesForChange(user.affiliateCodes);
+                        setUsernameForChangeAffiliateCodes(user.username);
+                        setPopup("ChangeAffiliateCode");
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                }
+              </td>
               <td>
                 <div className="text-with-button">
                   <p className="text">

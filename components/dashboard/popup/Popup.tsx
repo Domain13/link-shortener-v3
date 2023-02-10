@@ -5,6 +5,7 @@ import CreateUser from "./CreateUser";
 import ChangePassword from "./ChangePassword";
 import ChangeRedirectLink from "./ChangeRedirectLink";
 import ChangeDomain from "./ChangeDomain";
+import ChangeAffiliateCode from "./ChangeAffiliateCodes";
 import { PopupContext } from "../../../contexts/popup";
 
 export default function Popup() {
@@ -19,6 +20,7 @@ export default function Popup() {
       {popup === "CreateUser" && <CreateUser />}
       {popup === "ChangeRedirectLink" && <ChangeRedirectLink />}
       {popup === "ChangeDomain" && <ChangeDomain />}
+      {popup === "ChangeAffiliateCode" && <ChangeAffiliateCode />}
     </>
   );
 }

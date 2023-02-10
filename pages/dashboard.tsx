@@ -13,6 +13,7 @@ import { CurrentRedirectLinkContext } from "../components/dashboard/contexts/cur
 import { UsersContext } from "../components/dashboard/contexts/users";
 import { TokenContext } from "../components/dashboard/contexts/tokens";
 import { UserInfoForChangeDomainContext } from "../components/dashboard/contexts/userInfoForChangeDomain";
+import { ChangeAffiliateCodesContext } from "../components/dashboard/contexts/changeAffiliateCode";
 import Table from "../components/dashboard/table/Table";
 
 const get = async (url: string) => {
@@ -40,6 +41,13 @@ export default function Dashboard() {
   const [domainForChange, setDomainForChange] = useState("");
   const [userIdForDomainChange, setUserIdForDomainChange] = useState("");
   const [usernameForDomainChange, setUsernameForDomainChange] = useState("");
+  const [userIdForChangeAffiliateCodes, setUserIdForChangeAffiliateCodes] =
+    useState("");
+  const [affiliateCodesForChange, setAffiliateCodesForChange] = useState<
+    string[]
+  >([]);
+  const [usernameForChangeAffiliateCodes, setUsernameForChangeAffiliateCodes] =
+    useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -83,11 +91,22 @@ export default function Dashboard() {
                     setUsernameForDomainChange,
                   }}
                 >
-                  <div className="Admin">
-                    <h1 className="header-text">ADMIN PANNEL</h1>
-                    <Popup />
-                    <Table />
-                  </div>
+                  <ChangeAffiliateCodesContext.Provider
+                    value={{
+                      userIdForChangeAffiliateCodes,
+                      setUserIdForChangeAffiliateCodes,
+                      affiliateCodesForChange,
+                      setAffiliateCodesForChange,
+                      usernameForChangeAffiliateCodes,
+                      setUsernameForChangeAffiliateCodes,
+                    }}
+                  >
+                    <div className="Admin">
+                      <h1 className="header-text">ADMIN PANNEL</h1>
+                      <Popup />
+                      <Table />
+                    </div>
+                  </ChangeAffiliateCodesContext.Provider>
                 </UserInfoForChangeDomainContext.Provider>
               </TokenContext.Provider>
             </UsersContext.Provider>
