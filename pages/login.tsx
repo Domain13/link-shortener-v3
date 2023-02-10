@@ -19,10 +19,8 @@ export default function LoginPage() {
 
         <div className="App">
           <h1>You are already logged in</h1>
-          <Link href="/">
-            <a href="/" className="btn">
-              Go to home
-            </a>
+          <Link href="/" className="btn">
+            Go to home
           </Link>
         </div>
       </>
