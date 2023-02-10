@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/user";
-import { UserType } from "../contexts/user";
+import { UserType } from "../types/user";
 import { IsLoadingContext } from "../contexts/isLoading";
-import Navbar from "../components/Navbar";
-import { PopupContext, PopupType } from "../contexts/popup";
+import Navbar from "../components/navbar/Navbar";
+import { PopupContext } from "../contexts/popup";
+import { PopupType } from "../types/popup";
 import LoadingBar from "react-top-loading-bar";
 import FadeLoader from "react-spinners/FadeLoader";
 
@@ -71,7 +72,6 @@ function MyApp({ Component, pageProps }) {
       <UserContext.Provider value={{ user, setUser }}>
         <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <PopupContext.Provider value={{ popup, setPopup }}>
-            {/* <Navbar /> */}
             {!redirectPage && <Navbar />}
             <LoadingBar
               color="#ff0084"
@@ -88,16 +88,17 @@ function MyApp({ Component, pageProps }) {
                 />
               </div>
             )}
-            <main
-              style={{
-                opacity: isLoading ? 0.2 : 1,
-                background: redirectPage
-                  ? "white"
-                  : "linear-gradient(to left, #02aab0, #00cdac)",
-              }}
-            >
+            {!redirectPage ? (
+              <main
+                style={{
+                  opacity: isLoading ? 0.2 : 1,
+                }}
+              >
+                <Component {...pageProps} />
+              </main>
+            ) : (
               <Component {...pageProps} />
-            </main>
+            )}
           </PopupContext.Provider>
         </IsLoadingContext.Provider>
       </UserContext.Provider>
