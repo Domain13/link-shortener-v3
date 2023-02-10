@@ -72,6 +72,8 @@ export default async function handler(
   //     type: "ALREADY",
   //   });
   // }
+  const { username, password, domain, affiliateCodes, shouldRedirectOnLimit } =
+    req.body;
 
   // Check if the current user is an admin
   // ================================================================
@@ -113,7 +115,7 @@ export default async function handler(
     username,
     password,
     domain,
-    code,
+    affiliateCodes,
     shouldRedirectOnLimit,
     // firstToken,
 
@@ -142,9 +144,8 @@ export default async function handler(
       username: newUser.username,
       role: newUser.role,
       domain: newUser.domain,
-      code: newUser.code,
+      affiliateCodes: newUser.affiliateCodes,
       shouldRedirectOnLimit: newUser.shouldRedirectOnLimit,
-      // firstToken: newUser.firstToken,
     },
   });
 }

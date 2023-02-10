@@ -19,9 +19,7 @@ const userSchema = new mongoose.Schema({
   domain: {
     type: String,
   },
-  code: {
-    // type: String,
-    // default: "",
+  affiliateCodes: {
     type: Array,
     default: [],
   },
@@ -29,10 +27,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  // firstToken: {
-  //   type: String,
-  //   default: "",
-  // },
 });
 
 userSchema.pre("save", function (next) {

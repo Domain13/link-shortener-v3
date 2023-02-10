@@ -48,25 +48,14 @@ export default async function handler(
   // }
 
   const user = await isUser(req, res);
-
-  const code = user.code; // code is an array
-  // const firstToken = user.firstToken;
-
-  // Check if the code is present in the url
-  // This is not required for the admin
-  // if (!url.includes(code) && user.role !== "admin") {
-  //   return res.status(400).json({
-  //     message: "Code is not present in the url",
-  //     type: "NOTFOUND",
-  //   });
-  // }
+  const codes = user.affiliateCodes; // code is an array
 
   // Check if the codes are present in the url
   // This is not required for the admin
   let isCodePresent = false;
   // Need to loop through the array
   if (user.role !== "admin") {
-    code.forEach((c) => {
+    codes.forEach((c: string) => {
       if (url.includes(c)) {
         isCodePresent = true;
         return;
@@ -77,7 +66,7 @@ export default async function handler(
   if (!isCodePresent && user.role !== "admin") {
     return res.status(400).json({
       message: "Code is not present in the url",
-      type: "NOTFOUND",
+      type: "UNAUTHORIZED",
     });
   }
 
@@ -100,7 +89,6 @@ export default async function handler(
   });
 
   if (!domainExists) {
-    // Bad request
     return res.status(400).json({
       message: "Domain does not exist",
       type: "NOTFOUND",
@@ -118,7 +106,6 @@ export default async function handler(
   });
 
   if (!shortUrl) {
-    // server error
     return res.status(500).json({
       message: "Server error",
       type: "SERVER_ERROR",
