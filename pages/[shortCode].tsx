@@ -25,7 +25,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
             router.push(link);
           }}
         >
-          Join Free
+          Click here
         </button>
         <img src="snap-pic.webp" alt="snapchat" />
       </div>
