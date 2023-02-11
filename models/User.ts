@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  shouldAlwaysRedirect: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.pre("save", function (next) {

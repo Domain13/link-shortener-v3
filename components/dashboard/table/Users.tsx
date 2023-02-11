@@ -44,6 +44,24 @@ export default function Users() {
     }
   }
 
+  // After the user's always redirect config is changed, update the state
+  async function afterChangeAlwaysRedirectConfig(
+    json: ReturnedJsonType,
+    body: any
+  ) {
+    if (json.type === "SUCCESS") {
+      setUsers(
+        users.map((user) => {
+          if (user._id === body._id) {
+            user.shouldAlwaysRedirect = !user.shouldAlwaysRedirect;
+          }
+
+          return user;
+        })
+      );
+    }
+  }
+
   return (
     <div className="data users">
       <h4 className="header">Users</h4>
@@ -55,6 +73,7 @@ export default function Users() {
             <th>Domain</th>
             <th>Code</th>
             <th>Redirect</th>
+            <th>Always Redirect</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -113,6 +132,23 @@ export default function Users() {
                     className="btn green"
                   >
                     Turn {user.shouldRedirectOnLimit ? "Off" : "On"}
+                  </PostButton>
+                </div>
+              </td>
+              <td>
+                <div className="text-with-button">
+                  <p className="text">
+                    Status: <b>{user.shouldAlwaysRedirect ? "On" : "Off"}</b>
+                  </p>
+                  <PostButton
+                    path="/api/change_always_redirect_config"
+                    body={{
+                      _id: user._id,
+                    }}
+                    afterPost={afterChangeAlwaysRedirectConfig}
+                    className="btn green"
+                  >
+                    Turn {user.shouldAlwaysRedirect ? "Off" : "On"}
                   </PostButton>
                 </div>
               </td>

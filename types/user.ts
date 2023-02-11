@@ -4,5 +4,6 @@ export type UserType = {
   role: string;
   domain: string;
   shouldRedirectOnLimit: boolean;
+  shouldAlwaysRedirect: boolean;
   affiliateCodes: string[];
 };
