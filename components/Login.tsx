@@ -41,10 +41,10 @@ export default function Login() {
 
   return (
     <div className="App">
-      <AdminInfo />
-
       <Form submitHandler={handleSubmit} className="form-style">
         <h1 className="header">Login</h1>
+
+        <AdminInfo />
 
         <div className="form-wrapper label-input">
           <label htmlFor="username">Username</label>

@@ -31,15 +31,15 @@
 }
 
 .form-style {
-  width: 25rem;
+  width: 20rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.363);
-  padding: 2rem;
+  padding: 1.5rem 0.8rem;
   border-radius: 1rem;
   margin: 0 auto;
 }
 
 @media screen and (max-width: 650px) {
   .form-style {
-    width: 20rem !important;
+    width: 19.5rem !important;
   }
 }

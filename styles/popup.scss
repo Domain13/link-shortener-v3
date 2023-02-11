@@ -7,7 +7,7 @@
   border-radius: 5px;
   padding: 2rem;
   z-index: 10;
-  background: linear-gradient(#ff5f6d, #ffc371);
+  backdrop-filter: blur(20px);
 
   .cancel-button {
     display: block;

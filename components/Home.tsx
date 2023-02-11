@@ -79,10 +79,10 @@ export default function Home() {
       <div className="Home">
         <h1 className="header-text">URL Shortener</h1>
 
-        <AdminInfo />
-
         <Form submitHandler={handleSubmit} className="form-style">
-          <h1 className="header">Short new link</h1>
+          {/* <h1 className="header">Short new link</h1> */}
+
+          <AdminInfo />
 
           <div className="form-wrapper select">
             <label htmlFor="domain">Select your domain</label>

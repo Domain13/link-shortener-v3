@@ -4,7 +4,7 @@
 
   .data {
     margin: 2rem auto;
-    width: 90rem;
+    width: 99%;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.363);
     border-radius: 1rem;
     color: white;
@@ -69,8 +69,6 @@
 @media screen and (max-width: 650px) {
   .data-table {
     .data {
-      width: 90%;
-
       .header {
         font-size: 1.5rem;
       }

@@ -2,7 +2,11 @@
   .header-text {
     font-size: 2rem;
     text-align: center;
-    color: gold;
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.5rem;
+    background-color: springgreen;
+    padding: 0.5rem 0;
     text-shadow: 0 0 2px #000;
     margin: 1rem 0;
   }
