@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DomainContext } from "../contexts/domain";
 import { PopupContext } from "../../../contexts/popup";
 import { CurrentRedirectLinkContext } from "../contexts/currentRedirectLink";
@@ -14,8 +14,12 @@ export default function Domains() {
     UserIdForChangeRedirectLinkContext
   );
 
-  const [domainsToShow, setDomainsToShow] = useState(domains);
+  const [domainsToShow, setDomainsToShow] = useState([]);
   const [domainSearch, setDomainSearch] = useState("");
+
+  useEffect(() => {
+    setDomainsToShow(domains);
+  }, [domains]);
 
   async function afterDeleteDomain(json: ReturnedJsonType, body: any) {
     if (json.type === "SUCCESS") {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UsersContext } from "../contexts/users";
 import { PopupContext } from "../../../contexts/popup";
 import { UserInfoForChangeDomainContext } from "../contexts/userInfoForChangeDomain";
@@ -21,8 +21,12 @@ export default function Users() {
   } = useContext(ChangeAffiliateCodesContext);
   const { setPopup } = useContext(PopupContext);
 
-  const [usersToShow, setUsersToShow] = useState(users);
+  const [usersToShow, setUsersToShow] = useState([]);
   const [usernameSearch, setUsernameSearch] = useState("");
+
+  useEffect(() => {
+    setUsersToShow(users);
+  }, [users]);
 
   // After the user is deleted, update the state
   async function afterDeleteUser(json: ReturnedJsonType, body: any) {
