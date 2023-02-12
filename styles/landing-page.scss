@@ -1,14 +1,18 @@
 .LandingPage {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 100vh !important;
-  background: linear-gradient(to bottom, #fc5c7d, #6a82fb);
+  background: linear-gradient(to bottom, #fc5c7d, transparent), url('../public/snap-pic.webp') no-repeat;
+  background-size: cover;
+  background-position: center center;
   flex-direction: column;
 
   .btn-offer {
     text-shadow: none;
-    background: #fff;
+    background: #000;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px blue;
     border: 0;
     font-size: 20px;
     padding: 1rem 4rem;
@@ -18,7 +22,8 @@
     animation-iteration-count: infinite;
     animation-timing-function: ease-in;
     cursor: pointer;
-    color: #000;
+    color: #fff;
+    text-shadow: 0 0 10px #000;
     margin: 3rem 0;
     text-transform: uppercase;
 

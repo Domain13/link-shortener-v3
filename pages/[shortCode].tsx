@@ -27,7 +27,7 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
         >
           Click here
         </button>
-        <Image src={SnapchatPic} alt="snapchat" />
+        {/* <Image src={SnapchatPic} alt="snapchat" /> */}
       </div>
     </>
   );
