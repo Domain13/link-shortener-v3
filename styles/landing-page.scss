@@ -14,7 +14,7 @@
     padding: 1rem 4rem;
     position: relative;
     animation-name: shake;
-    animation-duration: 9s;
+    animation-duration: 1.5s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in;
     cursor: pointer;
@@ -29,6 +29,7 @@
 
   img {
     width: 100%;
+    height: auto;
     border-radius: 1.5rem;
     border: 2px solid #fff;
   }
