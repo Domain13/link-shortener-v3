@@ -5,6 +5,7 @@ import { CurrentRedirectLinkContext } from "../contexts/currentRedirectLink";
 import { UserIdForChangeRedirectLinkContext } from "../contexts/userIdForChangeRedirectLink";
 import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
+import SearchDomain from "./SearchDomain";
 
 export default function Domains() {
   const { domains, setDomains } = useContext(DomainContext);
@@ -15,7 +16,6 @@ export default function Domains() {
   );
 
   const [domainsToShow, setDomainsToShow] = useState([]);
-  const [domainSearch, setDomainSearch] = useState("");
 
   useEffect(() => {
     setDomainsToShow(domains);
@@ -29,42 +29,9 @@ export default function Domains() {
     }
   }
 
-  async function handleSearchDomain(e: any) {
-    e.preventDefault();
-
-    if (domainSearch.length === 0) {
-      setDomainsToShow(domains);
-    } else {
-      setDomainsToShow(
-        domains.filter((domain) =>
-          domain.domain.toLowerCase().includes(domainSearch.toLowerCase())
-        )
-      );
-    }
-  }
-
   return (
     <div className="table">
-      <form className="search form" onSubmit={handleSearchDomain}>
-        <div className="form-wrapper label-input">
-          <input
-            type="text"
-            placeholder="Search"
-            value={domainSearch}
-            onChange={(e) => setDomainSearch(e.target.value)}
-          />
-          <div
-            className="cancel"
-            onClick={() => {
-              setDomainSearch("");
-              setDomainsToShow(domains);
-            }}
-          >
-            X
-          </div>
-        </div>
-        <button className="btn green">Search</button>
-      </form>
+      <SearchDomain domains={domains} setDomainsToShow={setDomainsToShow} />
 
       <div className="data domains">
         <h4 className="header">Domains</h4>

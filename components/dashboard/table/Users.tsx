@@ -6,6 +6,7 @@ import { ChangeAffiliateCodesContext } from "../contexts/changeAffiliateCode";
 import PostButton from "../../utils/PostButton";
 import { ReturnedJsonType } from "../../../types/json";
 import Form from "../../utils/Form";
+import SearchUser from "./SearchUser";
 
 export default function Users() {
   const { users, setUsers } = useContext(UsersContext);
@@ -22,7 +23,6 @@ export default function Users() {
   const { setPopup } = useContext(PopupContext);
 
   const [usersToShow, setUsersToShow] = useState([]);
-  const [usernameSearch, setUsernameSearch] = useState("");
 
   useEffect(() => {
     setUsersToShow(users);
@@ -68,42 +68,9 @@ export default function Users() {
     }
   }
 
-  async function handleSearchUser(e: any) {
-    e.preventDefault();
-
-    if (usernameSearch === "") {
-      setUsersToShow(users);
-    } else {
-      setUsersToShow(
-        users.filter((user) =>
-          user.username.toLowerCase().includes(usernameSearch.toLowerCase())
-        )
-      );
-    }
-  }
-
   return (
     <div className="table">
-      <form className="search form" onSubmit={handleSearchUser}>
-        <div className="form-wrapper label-input">
-          <input
-            type="text"
-            placeholder="Search"
-            value={usernameSearch}
-            onChange={(e) => setUsernameSearch(e.target.value)}
-          />
-          <div
-            className="cancel"
-            onClick={() => {
-              setUsernameSearch("");
-              setUsersToShow(users);
-            }}
-          >
-            X
-          </div>
-        </div>
-        <button className="btn green">Search</button>
-      </form>
+      <SearchUser users={users} setUsersToShow={setUsersToShow} />
 
       <div className="data users">
         <h4 className="header">Users</h4>
