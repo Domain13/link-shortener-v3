@@ -1,89 +1,139 @@
 .data-table {
   padding: 2rem 0;
-  // border: 2px solid green;
 
-  .data {
+  .table {
     margin: 2rem auto;
-    width: 99%;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.363);
-    border-radius: 1rem;
-    color: white;
-    overflow-x: auto;
-    background-color: rgb(255, 140, 0);
 
-    .header {
-      text-align: center;
-      font-size: 2rem;
-      padding: 0.5rem;
-      width: 100%;
-    }
+    .search {
+      width: 99%;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      overflow: auto;
+      .label-input {
+        width: 90%;
+        position: relative;
 
-      tr.even {
-        background-color: rgb(44, 43, 43);
-      }
+        input {
+          width: 100%;
+        }
 
-      tr.odd {
-        background-color: rgb(34, 33, 33);
-      }
-
-      th,
-      td {
-        border: 1px solid rgb(138, 137, 137);
-        padding: 0.5rem;
-        font-size: 1.2rem;
-      }
-
-      th {
-        background-color: #101010;
-        color: gold;
-      }
-
-      td {
-        .options {
+        .cancel {
+          position: absolute;
+          right: 0.5rem;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: white;
+          width: 3rem;
+          height: 3rem;
           display: flex;
           justify-content: center;
           align-items: center;
+          border-radius: 50%;
+          transition: all 0.3s ease;
+          text-shadow: none;
+          font-weight: bold;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.325);
+          }
+        }
+      }
+
+      button {
+        width: 10%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .data {
+      margin: 0 auto;
+      width: 99%;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.363);
+      border-radius: 1rem;
+      color: white;
+      overflow-x: auto;
+      background-color: rgb(255, 140, 0);
+
+      .header {
+        text-align: center;
+        font-size: 2rem;
+        padding: 0.5rem;
+        width: 100%;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        overflow: auto;
+
+        tr.even {
+          background-color: rgb(44, 43, 43);
         }
 
-        .text-with-button {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+        tr.odd {
+          background-color: rgb(34, 33, 33);
         }
 
-        button {
-          font-size: 1rem;
-          padding: 0.5rem 1rem;
-          margin: 0 10px;
+        th,
+        td {
+          border: 1px solid rgb(138, 137, 137);
+          padding: 0.5rem;
+          font-size: 1.2rem;
+        }
+
+        th {
+          background-color: #101010;
+          color: gold;
+        }
+
+        td {
+          .options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .text-with-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          button {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            margin: 0 10px;
+          }
         }
       }
     }
   }
-}
 
-@media screen and (max-width: 650px) {
-  .data-table {
-    .data {
-      .header {
-        font-size: 1.5rem;
-      }
-
-      table {
-        th,
-        td {
-          font-size: 1rem;
+  @media screen and (max-width: 650px) {
+    .data-table {
+      .data {
+        .header {
+          font-size: 1.5rem;
         }
 
-        td {
-          button {
-            font-size: 0.8rem;
-            // padding: 0.3rem 0.5rem;
-            margin: 0 5px;
+        table {
+          th,
+          td {
+            font-size: 1rem;
+          }
+
+          td {
+            button {
+              font-size: 0.8rem;
+              // padding: 0.3rem 0.5rem;
+              margin: 0 5px;
+            }
           }
         }
       }
