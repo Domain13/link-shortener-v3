@@ -18,6 +18,8 @@ export default function RedirectLandingPage({ host, youtubeToken }) {
       </Head>
 
       <div className="LandingPage">
+        <h2>Go to Personal Profile...</h2>
+        
         <button
           className="btn btn-offer"
           onClick={() => {
