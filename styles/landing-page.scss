@@ -1,9 +1,12 @@
 .LandingPage {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 3rem;
   align-items: center;
   min-height: 100vh !important;
-  background: linear-gradient(to bottom, #61045F, #AA076B);
+  background: linear-gradient(to bottom, #61045F, transparent), url('../public/bg.jpeg');
+  // background-position: bottom right;
+  // background-size: cover;
   background-size: cover;
   background-position: center center;
   flex-direction: column;
