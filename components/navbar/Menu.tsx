@@ -60,6 +60,15 @@ export default function Menu() {
           >
             Change Password
           </button>
+          <button
+            className="option"
+            onClick={() => {
+              setPopup("ChangeNotice");
+              setOpenMenu(false);
+            }}
+          >
+            Change Notice
+          </button>
 
           <button
             className="option red"

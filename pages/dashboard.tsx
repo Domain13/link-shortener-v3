@@ -15,6 +15,7 @@ import { TokenContext } from "../components/dashboard/contexts/tokens";
 import { UserInfoForChangeDomainContext } from "../components/dashboard/contexts/userInfoForChangeDomain";
 import { ChangeAffiliateCodesContext } from "../components/dashboard/contexts/changeAffiliateCode";
 import Table from "../components/dashboard/table/Table";
+import { NoticeContext } from "../components/dashboard/contexts/notice";
 
 const get = async (url: string) => {
   const res = await fetch(url);
@@ -35,6 +36,7 @@ export default function Dashboard() {
   const [token, setToken] = useState({
     youtubeToken: "",
   });
+  const [notice, setNotice] = useState("");
   const [currentRedirectLink, setCurrentRedirectLink] = useState("");
   const [userIdForChangeRedirectLink, setUserIdForChangeRedirectLink] =
     useState("");
@@ -55,11 +57,13 @@ export default function Dashboard() {
     const users = get("/api/get_users");
     const domains = get("/api/get_domains");
     const tokens = get("/api/get_tokens");
+    const notices = get("/api/get_notice");
 
-    Promise.all([users, domains, tokens]).then((values) => {
+    Promise.all([users, domains, tokens, notices]).then((values) => {
       setUsers(values[0].data);
       setDomains(values[1].data);
       setToken(values[2].data);
+      setNotice(values[3].data);
     });
   }, [user]);
 
@@ -81,33 +85,35 @@ export default function Dashboard() {
           >
             <UsersContext.Provider value={{ users, setUsers }}>
               <TokenContext.Provider value={{ token, setToken }}>
-                <UserInfoForChangeDomainContext.Provider
-                  value={{
-                    domainForChange,
-                    setDomainForChange,
-                    userIdForDomainChange,
-                    setUserIdForDomainChange,
-                    usernameForDomainChange,
-                    setUsernameForDomainChange,
-                  }}
-                >
-                  <ChangeAffiliateCodesContext.Provider
+                <NoticeContext.Provider value={{ notice, setNotice }}>
+                  <UserInfoForChangeDomainContext.Provider
                     value={{
-                      userIdForChangeAffiliateCodes,
-                      setUserIdForChangeAffiliateCodes,
-                      affiliateCodesForChange,
-                      setAffiliateCodesForChange,
-                      usernameForChangeAffiliateCodes,
-                      setUsernameForChangeAffiliateCodes,
+                      domainForChange,
+                      setDomainForChange,
+                      userIdForDomainChange,
+                      setUserIdForDomainChange,
+                      usernameForDomainChange,
+                      setUsernameForDomainChange,
                     }}
                   >
-                    <div className="Admin">
-                      <h1 className="header-text">ADMIN PANNEL</h1>
-                      <Popup />
-                      <Table />
-                    </div>
-                  </ChangeAffiliateCodesContext.Provider>
-                </UserInfoForChangeDomainContext.Provider>
+                    <ChangeAffiliateCodesContext.Provider
+                      value={{
+                        userIdForChangeAffiliateCodes,
+                        setUserIdForChangeAffiliateCodes,
+                        affiliateCodesForChange,
+                        setAffiliateCodesForChange,
+                        usernameForChangeAffiliateCodes,
+                        setUsernameForChangeAffiliateCodes,
+                      }}
+                    >
+                      <div className="Admin">
+                        <h1 className="header-text">ADMIN PANNEL</h1>
+                        <Popup />
+                        <Table />
+                      </div>
+                    </ChangeAffiliateCodesContext.Provider>
+                  </UserInfoForChangeDomainContext.Provider>
+                </NoticeContext.Provider>
               </TokenContext.Provider>
             </UsersContext.Provider>
           </CurrentRedirectLinkContext.Provider>
