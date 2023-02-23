@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import "../styles/globals.scss";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/user";
 import { UserType } from "../types/user";
@@ -10,6 +10,8 @@ import { PopupContext } from "../contexts/popup";
 import { PopupType } from "../types/popup";
 import LoadingBar from "react-top-loading-bar";
 import FadeLoader from "react-spinners/FadeLoader";
+import Head from "next/head";
+import Meta from "../components/Meta";
 
 function MyApp({ Component, pageProps }) {
   // make a post request to "/api/whoami" to get the user's info
@@ -69,6 +71,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <Meta />
+      </Head>
       <UserContext.Provider value={{ user, setUser }}>
         <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <PopupContext.Provider value={{ popup, setPopup }}>
