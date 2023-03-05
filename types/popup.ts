@@ -6,4 +6,5 @@ export type PopupType =
   | "ChangeRedirectLink"
   | "ChangeDomain"
   | "ChangeAffiliateCode"
+  | "ChangeNotice"
   | null;

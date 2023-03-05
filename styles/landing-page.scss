@@ -1,19 +1,20 @@
 .LandingPage {
   display: flex;
-  justify-content: flex-start;
-  padding-top: 3rem;
+  justify-content: center;
   align-items: center;
   min-height: 100vh !important;
-  background: linear-gradient(to bottom, #61045F, transparent), url('../public/bg.jpeg');
+  background: linear-gradient(to bottom,#11998e, #38ef7d);
   background-size: cover;
   background-position: center center;
   flex-direction: column;
-  h2{
+
+  h2 {
     color: #fff;
   }
+
   .btn-offer {
     text-shadow: none;
-    background: linear-gradient(-45deg,#FF512F, #F09819);
+    background: linear-gradient(-45deg, #FF512F, #F09819);
     backdrop-filter: blur(20px);
     box-shadow: 0 0 20px blue;
     border: 0;
@@ -35,6 +36,62 @@
     }
   }
 
+  // Iphone notice area 
+  .iphone-user{
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    backdrop-filter: blur(20px);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    margin: .5rem 1rem;
+  }
+
+  // copy button style 
+  .btn-copy {
+    text-shadow: none;
+    background: #fff;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px #FF512F;
+    border: 0;
+    font-size: 1rem;
+    padding: 1rem 4rem;
+    position: relative;
+    animation-name: shake;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    cursor: pointer;
+    color: darkviolet;
+    text-shadow: 0 0 3px violet;
+    margin: 1.5rem 0;
+    text-transform: uppercase;
+
+    &:hover {
+      animation-name: shakeAnim;
+      background-color: gray;
+      color: white;
+    }
+  }
+
+  // link button image style 
+  .link-img {
+    height: 2rem;
+    width: auto;
+    margin-bottom: -.5rem;
+  }
+
+  // iphone notice text 
+  .iphone-notice{
+    color: white;
+    padding: 0 1rem;
+  }
+  .iphone-notice span{
+    color: yellow;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px #F09819;
+  }
   img {
     width: 100%;
     height: auto;
@@ -47,24 +104,31 @@
   0% {
     top: 0;
   }
+
   1% {
     top: -5;
   }
+
   2% {
     top: 8px;
   }
+
   3% {
     top: -10px;
   }
+
   4% {
     top: 8px;
   }
+
   5% {
     top: -10px;
   }
+
   6% {
     top: 5;
   }
+
   7% {
     top: 0;
   }
@@ -74,24 +138,31 @@
   0% {
     top: 0;
   }
+
   1% {
     top: -5;
   }
+
   2% {
     top: 8px;
   }
+
   3% {
     top: -10px;
   }
+
   4% {
     top: 8px;
   }
+
   5% {
     top: -10px;
   }
+
   6% {
     top: 5;
   }
+
   7% {
     top: 0;
   }

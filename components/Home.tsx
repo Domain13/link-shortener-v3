@@ -80,8 +80,6 @@ export default function Home() {
         <h1 className="header-text">URL Shortener</h1>
 
         <Form submitHandler={handleSubmit} className="form-style">
-          {/* <h1 className="header">Short new link</h1> */}
-
           <AdminInfo />
 
           <div className="form-wrapper select">
